@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.persistence.Table;
 /**
  *
  * @author albamagdaleno
@@ -15,6 +16,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="blocks")
+
 public class Block implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
