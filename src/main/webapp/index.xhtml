@@ -28,13 +28,13 @@
     <h:body>
         <div class="center-screen">
             <h:form>
-                <p:outputLabel value="Usuario" for="username" styleClass="input-label"/>
-                <p:inputText id="username" value="" styleClass="input-text"/>
+                <p:outputLabel value="Email:" for="username" styleClass="input-label"/>
+                <p:inputText id="username" value="#{indexController.user.email}" styleClass="input-text"/>
                 <br/>
-                <p:outputLabel value="Contraseña" for="password" styleClass="input-label"/>
-                <p:password id="password" value="" styleClass="input-text"/>
+                <p:outputLabel value="Contraseña:" for="password" styleClass="input-label"/>
+                <p:password id="password" value="#{indexController.user.user_password}" styleClass="input-text"/>
                 <br/>                   
-                <p:commandButton value="Iniciar sesión" style="margin-right: 10px;"/>
+                <p:commandButton value="Iniciar sesión" style="margin-right: 10px;" action="#{indexController.verifyUser()}"/>
             </h:form>
         </div>
     </h:body>
