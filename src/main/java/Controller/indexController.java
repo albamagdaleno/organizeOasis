@@ -31,6 +31,22 @@ public class indexController implements Serializable{
         
         user = new User();
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setUserEJB(UserFacadeLocal userEJB) {
+        this.userEJB = userEJB;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public UserFacadeLocal getUserEJB() {
+        return userEJB;
+    }
     
     public String verifyUser(){
         
