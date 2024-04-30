@@ -38,7 +38,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         User result = null;
         
         //Creamos la consulta para ver si el usuario está en bbdd
-        String stringQuery = "FROM User u WHERE u.email=:param1 and u.user_password=:param2";
+        String stringQuery = "FROM User u WHERE u.email=:param1 and u.password=:param2";
         
         Query query = em.createQuery(stringQuery);
         

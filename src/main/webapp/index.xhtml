@@ -32,7 +32,7 @@
                 <p:inputText id="username" value="#{indexController.user.email}" styleClass="input-text"/>
                 <br/>
                 <p:outputLabel value="Contraseña:" for="password" styleClass="input-label"/>
-                <p:password id="password" value="#{indexController.user.user_password}" styleClass="input-text"/>
+                <p:password id="password" value="#{indexController.user.password}" styleClass="input-text"/>
                 <br/>                   
                 <p:commandButton value="Iniciar sesión" style="margin-right: 10px;" action="#{indexController.verifyUser()}"/>
             </h:form>

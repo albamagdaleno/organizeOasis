@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
  surname VARCHAR(24),
  email VARCHAR(32),
  user_password VARCHAR(32),
- rol ENUM('private','influencer','administator'),
+ rol ENUM('private','influencer','administrator'),
  visits INT,
  PRIMARY KEY (id_user));
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS users (
  
  -- USUARIOS --
  INSERT INTO `organizeOasis`.`users` (`id_user`, `name`, `surname`, `email`) VALUES ('1', 'Alicia', 'Mayor', 'alicia@gmail.com');
- UPDATE `organizeOasis`.`users` SET `user_password`='1234', `rol`='administator', `visits`='3' WHERE  `id_user`=1;
+ UPDATE `organizeOasis`.`users` SET `user_password`='1234', `rol`='administrator', `visits`='3' WHERE  `id_user`=1;
 /*COMMENT ON COLUMN users.rol IS 'Tipo de rol que tiene el usuario. privado: no puede compartir paginas, influencer: permite compartir paginas';
 COMMENT ON COLUMN pages.id_user IS 'Usuario al que esta asociado la pagina';
 COMMENT ON COLUMN pages.num_blocks IS 'Numero de bloques en los que se divide la pagina';

@@ -11,12 +11,13 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author alimb
  */
-
+@Named
 @ViewScoped
 
 public class indexController implements Serializable{

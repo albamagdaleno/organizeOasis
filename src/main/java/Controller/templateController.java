@@ -7,13 +7,20 @@ package Controller;
 
 import Modelo.User;
 import java.io.IOException;
+import java.io.Serializable;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author alimb
  */
-public class templateController {
+
+@Named
+@ViewScoped
+
+public class templateController implements Serializable{
     
     public void verifyAndShow() throws IOException{
         
