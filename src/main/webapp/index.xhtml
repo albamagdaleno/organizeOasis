@@ -5,37 +5,74 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Organize Oasis</title>
+        <!--<link rel="stylesheet" href="resources/css/cssIndex.css"/> -->
+        
         <style>
+            .container{
+                position: relative;
+                height: 100vh;
+                background-image: url('resources/images/oasis.png');
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
             .center-screen {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
-            }
+                background-image: url("resources/images/oasis.png"); 
+                background-size: cover; 
+            }   
+
             .input-label {
                 display: block;
                 margin-bottom: 5px;
                 margin-top: 5px;
             }
+
             .input-text {
                 display: block;
                 margin-bottom: 5px;
                 margin-top: 5px;
             }
+            
+            
         </style>
     </h:head>
     <h:body>
-        <div class="center-screen">
-            <h:form>
-                <p:outputLabel value="Email:" for="username" styleClass="input-label"/>
-                <p:inputText id="username" value="#{indexController.user.email}" styleClass="input-text"/>
-                <br/>
-                <p:outputLabel value="Contraseña:" for="password" styleClass="input-label"/>
-                <p:password id="password" value="#{indexController.user.password}" styleClass="input-text"/>
-                <br/>                   
-                <p:commandButton value="Iniciar sesión" style="margin-right: 10px;" action="#{indexController.verifyUser()}"/>
-            </h:form>
+        <div class="container">
+            <div class="center-screen">
+                <h:form> 
+                    <!-- Forma mas bonita pero no funciona bien
+                    <span class="ui-float-label">
+                        <p:inputText id="float-input-email" value="#{indexController.user.email}" styleClass="input-text"/>
+                        <p:outputLabel for="@previous" value="Email" styleClass="input-label"/>
+                    </span>
+                    
+                    <span class="ui-float-label">
+                        <p:inputText id="float-input-password" value="#{indexController.user.password}" styleClass="input-text"/>
+                        <p:outputLabel for="@previous" value="Contraseña" styleClass="input-label"/>
+                    </span>-->
+                    
+                    <img src="resources/images/logoOasisBlack.jpg" alt="Imagen centrada"/>
+                        
+                    <p:outputLabel value="Email:" for="username" styleClass="input-label"/>
+                    <p:inputText id="username" value="#{indexController.user.email}" styleClass="input-text"/>
+                    <br/>
+                    <p:outputLabel value="Contraseña:" for="password" styleClass="input-label"/>
+                    <p:password id="password" value="#{indexController.user.password}" styleClass="input-text"/>
+                    <br/>                   
+                    
+                    <p:commandButton value="Iniciar sesión" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{indexController.verifyUser()}"/>
+                    
+                    
+                </h:form>
+            </div>
         </div>
     </h:body>
 </html>
