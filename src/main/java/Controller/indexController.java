@@ -7,6 +7,7 @@ package Controller;
 
 import EJB.UserFacadeLocal;
 import Modelo.User;
+import Modelo.User.Rol;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -59,7 +60,15 @@ public class indexController implements Serializable{
         User searchedUser = userEJB.verifyUser(user);
         
         if(searchedUser!=null){
-            direction = "private/mainViewUser.xhtml?faces-redirect=true";
+            if(searchedUser.getRol().equals(Rol.Administrator)){
+            //if(searchedUser.getRol().toString().equals("Administrator")){
+                
+                direction = "private/administrator/mainViewAdmin.xhtml?faces-redirect=true";
+            }else{
+                
+                direction = "private/mainViewUser.xhtml?faces-redirect=true";
+            }
+            
         }
         
         return direction;
