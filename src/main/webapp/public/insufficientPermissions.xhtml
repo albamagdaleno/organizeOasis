@@ -7,10 +7,40 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Permisos insuficientes</title>
+        <title>Error de inicio de sesión sesión</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+            .message {
+                position: relative;
+                text-align: center;
+                border: 2px solid #ddd; 
+                border-radius: 10px; 
+                padding: 20px;
+            }    
+            .close-btn {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                line-height: 1;
+            }
+        </style>
     </head>
     <body>
-        <div>No puedes acceder a organizeOasis porque este usuario no existe</div>
+        <div class="message">
+            <button class="close-btn" onclick="window.location.href = '../index.xhtml';">X</button>
+            <p>Email o contraseña incorrectos. Vuelve a intentarlo.</p>
+            <p>Si no tienes usuario todavía, <a href="registerForm.xhtml">regístrate aquí</a>.</p>
+        </div>
     </body>
 </html>

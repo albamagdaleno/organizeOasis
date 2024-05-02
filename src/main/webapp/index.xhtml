@@ -5,76 +5,9 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Organize Oasis</title>
+        <h:outputStylesheet library="css" name="cssIndex.css"/>
         <!--<link rel="stylesheet" href="resources/css/cssIndex.css"/> -->
-        
-        <style>
-            .container{
-                position: relative;
-                height: 100vh;
-                /*background-image: url("https://raw.githubusercontent.com/albamagdaleno/organizeOasis/Develop/src/main/webapp/resources/images/oasis.png?token=GHSAT0AAAAAACRFMMTAGLH5ZMGSTI3MSEJ4ZRSKE5Q");*/
-                background-image: url("resources/images/oasis.png"); 
-                background-size: cover;
-                background-position: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-                margin: 0;
-            }
-            
-            .container::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(255, 255, 255, 0.5); /* Color de fondo transparente */
-            }
-            
-            .center-screen {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                text-align: center;
-                background-size: cover; 
-            }   
 
-            .input-label {
-                display: block;
-                margin-bottom: 5px;
-                margin-top: 5px;
-            }
-
-            .input-text {
-                display: block;
-                margin-bottom: 5px;
-                margin-top: 5px;
-            }
-            
-            /*.register-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-            }*/
-            
-            .register-link {
-                text-align: center;
-                margin-top: 10px;
-                margin-bottom: 15px;
-            }
-            
-            .input, .buttons{
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 10px
-            }
-            
-            
-        </style>
     </h:head>
     <h:body>
         <div class="container">
@@ -106,8 +39,13 @@
                         <br/>                   
                     </div>
                     <div class="buttons">
+
                         <p:commandButton value="Iniciar sesión" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{indexController.verifyUser()}"/>
                     </div>
+                    
+                    <p:dialog header="Error de inicio de sesión" id="errorDialog" widgetVar="errorDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
+                        <h:outputText value="#{indexController.errorLoginMessage}" />
+                    </p:dialog>
                                            
                     
                 </h:form>
