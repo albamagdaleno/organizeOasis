@@ -1,0 +1,16 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05-may-2024, 21:03:34
+    Author     : albamagdaleno
+*/
+
+body .ui-button {
+    background: transparent;
+    color: red;
+    border: none;
+    
+}

@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Administrator Menu</title>
+        <h:outputStylesheet library="css" name="cssAdmin.css"/>
     </h:head>
     <h:body>
 
@@ -23,22 +24,32 @@
             <ui:define name="content">
                 <h:form>
                     <div class="card">
-                        <p:dataTable var="row" value="#{dtBasicView.products}">
+                        <p:dataTable var="user" value="#{adminController.listUser}">
                             <f:facet name="header">
                                 Lista de Usuarios Registrados
                             </f:facet>
-                            <p:column field="id_user" headerText="Id User" sortable="false" filterable="false" />
-                            <p:column field="name" headerText="Name" />
-                            <p:column field="surname" headerText="Surname" />
-                            <p:column field="email" headerText="Email" />
-                            <p:column field="rol" headerText="Rol" />
-                            <p:column field="Visits" headerText="Visits" />
-                            <p:column exportable="false">
-                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
-                                                 process="@this"
-                                                 oncomplete="PF('deleteProductDialog').show()">
-                                    <f:setPropertyActionListener value="#{product}" target="#{crudView.selectedProduct}" />
-                                </p:commandButton>
+                            <p:column headerText="Id User" sortable="false" filterable="false">
+                                <h:outputText value="#{user.id_user}" />
+                            </p:column>
+                            <p:column headerText="Name">
+                                <h:outputText value="#{user.name}" />
+                            </p:column>
+                            <p:column headerText="Surname">
+                                <h:outputText value="#{user.surname}" />
+                            </p:column>    
+                            <p:column headerText="Email">
+                                <h:outputText value="#{user.email}" />
+                            </p:column>
+                            <p:column headerText="Rol">
+                                <h:outputText value="#{user.rol}" />
+                            </p:column>
+                            <p:column headerText="Visits">
+                                <h:outputText value="#{user.visits}" />
+                            </p:column>
+                            <p:column headerText="Actions" exportable="false">
+                                <p:commandButton id="fileButton" icon="pi pi-file" update="@form" action="#{adminController.deleteUser(user)}"/>
+                                <p:commandButton id="trashButton" icon="pi pi-trash" update="@form" action="#{adminController.deleteUser(user)}"/>
+
                             </p:column>
                         </p:dataTable>
                     </div>
