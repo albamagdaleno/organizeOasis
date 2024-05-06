@@ -23,6 +23,7 @@ import javax.inject.Named;
 
 public class adminController implements Serializable{ 
     
+    private User selUser;
     private List<User> listUser;
     
     @EJB
@@ -36,5 +37,21 @@ public class adminController implements Serializable{
     
     public List<User> getListUser(){
         return listUser;
+    }
+    
+    public void setSelectedUser(User user){
+        this.selUser = user;
+    }
+    
+    public User getSelectedUSer(){
+        return selUser;
+    }
+    
+    public void deleteUser(){
+        if(selUser!=null){
+            userEJB.remove(selUser);
+            listUser = userEJB.findAll();  
+            selUser = null;
+        }
     }
 }

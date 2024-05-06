@@ -14,13 +14,13 @@
 
         <ui:composition template="./../../WEB-INF/template/mainTemplate.xhtml">
 
-            <ui:define name="top">
-                top
-            </ui:define>
+            <ui:insert name="top">
+                Prueba de mantener el top entre paginas 
+            </ui:insert>
 
-            <ui:define name="left">
-                lefttttttt
-            </ui:define>
+            <ui:insert name="left">
+                Prueba de mantener el left entre paginas
+            </ui:insert>
 
             <ui:define name="content">
                 <h:form>
@@ -68,7 +68,8 @@
                         
                         <p:commandButton value="Sí" 
                             icon="pi pi-check" 
-                            action="#{adminController.deleteUser(selectedUser)}" 
+                            style="background-color: red; border: none; "
+                            action="#{adminController.deleteUser()}" 
                             oncomplete="PF('deleteProductDialog').hide();" 
                             update="@form"/>
                         <p:commandButton value="No" 
