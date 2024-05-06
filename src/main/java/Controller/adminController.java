@@ -6,6 +6,7 @@
 package Controller;
 
 import EJB.UserFacadeLocal;
+import Modelo.Page;
 import Modelo.User;
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +26,7 @@ public class adminController implements Serializable{
     
     private User selUser;
     private List<User> listUser;
+    private List<Page> listPageUser;
     
     @EJB
     private UserFacadeLocal userEJB;
@@ -33,10 +35,15 @@ public class adminController implements Serializable{
     public void init() {
         // Asigna la lista al campo
         this.listUser = userEJB.findAll();
+        
     }
     
     public List<User> getListUser(){
         return listUser;
+    }
+    
+    public List<Page> getListUserPage(){
+        return listPageUser;
     }
     
     public void setSelectedUser(User user){
