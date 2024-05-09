@@ -18,7 +18,7 @@
                 Aqui viene la tabla de las páginas que tiene un usuario
                 <h:form>
                     <div class="card">
-                        <p:dataTable var="page" value="#{adminController.listUser}">
+                        <p:dataTable var="page" value="#{adminController.listUserPage}">
                             <f:facet name="header">
                                 Lista de Páginas del Usuario
                             </f:facet>
@@ -39,7 +39,7 @@
                             </p:column>
                             <p:column headerText="Actions" exportable="false">
                                 <p:commandButton style="background-color: transparent; border: none; color: red;" 
-                                                 icon="pi pi-trash" onclick="PF('deleteProductDialog').show(); #{adminController.setSelectedUser(user)}" update="@this"/>
+                                                 icon="pi pi-trash" onclick="PF('deleteProductDialog').show(); #{adminController.setSelectedPage(page)}" update="@this"/>
 
                             </p:column>
                         </p:dataTable>
