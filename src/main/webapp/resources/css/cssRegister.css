@@ -1,0 +1,27 @@
+/* Estilos para el cuerpo de la página */
+body {
+    background-color: #FF0000; /* Color de fondo */
+    font-family: Arial, sans-serif; /* Tipo de fuente */
+}
+
+/* Estilos para las etiquetas de entrada */
+.input, input-label {
+    font-size: 16px; /* Tamaño de la fuente */
+    color: #333; /* Color del texto */
+}
+
+/* Estilos para los campos de entrada */
+.input-text {
+    border: 1px solid #ccc; /* Borde */
+    margin: 5px; /* Margen exterior */
+    padding: 5px; /* Relleno interior */
+}
+
+/* Estilos para el contenedor principal */
+.container {
+    width: 80%; /* Ancho */
+    margin: 0 auto; /* Margen automático para centrar horizontalmente */
+    display: flex; /* Utilizar flexbox */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+}
