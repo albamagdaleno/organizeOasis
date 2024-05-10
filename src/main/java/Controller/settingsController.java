@@ -1,3 +1,5 @@
+package Controller;
+
 
 import EJB.UserFacadeLocal;
 import Modelo.User;
