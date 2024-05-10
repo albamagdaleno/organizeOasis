@@ -27,6 +27,42 @@ import javax.inject.Named;
 public class settingsController implements Serializable{
     
     private User user;
+    private String newName;
+    private String newSurname;
+    private String newEmail;
+    private String newPassword;
+
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+
+    public void setNewSurname(String newSurname) {
+        this.newSurname = newSurname;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getNewName() {
+        return newName;
+    }
+
+    public String getNewSurname() {
+        return newSurname;
+    }
+
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
     
     
     @EJB
@@ -63,7 +99,7 @@ public class settingsController implements Serializable{
         List<ParametroUsuario> parameters = new ArrayList<>();
 
         parameters.add(new ParametroUsuario("Nombre", user.getName()));
-        parameters.add(new ParametroUsuario("Apellido", user.getSurname()));
+        parameters.add(new ParametroUsuario("Apellidos", user.getSurname()));
         parameters.add(new ParametroUsuario("Email", user.getEmail()));
         parameters.add(new ParametroUsuario("Rol", user.getRol().toString()));
 
