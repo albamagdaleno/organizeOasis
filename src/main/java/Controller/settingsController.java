@@ -4,6 +4,8 @@ package Controller;
 import EJB.UserFacadeLocal;
 import Modelo.User;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -56,6 +58,42 @@ public class settingsController implements Serializable{
     
     return user.getName();
     }
+    
+    public List<ParametroUsuario> getUserInformation() {
+        List<ParametroUsuario> parameters = new ArrayList<>();
 
+        parameters.add(new ParametroUsuario("Nombre", user.getName()));
+        parameters.add(new ParametroUsuario("Apellido", user.getSurname()));
+        parameters.add(new ParametroUsuario("Email", user.getEmail()));
+        parameters.add(new ParametroUsuario("Rol", user.getRol().toString()));
+
+        return parameters;
+    }
+    
+    public class ParametroUsuario implements Serializable {
+        private String name;
+        private String value;
+
+        public ParametroUsuario(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setame(String name) {
+            this.name = name;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValor(String value) {
+            this.value = value;
+        }
+    }
 }
 
