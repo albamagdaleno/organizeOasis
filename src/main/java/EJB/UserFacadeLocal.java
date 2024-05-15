@@ -31,4 +31,13 @@ public interface UserFacadeLocal {
     int count();
     
     User verifyUser(User user);
+
+    /**
+     * Registra un usuario en la DB
+     * true: registro correcto
+     * false: no se ha podido completar el registro
+     * @param user
+     * @return
+     */
+    boolean registerUser(User user);
 }

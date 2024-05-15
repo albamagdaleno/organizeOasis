@@ -6,6 +6,8 @@
 package EJB;
 
 import Modelo.User;
+import org.eclipse.persistence.exceptions.QueryException;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
@@ -57,6 +59,29 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         } 
         
         return result;
+    }
+
+    @Override
+    public boolean registerUser(User user){
+        User userRegistered = new User();
+
+        try {
+            String registerQuery = "INSERT INTO users (name, surname, email, user_password, role, visits)" +
+                    "VALUES (name, surname, email, passw, rol, 0)";
+
+            Query query = em.createQuery(registerQuery);
+
+            query.setParameter("name",user.getName());
+            query.setParameter("surname", user.getSurname());
+            query.setParameter("email", user.getEmail());
+            query.setParameter("passw",user.getPassword());
+            query.setParameter("rol", user.getRol());
+        }catch (QueryException e){
+            return false;
+        }
+
+        return true;
+
     }
     
     
