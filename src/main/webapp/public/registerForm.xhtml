@@ -1,35 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        
-        <title>Formulario de registro</title>
-        <h:outputStylesheet library="css" name="cssRegister.css"/>
-    </h:head>
-    <h:body>
-        hola que pasa
-        <div class="container">
-            dentro container
-                <h:form>
-                    formulario
-                    <div class="input">
-                        <p:outputLabel value="Email:" for="username" styleClass="input-label"/>
-                        <p:inputText id="username" value="#{indexController.user.email}" styleClass="input-text"/>
-                        <br/>
-                        y aqui
-                        <p:outputLabel value="Contraseña:" for="password" styleClass="input-label"/>
-                        <p:password id="password" value="#{indexController.user.password}" styleClass="input-text"/>
-                        <br/>                   
-                    </div>
-                    <div>
-                        <p:commandButton value="Iniciar sesión" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{indexController.verifyUser()}"/>
-                    </div>
-                </h:form>
-        </div>
-    </h:body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Formulario de registro</title>
+</h:head>
+<h:body>
+    <h:form style="align-items: center">
+        <h2>Formulario de Registro</h2>
+
+        <p:panelGrid columns="2" style="width: 300px;">
+            <h:outputLabel for="name" value="Nombre:" styleClass="input-label"/>
+            <p:inputText id="name" value="#{registerController.user.name}" styleClass="input-text" required="true" requiredMessage="El nombre es obligatorio"/>
+
+            <h:outputLabel for="surname" value="Apellidos:" styleClass="input-label"/>
+            <p:inputText id="surname" value="#{registerController.user.surname}" styleClass="input-text" required="true" requiredMessage="Los apellidos son obligatorios"/>
+
+            <h:outputLabel for="rol" value="Rol:" styleClass="input-label"/>
+            <p:selectOneMenu id="rol" value="#{registerController.user.rol}" styleClass="input-text" required="true" requiredMessage="El rol es obligatorio">
+                <f:selectItem itemLabel="Seleccione un rol" itemValue=""/>
+                <f:selectItem itemLabel="Privado" itemValue="Privado"/>
+                <f:selectItem itemLabel="Influencer" itemValue="Influencer"/>
+            </p:selectOneMenu>
+
+            <h:outputLabel for="email" value="Email:" styleClass="input-label"/>
+            <p:inputText id="email" value="#{registerController.user.email}" styleClass="input-text" required="true" requiredMessage="El correo electrónico es obligatorio">
+            <f:validateRegex pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$" />
+            </p:inputText>
+            <p:message for="email" />
+
+            <h:outputLabel for="password" value="Contraseña:" styleClass="input-label"/>
+            <p:password id="password" value="#{registerController.user.password}" styleClass="input-text" required="true" requiredMessage="Lo contraseña es obligatoria, debe tener 8 caracteres minimo">
+            <f:validateLength minimum="8" />
+            <p:ajax event="blur"/>
+            </p:password>
+        </p:panelGrid>
+
+        <p:commandButton value="Registrarse" action="#{registerController.registerUser()}" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px;"/>
+        <p:commandButton value="Borrar todos los campos" type="reset" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px;"/>
+
+    </h:form>
+</h:body>
 </html>
