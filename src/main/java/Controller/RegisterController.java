@@ -54,17 +54,15 @@ public class RegisterController implements Serializable {
         User userAlreadyExists = userFacadeLocal.verifyUser(user);
 
         if(userAlreadyExists == null){
-            errorRegister = "El usuario ya existe";
-        }else{
             if(!userFacadeLocal.registerUser(user)){
                 errorRegister = "No se ha podido registrar el usuario, intendelo de nuevo";
+            }else{
+                return "index.xhtml?faces-redirect=true";
             }
-        }
-
-        if(!errorRegister.isEmpty()){
-            return "Registro realizado con exito";
         }else{
-            return errorRegister;
+            errorRegister = "El usuario ya existe";
+
         }
+        return errorRegister;
     }
 }

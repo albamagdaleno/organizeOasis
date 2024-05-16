@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -63,24 +64,15 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
     @Override
     public boolean registerUser(User user){
-        User userRegistered = new User();
-
+        boolean inserted = false;
         try {
-            String registerQuery = "INSERT INTO users (name, surname, email, user_password, role, visits)" +
-                    "VALUES (name, surname, email, passw, rol, 0)";
-
-            Query query = em.createQuery(registerQuery);
-
-            query.setParameter("name",user.getName());
-            query.setParameter("surname", user.getSurname());
-            query.setParameter("email", user.getEmail());
-            query.setParameter("passw",user.getPassword());
-            query.setParameter("rol", user.getRol());
-        }catch (QueryException e){
-            return false;
+            user.setVisits(0);
+            em.persist(user);
+            inserted = true;
+        }catch (Exception e){
+            return inserted;
         }
-
-        return true;
+        return inserted;
 
     }
     
