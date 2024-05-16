@@ -106,6 +106,19 @@ public class settingsController implements Serializable{
         return parameters;
     }
     
+    public String getStatisticsBasedOnRole(){
+        
+        if(user.getRol().toString().equals("Private")){
+            
+            return "private/userPrivate/statisticsPrivateUser.xhtml?faces-redirect=true";
+        }else{
+            
+            return "private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
+        }
+        
+    }
+    
+    
     public class ParametroUsuario implements Serializable {
         private String name;
         private String value;
