@@ -25,6 +25,9 @@
             <ui:define name="content">
                 <h:form>
                     <div class="card">
+                        
+                        Tabla de paginas de usuario
+                        <ui:remove>
                         <p:dataTable var="page" value="#{adminController.getListUserPage(adminController.selectedUSer)}">
                             <f:facet name="header">
                                 Lista de Páginas del Usuario
@@ -44,9 +47,9 @@
                             <p:column headerText="Actions" exportable="false">
                                 <p:commandButton style="background-color: transparent; border: none; color: red;" 
                                                  icon="pi pi-trash" onclick="PF('deleteProductDialog').show(); #{adminController.setSelectedPage(page)}" update="@this"/>
-
                             </p:column>
                         </p:dataTable>
+                        </ui:remove>
                     </div>
                 </h:form>
             </ui:define>
