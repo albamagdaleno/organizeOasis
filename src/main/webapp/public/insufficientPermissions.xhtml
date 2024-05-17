@@ -5,8 +5,11 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
         <title>Error de inicio de sesión sesión</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <style>
@@ -35,12 +38,12 @@ and open the template in the editor.
                 line-height: 1;
             }
         </style>
-    </head>
-    <body>
+    </h:head>
+    <h:body style="background-image: url('#{resource['images/oasis.png']}'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;">
         <div class="message">
             <button class="close-btn" onclick="window.location.href = '../index.xhtml';">X</button>
             <p>Email o contraseña incorrectos. Vuelve a intentarlo.</p>
             <p>Si no tienes usuario todavía, <a href="registerForm.xhtml">regístrate aquí</a>.</p>
         </div>
-    </body>
+    </h:body>
 </html>
