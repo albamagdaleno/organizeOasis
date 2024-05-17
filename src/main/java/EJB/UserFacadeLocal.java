@@ -31,4 +31,8 @@ public interface UserFacadeLocal {
     int count();
     
     User verifyUser(User user);
+    
+    void changeName(String newName);
+    
+    void changeSurname(String newSurname);
 }

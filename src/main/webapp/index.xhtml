@@ -12,7 +12,7 @@
         </ui:remove>
         
     </h:head>
-    <h:body>
+    <h:body style="background-image: url('#{resource['images/oasis.png']}'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;">
         <div class="container">
 
             <div class="center-screen">
@@ -40,8 +40,8 @@
                     </div>
                     
                     
-                    <div class="register-link">
-                        ¿No tienes cuenta todavía? <a href="public/registerForm.xhtml">Crea tu cuenta</a>
+                    <div class="register-link"> 
+                        ¿No tienes cuenta todavía? <h:link outcome="public/registerForm.xhtml" value="Crea tu cuenta" />
                     </div>
                     <div class="input">
                         <p:outputLabel value="Email:" for="username" styleClass="input-label"/>

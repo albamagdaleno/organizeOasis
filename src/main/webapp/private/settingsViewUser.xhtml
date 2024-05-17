@@ -61,7 +61,7 @@
                                       
                 </h:form>
                 
-                <h:form id="dialogs">
+                <h:form>
                     <p:confirmDialog widgetVar="changeNombreDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -80,7 +80,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changeName()}" 
-                                oncomplete="PF('changeNombreDialog').hide();" 
+                                oncomplete="PF('changeNombreDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -90,7 +90,11 @@
                         </div>
                         
                        </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
                     
+                
                     <p:confirmDialog widgetVar="changeApellidosDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -107,7 +111,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changeSurname()}" 
-                                oncomplete="PF('changeApellidosDialog').hide();" 
+                                oncomplete="PF('changeApellidosDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -117,7 +121,9 @@
                         </div>
                         
                        </p:confirmDialog>
-                    
+                    </h:form>
+                
+                    <h:form>
                     <p:confirmDialog widgetVar="changeEmailDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -134,7 +140,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changeEmail()}" 
-                                oncomplete="PF('changeEmailDialog').hide();" 
+                                oncomplete="PF('changeEmailDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -144,7 +150,9 @@
                         </div>
                         
                        </p:confirmDialog>
-                    
+                    </h:form>
+                
+                    <h:form>
                     <p:confirmDialog widgetVar="changePasswordDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -161,7 +169,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changePassword()}" 
-                                oncomplete="PF('changePasswordDialog').hide();" 
+                                oncomplete="PF('changePasswordDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -171,7 +179,9 @@
                         </div>
                         
                        </p:confirmDialog>
-                    
+                    </h:form>
+                
+                    <h:form>
                     <p:confirmDialog widgetVar="deleteUserDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -185,7 +195,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.deleteUser()}" 
-                                oncomplete="PF('deleteUserDialog').hide();" 
+                                oncomplete="PF('deleteUserDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
