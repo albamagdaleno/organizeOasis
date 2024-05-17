@@ -68,16 +68,13 @@ public class indexController implements Serializable{
         String direction = "public/insufficientPermissions.xhtml?faces-redirect=true";
         //String direction = "index.xhtml?faces-redirect=true";
         
-        System.out.println(user.getEmail());
         User searchedUser = userEJB.verifyUser(user);
         
         if(searchedUser!=null){
             if(searchedUser.getRol().equals(Rol.Administrator)){
             //if(searchedUser.getRol().toString().equals("Administrator")){
-                System.out.println(searchedUser.getName() + searchedUser.getEmail());
                 direction = "private/administrator/mainViewAdmin.xhtml?faces-redirect=true";
             }else{
-                System.out.println("No está verificando bien con bd");
                 direction = "private/mainViewUser.xhtml?faces-redirect=true";
             }
             
