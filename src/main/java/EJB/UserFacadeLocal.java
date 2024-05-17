@@ -39,4 +39,6 @@ public interface UserFacadeLocal {
     void changeEmail(String newEmail);
     
     void changePassword(String newPassword);
+    
+    void changeRol();
 }

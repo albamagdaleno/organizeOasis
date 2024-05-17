@@ -143,4 +143,31 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
     
+    @Override
+    public void changeRol(){
+        
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+        System.out.println(globalUser.getRol().toString());
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+            
+            if (userToUpdate != null) {
+                
+                if(globalUser.getRol().toString().equals("Private")){
+                    userToUpdate.setRol(User.Rol.Influencer);
+                }
+                
+                if(globalUser.getRol().toString().equals("Influencer")){
+                    userToUpdate.setRol(User.Rol.Private);
+                }
+                
+                
+                em.merge(userToUpdate);
+                
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+    }
+    
 }
