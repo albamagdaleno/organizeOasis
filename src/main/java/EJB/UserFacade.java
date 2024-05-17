@@ -101,5 +101,46 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         
     }
     
+    @Override
+    public void changeEmail(String newEmail){
+        
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+            
+            if (userToUpdate != null) {
+
+                userToUpdate.setEmail(newEmail);
+                
+                em.merge(userToUpdate);
+                
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+        
+        
+    }
+    
+    @Override
+    public void changePassword(String newPassword){
+        
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+            
+            if (userToUpdate != null) {
+
+                userToUpdate.setPassword(newPassword);
+                
+                em.merge(userToUpdate);
+                
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+    }
     
 }

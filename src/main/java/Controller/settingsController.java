@@ -128,6 +128,15 @@ public class settingsController implements Serializable{
         userEJB.changeSurname(this.newSurname);
     }
     
+    public void changeEmail(){
+        
+        userEJB.changeEmail(this.newEmail);
+    }
+    
+    public void changePassword(){
+        
+        userEJB.changePassword(this.newPassword);
+    }
     
     public class ParametroUsuario implements Serializable {
         private String name;

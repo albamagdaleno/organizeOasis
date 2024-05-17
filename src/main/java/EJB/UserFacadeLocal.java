@@ -35,4 +35,8 @@ public interface UserFacadeLocal {
     void changeName(String newName);
     
     void changeSurname(String newSurname);
+    
+    void changeEmail(String newEmail);
+    
+    void changePassword(String newPassword);
 }
