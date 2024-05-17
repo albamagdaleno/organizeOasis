@@ -8,12 +8,15 @@ package Controller;
 import EJB.UserFacadeLocal;
 import Modelo.Page;
 import Modelo.User;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -60,5 +63,7 @@ public class adminController implements Serializable{
             listUser = userEJB.findAll();  
             selUser = null;
         }
+        
+        
     }
 }
