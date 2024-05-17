@@ -5,12 +5,22 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
         <title>Formulario de registro</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>Formulario para meter los datos del nuevo usuario (Parte de Adris)</div>
-    </body>
+    </h:head>
+    <h:body>
+        <h:form>
+            <div>Formulario para meter los datos del nuevo usuario (Parte de Adris)</div>
+            <p:commandButton value="Registrarse" action="#{registerController.registerUser()}" update="@form" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px;"/>
+            <p:commandButton value="Borrar todos los campos" type="reset" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px; margin-left: 10px"/>
+
+            <p:dialog header="Error:" id="errorRegister" widgetVar="errorRegisterDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
+                <h:outputText value="#{registerController.errorRegister}" />
+            </p:dialog>
+        </h:form>
+    </h:body>
 </html>
