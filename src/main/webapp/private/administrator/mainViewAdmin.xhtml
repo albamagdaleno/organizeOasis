@@ -48,8 +48,9 @@
                                 <h:outputText value="#{user.visits}" />
                             </p:column>
                             <p:column headerText="Actions" exportable="false">
+                               
                                 <p:commandButton style="background-color: transparent; border: none; color: black;"  
-                                                 icon="pi pi-file"  action="#{navigationBean.goToPage1()}" update="@all"/>
+                                                 icon="pi pi-file" action="#{navigationBean.redirectToUserPages()}" update="@all"/>
                                 <p:commandButton style="background-color: transparent; border: none; color: red;" 
                                                  icon="pi pi-trash" onclick="PF('deleteProductDialog').show(); #{adminController.setSelectedUser(user)}" update="@this"/>
 

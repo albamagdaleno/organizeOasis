@@ -14,8 +14,15 @@
 
         <ui:composition template="./../../WEB-INF/template/mainTemplate.xhtml">
 
+            <ui:define name="left">
+                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
+                    <h:form style="margin: 0;">
+                        <p:commandButton id="boton-volver-usuarios" value="Volver a Usuarios" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.redirectToMainAdmin()}" style="width: 100%; height: 75px; margin-bottom: 5px"/>
+                    </h:form>
+                </div>
+            </ui:define>
+            
             <ui:define name="content">
-                Aqui viene la tabla de las páginas que tiene un usuario
                 <h:form>
                     <div class="card">
                         <p:dataTable var="page" value="#{adminController.listUserPage}">
