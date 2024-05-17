@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Page implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private int idPage;
     
     @Column(name="title")
     private String title; 
@@ -31,11 +31,11 @@ public class Page implements Serializable{
     private int visits;
     
     @JoinColumn(name="id_user")
-    @ManyToOne //TO-DO no se si es esto pq no me aparecen las relaciones
+    @ManyToOne 
     private User user;
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getIdPage() {
+        return idPage;
     }
 
     public String getTitle() {
@@ -54,8 +54,8 @@ public class Page implements Serializable{
         return user;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdPage(int idPage) {
+        this.idPage = idPage;
     }
 
     public void setTitle(String title) {
@@ -75,12 +75,6 @@ public class Page implements Serializable{
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -92,7 +86,7 @@ public class Page implements Serializable{
             return false;
         }
         final Page other = (Page) obj;
-        if (this.idUsuario != other.idUsuario) {
+        if (this.idPage != other.idPage) {
             return false;
         }
         if (this.numBlocks != other.numBlocks) {

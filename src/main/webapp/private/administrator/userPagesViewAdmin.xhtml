@@ -25,22 +25,19 @@
             <ui:define name="content">
                 <h:form>
                     <div class="card">
-                        <p:dataTable var="page" value="#{adminController.listUserPage}">
+                        <p:dataTable var="page" value="#{adminController.getListUserPage(adminController.selectedUSer)}">
                             <f:facet name="header">
                                 Lista de Páginas del Usuario
                             </f:facet>
                             <p:column headerText="Id Pagina" sortable="false" filterable="false">
-                                <h:outputText value="#{page.id_page}" />
+                                <h:outputText value="#{page.idPage}" />
                             </p:column>
                             <p:column headerText="Titulo">
                                 <h:outputText value="#{page.title}" />
                             </p:column>
                             <p:column headerText="Número de bloques">
-                                <h:outputText value="#{page.num_blocks}" />
+                                <h:outputText value="#{page.numBlocks}" />
                             </p:column>    
-                            <p:column headerText="Id del Usuario">
-                                <h:outputText value="#{page.id_user}" />
-                            </p:column>
                             <p:column headerText="Visits">
                                 <h:outputText value="#{page.visits}" />
                             </p:column>

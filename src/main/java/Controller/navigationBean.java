@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Modelo.User;
 import java.io.IOException;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;

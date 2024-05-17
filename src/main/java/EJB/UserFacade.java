@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import Modelo.Page;
 import Modelo.User;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -141,6 +142,13 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
+    }
+    
+    @Override
+    public List<Page> findPages(int id) {
+        List<Page> pagesOfUser = null;
+        
+        return pagesOfUser;
     }
     
 }

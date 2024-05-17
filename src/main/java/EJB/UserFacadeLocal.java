@@ -5,6 +5,7 @@
  */
 package EJB;
 
+import Modelo.Page;
 import Modelo.User;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,6 +24,8 @@ public interface UserFacadeLocal {
     void remove(User user);
 
     User find(Object id);
+    
+    List<Page> findPages(int id);
 
     List<User> findAll();
 

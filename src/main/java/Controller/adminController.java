@@ -45,7 +45,8 @@ public class adminController implements Serializable{
         return listUser;
     }
     
-    public List<Page> getListUserPage(){
+    public List<Page> getListUserPage(User user){
+        this.listPageUser = userEJB.findPages(user.getId_user());
         return listPageUser;
     }
     
