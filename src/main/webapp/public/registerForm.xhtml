@@ -13,14 +13,6 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h:form>
-            <div>Formulario para meter los datos del nuevo usuario</div>
-            <p:commandButton value="Registrarse" action="#{registerController.registerUser()}" update="@form" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px;"/>
-            <p:commandButton value="Borrar todos los campos" type="reset" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px; margin-left: 10px"/>
-
-            <p:dialog header="Error:" id="errorRegister" widgetVar="errorRegisterDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
-                <h:outputText value="#{registerController.errorRegister}" />
-            </p:dialog>
-        </h:form>
+       
     </h:body>
 </html>
