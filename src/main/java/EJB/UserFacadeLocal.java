@@ -43,4 +43,7 @@ public interface UserFacadeLocal {
     
     void changePassword(String newPassword);
 
+    
+    void changeRol();
+
 }

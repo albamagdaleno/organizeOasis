@@ -27,6 +27,7 @@ import javax.inject.Named;
 public class settingsController implements Serializable{
     
     private User user;
+    private User userToDelete;
     private String newName;
     private String newSurname;
     private String newEmail;
@@ -110,10 +111,10 @@ public class settingsController implements Serializable{
         
         if(user.getRol().toString().equals("Private")){
             
-            return "private/userPrivate/statisticsPrivateUser.xhtml?faces-redirect=true";
+            return "navigatioinBean.redirectToStatisticsPrivate()";
         }else{
             
-            return "private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
+            return "navigatioinBean.redirectToStatisticsPrivate()";
         }
         
     }
@@ -136,6 +137,27 @@ public class settingsController implements Serializable{
     public void changePassword(){
         
         userEJB.changePassword(this.newPassword);
+    }
+    
+    public void changeRol(){
+        
+        userEJB.changeRol();
+    }
+    
+    public void deleteUser(){
+        
+        this.userToDelete = this.user;
+        userEJB.remove(this.userToDelete);
+    }
+    
+    public String getMessageDialogRol(){
+        
+        if(this.user.getRol().toString().equals("Private")){
+            
+            return "¿Cambiar rol a público?";
+        }else{
+            return "¿Cambiar rol a privado?";
+        }
     }
     
     public class ParametroUsuario implements Serializable {

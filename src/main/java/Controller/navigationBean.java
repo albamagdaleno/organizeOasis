@@ -30,10 +30,35 @@ public class navigationBean {
     }
     
     public String redirectToSettings() {
-        return "/private/userPublic/settingsViewUser.xhtml?faces-redirect=true";
+        return "/private/settingsViewUser.xhtml?faces-redirect=true";
     }
     
     public String redirectToMainViewUser() {
-        return "/private/userPublic/mainViewUser.xhtml?faces-redirect=true";
+        return "/private/mainViewUser.xhtml?faces-redirect=true";
+    }
+    
+    public String redirectToStatistics() {
+        
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+        if(user.getRol().toString().equals("Private")){
+            
+            return "/private/userPrivate/statisticsPrivateUser.xhtml?faces-redirect=true";
+        }else{
+            
+            return "/private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
+        }
+        
+        
+        
+    }
+    
+    public String redirectToStatisticsPrivate() {
+        return "/private/userPrivate/statisticsPrivateUser.xhtml?faces-redirect=true";
+        
+    }
+    
+    public String redirectToStatisticsPublic() {
+        return "/private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
+        
     }
 }
