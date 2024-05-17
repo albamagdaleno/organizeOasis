@@ -111,10 +111,10 @@ public class settingsController implements Serializable{
         
         if(user.getRol().toString().equals("Private")){
             
-            return "private/userPrivate/statisticsPrivateUser.xhtml?faces-redirect=true";
+            return "navigatioinBean.redirectToStatisticsPrivate()";
         }else{
             
-            return "private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
+            return "navigatioinBean.redirectToStatisticsPrivate()";
         }
         
     }
