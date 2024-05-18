@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
  id_user INT NOT NULL AUTO_INCREMENT,
  name VARCHAR(16),
  surname VARCHAR(24),
+ username VARCHAR(16);
  email VARCHAR(32),
  user_password VARCHAR(32),
  rol ENUM('Private','Influencer','Administrator'),
