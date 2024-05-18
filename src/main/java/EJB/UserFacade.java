@@ -214,4 +214,12 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
         return listVisits;
     }
+
+    @Override
+    public List<String> getUsersStartingWith(String searchTerm) {
+        Query q = em.createQuery("SELECT u.username FROM User u WHERE u.username LIKE :query");
+        q.setParameter("query", searchTerm + "%");
+        q.setMaxResults(3);
+        return q.getResultList();
+    }
 }
