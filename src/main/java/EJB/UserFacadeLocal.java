@@ -62,4 +62,11 @@ public interface UserFacadeLocal {
 
     void changeRol();
 
+    /**
+     * Busca en la tabla users todos los username que comiencen por el parametro searchTerm
+     * @param searchTerm
+     * @return Devuelve un listado que coincida con el campo searchTerm
+     */
+    List<String> getUsersStartingWith(String searchTerm);
+
 }
