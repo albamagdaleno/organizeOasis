@@ -14,14 +14,15 @@
     <body>
 
         <ui:composition template="./../WEB-INF/template/mainTemplate.xhtml">
+           
 
             <ui:define name="top">
-                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 100%;">
+                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 0%;">
                     <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px">
                     
                         <h:form> 
                             
-                            <p:commandButton id="boton-ajustes" value="Volver a mi perfil" styleClass="ui-button-raised ui-button-secondary" action="mainViewUser.xhtml"/>
+                            <p:commandButton id="boton-ajustes" value="Volver a mi perfil" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.redirectToMainViewUser()}"/>
                          
                         </h:form> 
                     </div>
@@ -31,8 +32,8 @@
             <ui:define name="left">
                 <div style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
                     <h:form style="margin: 0;">
-                        <p:commandButton id="boton-mis-datos" value="Mis datos" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="settingsUserView.xhtml" style="width: 100%; height: 75px; margin-bottom: 5px"/>
-                        <p:commandButton id="boton-mis-estadisticas" value="Mis estadisticas" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="misEstadisticas.xhtml" style="width: 100%; height: 75px; margin-bottom: 5px"/>
+                        <p:commandButton id="boton-mis-datos" value="Mis datos" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.redirectToSettings()}" style="width: 100%; height: 75px; margin-bottom: 5px"/>
+                        <p:commandButton id="boton-mis-estadisticas" value="Mis estadisticas" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.redirectToStatistics()}" style="width: 100%; height: 75px; margin-bottom: 5px"/>
                         <!--<p:commandButton id="boton-mis-estadisticas" value="Mis estadisticas" styleClass="boton-left ui-button-raised ui-button-secondary" action="misEstadisticas.xhtml" style="width: 100%; height: 50px;"/>-->
                     </h:form>
                 </div>
@@ -49,19 +50,19 @@
                                 <h:outputText value="#{parameter.value}" />
                             </p:column>
                             <p:column style="width:100px; margin-right: 15px;">  
-                                <p:commandButton icon="pi pi-pencil" styleClass="ui-button-raised ui-button-flat ui-button-plain" onclick="PF('change#{parameter.name}Dialog').show()" update="@this" action="#{usuarioController.editarParametro(parametro)}"/>
+                                <p:commandButton icon="pi pi-pencil" styleClass="ui-button-raised ui-button-flat ui-button-plain" onclick="PF('change#{parameter.name}Dialog').show()" update="@this"/>
                             </p:column>
                         </p:dataTable>
                     </div>
                         
                     <div class="div-contrasenia" style="padding:10px">
                         <p:commandButton id="boton-cambio-contrasenia" value="Cambiar contraseña" styleClass="ui-button-raised ui-button-secondary" onclick="PF('changePasswordDialog').show()" style="padding:10px; margin-right: 10px"/>
-                        <p:commandButton id="boton-desactivar-cuenta" value="Eliminar cuenta" styleClass="ui-button-raised ui-button-secondary" style="padding:10px"/>
+                        <p:commandButton id="boton-desactivar-cuenta" value="Eliminar cuenta" styleClass="ui-button-raised ui-button-secondary" onclick="PF('deleteUserDialog').show()" style="padding:10px"/>
                     </div>
                                       
                 </h:form>
                 
-                <h:form id="dialogs">
+                <h:form>
                     <p:confirmDialog widgetVar="changeNombreDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -80,7 +81,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changeName()}" 
-                                oncomplete="PF('changeNombreDialog').hide();" 
+                                oncomplete="PF('changeNombreDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -90,7 +91,11 @@
                         </div>
                         
                        </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
                     
+                
                     <p:confirmDialog widgetVar="changeApellidosDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -107,7 +112,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changeSurname()}" 
-                                oncomplete="PF('changeApellidosDialog').hide();" 
+                                oncomplete="PF('changeApellidosDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -117,7 +122,9 @@
                         </div>
                         
                        </p:confirmDialog>
-                    
+                    </h:form>
+                
+                    <h:form>
                     <p:confirmDialog widgetVar="changeEmailDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -134,7 +141,7 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changeEmail()}" 
-                                oncomplete="PF('changeEmailDialog').hide();" 
+                                oncomplete="PF('changeEmailDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
@@ -144,7 +151,9 @@
                         </div>
                         
                        </p:confirmDialog>
-                    
+                    </h:form>
+                
+                    <h:form>
                     <p:confirmDialog widgetVar="changePasswordDialog"
                                      showEffect="fade" 
                                      width="500" 
@@ -161,13 +170,65 @@
                                 icon="pi pi-check" 
                                 style="background-color: red; border: none; "
                                 action="#{settingsController.changePassword()}" 
-                                oncomplete="PF('changePasswordDialog').hide();" 
+                                oncomplete="PF('changePasswordDialog').hide(); location.reload(true);"
                                 update="@form"/>
                             <p:commandButton value="Cancelar" 
                                 type="button" 
                                 styleClass="ui-button-secondary" 
                                 icon="pi pi-times" 
                                 onclick="PF('changePasswordDialog').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                    </h:form>
+                
+                    <h:form>
+                    <p:confirmDialog widgetVar="deleteUserDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="¿Eliminar la cuenta definitivamente?"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Eliminar" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{settingsController.deleteUser()}" 
+                                oncomplete="window.location.href = '../../faces/index.xhtml'"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('deleteUserDialog').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
+                    <p:confirmDialog widgetVar="changeRolDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="#{settingsController.getMessageDialogRol()}"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Cambiar" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{settingsController.changeRol()}" 
+                                oncomplete="PF('changeRolDialog').hide(); location.reload(true);"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('changeRolDialog').hide();" />
                         </div>
                         
                        </p:confirmDialog>

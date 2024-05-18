@@ -1,11 +1,14 @@
 
 #top {
     position: relative;
-    background-color: #BFD9D6;
+    background: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), url("#{resource['images/bannerCroped.png']}");
+    background-size: cover; /* Ajusta la imagen para que cubra todo el contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
     color: white;
-    /*padding:  5px;*/
-    /*margin: 0px 0px 10px 0px;*/
     height: 150px;
+    /*padding: 5px;*/
+    /*margin: 0px 0px 10px 0px;*/
     
 }
 
@@ -17,15 +20,28 @@
 }
 
 #left {
-    position: fixed;
-    top: 160px;
+    position: relative;
+    min-height: 100vh;
+   box-sizing: border-box;
+   padding-bottom: 50px; 
+    top: 0px;
     bottom: 0;
-    /*left: 10px;*/
     float: left;
-    /*background-color: #7D8C8B;*/
     background-color: #dddddd;
-    /*padding: 5px;*/
     width: 260px;
+}
+
+
+#content{
+   position: relative;
+   bottom: 0; 
+   top: 0px;
+   float: top;
+   width: 86.3%;
+   min-height: 100vh;
+   box-sizing: border-box;
+   padding-bottom: 50px; 
+   height: 100%;
 }
 
 #right {
@@ -39,6 +55,7 @@
     position: relative;
     background-color: #f4f4f4;
     /*padding: 5px;*/
+    bottom: 0;
 }
 
 .left_content {
@@ -64,5 +81,4 @@
   font-weight : bold;
   text-decoration : underline;
 }
-
 

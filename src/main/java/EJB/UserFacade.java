@@ -8,6 +8,7 @@ package EJB;
 import Modelo.User;
 import org.eclipse.persistence.exceptions.QueryException;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
@@ -75,6 +76,130 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         return inserted;
 
     }
-    
-    
+
+    @Override
+    public void changeName(String newName){
+
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
+
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+
+            if (userToUpdate != null) {
+
+                userToUpdate.setName(newName);
+
+                em.merge(userToUpdate);
+
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+    }
+
+    @Override
+    public void changeSurname(String newSurname){
+
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+
+            if (userToUpdate != null) {
+
+                userToUpdate.setSurname(newSurname);
+
+                em.merge(userToUpdate);
+
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+
+    }
+
+    @Override
+    public void changeEmail(String newEmail){
+
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+
+            if (userToUpdate != null) {
+
+                userToUpdate.setEmail(newEmail);
+
+                em.merge(userToUpdate);
+
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+
+
+    }
+
+    @Override
+    public void changePassword(String newPassword){
+
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+
+            if (userToUpdate != null) {
+
+                userToUpdate.setPassword(newPassword);
+
+                em.merge(userToUpdate);
+
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+    }
+
+    @Override
+    public void changeRol(){
+
+        User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+        System.out.println(globalUser.getRol().toString());
+        if (globalUser != null) {
+
+            User userToUpdate = em.find(User.class, globalUser.getId_user());
+
+            if (userToUpdate != null) {
+
+                if(globalUser.getRol().toString().equals("Private")){
+                    userToUpdate.setRol(User.Rol.Influencer);
+                }
+
+                if(globalUser.getRol().toString().equals("Influencer")){
+                    userToUpdate.setRol(User.Rol.Private);
+                }
+
+
+                em.merge(userToUpdate);
+
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+            }
+        }
+    }
+
+    public List<Integer> getVisitsUsers(){
+        List<Integer> listVisits = new ArrayList<>();
+
+        List<User> usersList = findAll();
+
+        for (User user : usersList) {
+        // Verificar si el rol del usuario es "Influcnecer"
+        if ("Influencer".equals(user.getRol().toString())) {
+            // Agregar las visitas del usuario a la lista de visitas
+            listVisits.add(user.getVisits());
+        }
+    }
+        return listVisits;
+    }
 }

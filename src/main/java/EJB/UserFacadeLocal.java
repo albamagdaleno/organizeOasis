@@ -40,4 +40,17 @@ public interface UserFacadeLocal {
      * @return
      */
     boolean registerUser(User user);
+
+    void changeName(String newName);
+
+    void changeSurname(String newSurname);
+
+    void changeEmail(String newEmail);
+
+    void changePassword(String newPassword);
+
+    List<Integer> getVisitsUsers();
+
+    void changeRol();
+
 }

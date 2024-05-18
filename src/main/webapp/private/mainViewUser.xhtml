@@ -17,12 +17,12 @@
 
             <ui:define name="top">              
                     
-                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 100%;">
-                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px">
+                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 0%;">
+                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px;">
                     
                         <h:form> 
                             
-                            <p:commandButton id="boton-ajustes" value="Ajustes" styleClass="ui-button-raised ui-button-secondary" action="settingsViewUser.xhtml"/>
+                            <p:commandButton id="boton-ajustes" value="Ajustes" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.redirectToSettings()}"/>
                          
                         </h:form> 
                     </div>
