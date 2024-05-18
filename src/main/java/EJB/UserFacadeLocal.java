@@ -25,7 +25,7 @@ public interface UserFacadeLocal {
 
     User find(Object id);
     
-    List<Page> findPages(int id);
+    List<Page> findPages(Integer id);
 
     List<User> findAll();
 

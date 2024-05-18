@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.faces.context.ExternalContext;
@@ -23,11 +24,11 @@ import javax.faces.context.FacesContext;
  * @author albamagdaleno
  */
 @Named
-@ViewScoped
+@SessionScoped
 
 public class adminController implements Serializable{ 
     
-    private User selUser;
+    private User selectedUser;
     private List<User> listUser;
     private List<Page> listPageUser;
     
@@ -51,20 +52,19 @@ public class adminController implements Serializable{
     }
     
     public void setSelectedUser(User user){
-        this.selUser = user;
+        this.selectedUser = user;
     }
     
     public User getSelectedUSer(){
-        return selUser;
+        return selectedUser;
     }
     
     public void deleteUser(){
-        if(selUser!=null){
-            userEJB.remove(selUser);
+        if(selectedUser!=null){
+            userEJB.remove(selectedUser);
             listUser = userEJB.findAll();  
-            selUser = null;
+            selectedUser = null;
         }
-        
         
     }
 }

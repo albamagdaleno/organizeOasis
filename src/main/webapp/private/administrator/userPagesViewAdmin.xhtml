@@ -27,7 +27,12 @@
                     <div class="card">
                         
                         Tabla de paginas de usuario
+                        
+                        <h:outputText value="Nombre de usuario: #{adminController.selectedUSer == null ? 'Ninguno' : adminController.selectedUSer.id_user}" />
+
                         <ui:remove>
+
+                        <h:outputText value="Id de usuario: #{adminController.selectedUSer.name}" />
                         <p:dataTable var="page" value="#{adminController.getListUserPage(adminController.selectedUSer)}">
                             <f:facet name="header">
                                 Lista de Páginas del Usuario

@@ -101,6 +101,12 @@ public class User implements Serializable{
     }
 
     @Override
+    public String toString() {
+        return "User{" + "id_user=" + id_user + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password=" + password + ", rol=" + rol + ", visits=" + visits + '}';
+    }
+
+    
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 29 * hash + this.id_user;

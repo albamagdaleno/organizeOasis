@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -21,7 +22,12 @@ import javax.inject.Named;
 @RequestScoped
 public class navigationBean {
     
-    public String redirectToUserPages()  {
+    @Inject
+    private adminController adminController; 
+    
+    public String redirectToUserPages(User user)  {
+        
+        adminController.setSelectedUser(user);
         return "/private/administrator/userPagesViewAdmin.xhtml?faces-redirect=true";
     }
     
@@ -47,8 +53,6 @@ public class navigationBean {
             
             return "/private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
         }
-        
-        
         
     }
     
