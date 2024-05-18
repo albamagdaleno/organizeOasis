@@ -3,6 +3,7 @@ package Controller;
 import Modelo.User;
 
 import EJB.UserFacadeLocal;
+import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -50,19 +51,29 @@ public class RegisterController implements Serializable {
         this.userFacadeLocal = userFacadeLocal;
     }
 
-    public String registerUser(){
+    public String registerUser() {
         User userAlreadyExists = userFacadeLocal.verifyUser(user);
 
-        if(userAlreadyExists == null){
-            if(!userFacadeLocal.registerUser(user)){
-                errorRegister = "No se ha podido registrar el usuario, intendelo de nuevo";
-            }else{
-                return "index.xhtml?faces-redirect=true";
-            }
-        }else{
+        if (userFacadeLocal.existsUsername(user.getUsername())) {
             errorRegister = "El usuario ya existe";
-
+        } else {
+            if (userAlreadyExists == null) {
+                if (!userFacadeLocal.registerUser(user)) {
+                    errorRegister = "No se ha podido registrar el usuario, inténtelo de nuevo";
+                } else {
+                    return "/index.xhtml?faces-redirect=true";
+                }
+            } else {
+                errorRegister = "El correo ya existe";
+            }
         }
-        return errorRegister;
+        
+        // Si se produce algún error, mostramos el diálogo
+        PrimeFaces.current().executeScript("PF('errorDialog').show();");
+
+        // Si se produce algún error, no se redirige, por lo que permanecemos en la misma página
+        return null;
     }
+
+
 }

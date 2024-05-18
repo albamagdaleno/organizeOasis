@@ -78,6 +78,18 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
 
     @Override
+    public boolean existsUsername(String username){
+        Query query = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.username = :username");
+        query.setParameter("username", username);
+        Long count = (Long) query.getSingleResult();
+        if(count > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public void changeName(String newName){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");

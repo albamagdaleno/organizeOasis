@@ -1,59 +1,77 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>OrganizeOasis</title>
+    <h:outputStylesheet  library ="css" name="registerForm.css"/>
 </h:head>
-<h:body style="display: flex; justify-content: center; align-items: center;">
-    <h:form style="justify-content: center; align-items: center; width: 600px;">
-        <h2>¡Registrate en OrganizeOasis!</h2>
+<h:body style="background-image: url('#{resource['images/oasis.png']}'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;">
+    <h:form>
+        <h2>¡Regístrate en OrganizeOasis!</h2>
         <p:messages id="msgs"/>
-        <div style="margin-bottom: 10px; justify-content: center;">
-            <h:outputLabel for="name" value="Nombre:" styleClass="input-label" style="width: 100px; display: inline-block;"/>
-            <p:inputText id="name" value="#{registerController.user.name}" styleClass="input-text" required="true" requiredMessage="El nombre es obligatorio"/>
+        <div class="form-group">
+            <h:outputLabel for="name" value="Nombre:" styleClass="input-label"/>
+            <p:inputText id="name" value="#{registerController.user.name}" styleClass="input-text" required="true" requiredMessage="El nombre es obligatorio">
+                <p:ajax event="blur" update="nameMessage"/>
+            </p:inputText>
+            <p:message id="nameMessage" for="name" display="text"/>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <h:outputLabel for="surname" value="Apellidos:" styleClass="input-label" style="width: 100px; display: inline-block;"/>
-            <p:inputText id="surname" value="#{registerController.user.surname}" styleClass="input-text" required="true" requiredMessage="Los apellidos son obligatorios"/>
+        <div class="form-group">
+            <h:outputLabel for="surname" value="Apellidos:" styleClass="input-label"/>
+            <p:inputText id="surname" value="#{registerController.user.surname}" styleClass="input-text" required="true" requiredMessage="Los apellidos son obligatorios">
+                <p:ajax event="blur" update="surnameMessage"/>
+            </p:inputText>
+            <p:message id="surnameMessage" for="surname" display="text"/>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <h:outputLabel for="rol" value="Rol:" styleClass="input-label" style="width: 100px; display: inline-block;"/>
+        <div class="form-group">
+            <h:outputLabel for="username" value="Nombre de usuario:" styleClass="input-label"/>
+            <p:inputText id="username" value="#{registerController.user.username}" styleClass="input-text" required="true" requiredMessage="El nombre de usuario es obligatorio">
+                <p:ajax event="blur" update="usernameMessage"/>
+            </p:inputText>
+            <p:message id="usernameMessage" for="username" display="text"/>
+        </div>
+
+        <div class="form-group">
+            <h:outputLabel for="rol" value="Rol:" styleClass="input-label"/>
             <p:selectOneMenu id="rol" value="#{registerController.user.rol}" styleClass="input-text" required="true" requiredMessage="El rol es obligatorio">
                 <f:selectItem itemLabel="Seleccione un rol" itemValue=""/>
                 <f:selectItem itemLabel="Privado" itemValue="Private"/>
                 <f:selectItem itemLabel="Influencer" itemValue="Influencer"/>
+                <p:ajax event="blur" update="rolMessage"/>
             </p:selectOneMenu>
+            <p:message id="rolMessage" for="rol" display="text"/>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <h:outputLabel for="email" value="Email:" styleClass="input-label" style="width: 100px; display: inline-block;"/>
+        <div class="form-group">
+            <h:outputLabel for="email" value="Email:" styleClass="input-label"/>
             <p:inputText id="email" value="#{registerController.user.email}" styleClass="input-text" required="true" requiredMessage="El correo electrónico es obligatorio">
                 <f:validateRegex pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$"/>
                 <p:ajax event="blur" update="emailMessage"/>
             </p:inputText>
-            <p:message id="emailMessage" for="email" />
+            <p:message id="emailMessage" for="email" display="text"/>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <h:outputLabel for="password" value="Contraseña:" styleClass="input-label" style="width: 100px; display: inline-block;"/>
+        <div class="form-group">
+            <h:outputLabel for="password" value="Contraseña:" styleClass="input-label"/>
             <p:password id="password" value="#{registerController.user.password}" styleClass="input-text" required="true" requiredMessage="La contraseña es obligatoria, debe tener al menos 8 caracteres">
                 <f:validateLength minimum="8" />
-                <p:ajax event="blur" update="passwMessage"/>
+                <p:ajax event="blur" update="passwordMessage"/>
             </p:password>
-            <p:message id="passwMessage" for="password" />
+            <p:message id="passwordMessage" for="password" display="text"/>
         </div>
 
-        <p:commandButton value="Registrarse" action="#{registerController.registerUser()}" update="@form" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px;"/>
-        <p:commandButton value="Borrar todos los campos" type="reset" styleClass="ui-button-raised ui-button-flat ui-button-plain" style="margin-top: 10px; margin-left: 10px"/>
+        <p:commandButton value="Registrarse" action="#{registerController.registerUser()}" update="@form" styleClass="ui-button-raised ui-button-flat ui-button-plain"/>
+        <p:commandButton value="Borrar todos los campos" type="reset" styleClass="ui-button-raised ui-button-flat ui-button-plain"/>
 
-        <p:dialog header="Error:" id="errorRegister" widgetVar="errorRegisterDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
+        <p:dialog header="Error" id="errorDialog" widgetVar="errorDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:outputText value="#{registerController.errorRegister}" />
         </p:dialog>
+
     </h:form>
 </h:body>
 </html>
