@@ -59,11 +59,29 @@ and open the template in the editor.
             }
         </style>
     </h:head>
-    <h:body>
-        <div class="message">
-            <button class="close-btn" onclick="window.location.href = '../index.xhtml';">x</button>
-            <p>Email o contraseña incorrectos. Vuelve a intentarlo.</p>
-            <p>Si no tienes usuario todavía, <a href="registerForm.xhtml">regístrate aquí</a>.</p>
+    <h:body>       
+        <div class="message" style="display: flex; flex-direction: column; align-items: center;">
+            
+            <div style="align-self: flex-end; margin-bottom: 1px;">
+                <p:commandButton class="close-btn" value="x" styleClass="ui-button-flat ui-button-plain" onclick="window.location.href = '../index.xhtml';"/>
+            </div>
+            
+            <div class="bottom-message" style="display: flex; align-items: center; margin-bottom: 10px" >
+                <div style="margin-right: 20px;">
+                    <h:graphicImage library="images" name="sadFaceStatistics.png" width="110" height="100" alt="Sad Face"/>
+                </div>
+                <div style="text-align: center;">
+                    <p:outputLabel value="Email o contraseña incorrectos. Vuelve a intentarlo." style="font-size: 18px; margin-bottom: 20px;"/><br></br>
+
+                    <h:panelGroup layout="block" style="margin-top:5px">
+                        <h:outputLabel value="Si no tienes usuario todavía, "/>
+                        <h:link outcome="registerForm.xhtml" value="Crea tu cuenta" styleClass="input-label"/>
+                    </h:panelGroup>
+                </div>
+            </div>
+                       
         </div>
+
+
     </h:body>
 </html>

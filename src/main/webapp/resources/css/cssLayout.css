@@ -20,15 +20,28 @@
 }
 
 #left {
-    position: fixed;
-    top: 160px;
+    position: relative;
+    min-height: 100vh;
+   box-sizing: border-box;
+   padding-bottom: 50px; 
+    top: 0px;
     bottom: 0;
-    /*left: 10px;*/
     float: left;
-    /*background-color: #7D8C8B;*/
     background-color: #dddddd;
-    /*padding: 5px;*/
     width: 260px;
+}
+
+
+#content{
+   position: relative;
+   bottom: 0; 
+   top: 0px;
+   float: top;
+   width: 86.3%;
+   min-height: 100vh;
+   box-sizing: border-box;
+   padding-bottom: 50px; 
+   height: 100%;
 }
 
 #right {
@@ -42,6 +55,7 @@
     position: relative;
     background-color: #f4f4f4;
     /*padding: 5px;*/
+    bottom: 0;
 }
 
 .left_content {
@@ -67,6 +81,4 @@
   font-weight : bold;
   text-decoration : underline;
 }
-
-
 

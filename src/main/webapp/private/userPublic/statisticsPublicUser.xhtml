@@ -10,7 +10,7 @@
         <ui:composition template="./../../WEB-INF/template/mainTemplate.xhtml">
 
             <ui:define name="top">
-                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 100%;">
+                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 0%;">
                     <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px">
                     
                         <h:form> 
@@ -31,10 +31,23 @@
                     </h:form>
                 </div>
             </ui:define>
-
             <ui:define name="content">
-                Estadisticas usuario publico
+                <div style="display: flex; justify-content: center; align-items: center; height: 80vh;">
+                    <div style="text-align: center;">
+                        <div style="width: 400px; height: 200px; border: 5px solid #dddddd; border-radius: 5px; display: flex; flex-direction: column; align-items: center; margin-right: 10px">
+                            <p:outputLabel value="Número de visitas a tu perfil:" style="font-size: 18px; margin-top: 20px;"/>
+                            <p:outputLabel value="#{statisticsController.getVisitsUser()}" style="font-size: 18px; margin-top: 20px;"/>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 400px; height: 200px; border: 5px solid #dddddd; border-radius: 5px; display: flex; flex-direction: column; align-items: center;">
+                            <p:outputLabel value="Número de visitas a tu perfil:" style="font-size: 18px; margin-top: 20px;"/>
+                            <p:outputLabel value="#{statisticsController.getVisitsUser()}" style="font-size: 18px; margin-top: 20px;"/>
+                        </div>
+                    </div>
+                </div>
             </ui:define>
+
 
         </ui:composition>
 
