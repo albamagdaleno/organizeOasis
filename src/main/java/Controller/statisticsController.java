@@ -67,14 +67,9 @@ public class statisticsController implements Serializable{
         // Posición del usuario actual dentro de la lista ordenada
         int index = Collections.binarySearch(visitsUsers, visitsGlobalUser);
 
-        // Si el número de visitas del usuario no está en la lista, calcular su posición en base a dónde debería estar
-        if (index < 0) {
-            index = -(index + 1);
-        }
-
         // Calcular el percentil y redondearlo al entero más cercano
         double percentile = (double) index / visitsUsers.size() * 100;
-        int roundedPercentile = (int) Math.round(percentile);
+        int roundedPercentile = 100 -(int) Math.round(percentile);
 
         // Devolver el percentil redondeado
         return roundedPercentile + "%";
