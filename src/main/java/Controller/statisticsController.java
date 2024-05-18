@@ -8,6 +8,9 @@ package Controller;
 import EJB.UserFacadeLocal;
 import Modelo.User;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -52,5 +55,28 @@ public class statisticsController implements Serializable{
     public int getVisitsUser(){
         
         return this.user.getVisits();
+    }
+    
+    public String getPercentile() {
+        List<Integer> visitsUsers = userEJB.getVisitsUsers();
+
+        int visitsGlobalUser = this.user.getVisits();
+
+        Collections.sort(visitsUsers);
+
+        // Posición del usuario actual dentro de la lista ordenada
+        int index = Collections.binarySearch(visitsUsers, visitsGlobalUser);
+
+        // Si el número de visitas del usuario no está en la lista, calcular su posición en base a dónde debería estar
+        if (index < 0) {
+            index = -(index + 1);
+        }
+
+        // Calcular el percentil y redondearlo al entero más cercano
+        double percentile = (double) index / visitsUsers.size() * 100;
+        int roundedPercentile = (int) Math.round(percentile);
+
+        // Devolver el percentil redondeado
+        return roundedPercentile + "%";
     }
 }

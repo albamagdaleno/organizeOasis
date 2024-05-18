@@ -40,6 +40,7 @@ public interface UserFacadeLocal {
     
     void changePassword(String newPassword);
 
+    List<Integer> getVisitsUsers();
     
     void changeRol();
 

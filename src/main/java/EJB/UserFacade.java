@@ -6,6 +6,7 @@
 package EJB;
 
 import Modelo.User;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
@@ -170,4 +171,18 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
     
+    public List<Integer> getVisitsUsers(){
+        List<Integer> listVisits = new ArrayList<>();
+        
+        List<User> usersList = findAll();
+        
+        for (User user : usersList) {
+        // Verificar si el rol del usuario es "Influcnecer"
+        if ("Influencer".equals(user.getRol().toString())) {
+            // Agregar las visitas del usuario a la lista de visitas
+            listVisits.add(user.getVisits());
+        }
+    }
+        return listVisits;
+    }
 }
