@@ -48,7 +48,7 @@ public class adminController implements Serializable{
     }
     
     public List<Page> getListUserPage(User user){
-        System.out.println("Admin controller"+user.getId_user());
+        
         this.listPageUser = userEJB.findPages(user.getId_user());
         return listPageUser;
     }
@@ -71,22 +71,17 @@ public class adminController implements Serializable{
     
     public void deleteUser(){
         if(selectedUser!=null){
-            if(getListUserPage(selectedUser)==null){
-                userEJB.remove(selectedUser);
-                listUser = userEJB.findAll();  
-                selectedUser = null;
-            }else{
-                System.out.println("El usuario tiene páginas, hay que eliminarlas primero");
-                //Hacer ese aviso o eliminar todas las paginas del usuario y despues al usuario
-            }
-            
+            //Borrar todas las paginas del usuario --METHOD
+            userEJB.remove(selectedUser);
+            listUser = userEJB.findAll();  
+            selectedUser = null;
         } 
     }
     
     public void deletePage(User user){
         if(selectedPage!=null){
             pageEJB.remove(selectedPage);
-            //listPageUser = userEJB.findPages(user.getId_user());
+            listPageUser = userEJB.findPages(user.getId_user());
             selectedPage = null;
         }
     }
