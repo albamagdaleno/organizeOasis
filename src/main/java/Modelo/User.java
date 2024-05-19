@@ -26,6 +26,9 @@ public class User implements Serializable{
     
     @Column(name="surname")
     private String surname;
+
+    @Column(name="username")
+    private String username;
     
     @Column(name="email")
     private String email;
@@ -154,6 +157,12 @@ public class User implements Serializable{
         }
         return true;
     }
-    
-    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

@@ -10,7 +10,7 @@
         <ui:composition template="./../../WEB-INF/template/mainTemplate.xhtml">
 
             <ui:define name="top">
-                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 100%;">
+                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 0%;">
                     <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px">
                     
                         <h:form> 
@@ -33,7 +33,10 @@
             </ui:define>
 
             <ui:define name="content">
-                Estadisticas usuario privado
+                <div style="text-align: center; padding-top: 100px; display: flex; flex-direction: column; align-items: center;">
+                    <h:graphicImage library="images" name="sadFaceStatistics.png" width="160" height="150" alt="Sad Face"/>
+                    <p:outputLabel value="No puedes acceder a estadísticas ya que eres un usuario privado." style="font-size: 18px; margin-top: 20px;"/>
+                </div>
             </ui:define>
 
         </ui:composition>

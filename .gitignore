@@ -1,1 +1,17 @@
+# Ignorar archivos compilados
+*.class
+
+# Ignorar archivos de configuración específicos de tu IDE
+.idea/
+.vscode/
+
+# Ignorar archivos de compilación y directorios
 /target/
+/bin/
+/build/
+/out/
+
+.DS_Store
+src/.DS_Store
+src/main/.DS_Store
+src/main/webapp/.DS_Store

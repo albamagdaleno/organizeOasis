@@ -6,28 +6,30 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     
     <head>
-        <style>
-
-        </style>
     </head>
     
     <body>
 
         <ui:composition template="./../WEB-INF/template/mainTemplate.xhtml">
 
-            <ui:define name="top">              
-                    
-                <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 100%;">
-                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px">
-                    
-                        <h:form> 
-                            
+            <ui:define name="top">
+                <div class="top-div" style="display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr auto; height: 0%;">
+                    <div class="top-search" style="text-align: left; align-self: start; margin-bottom: 5px; margin-left: 5px;">
+                        <h:form>
+                            <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
+                            <p:autoComplete id="userAutoComplete" value="#{searchUsernameQuery.searchTerm}"
+                                            completeMethod="#{searchUsernameQuery.completeUser}"
+                                            dropdown="true" forceSelection="true"
+                                            placeholder="Buscar usuario" />
+                            <p:commandButton value="Buscar" action="#{searchUsernameQuery.searchUser()}" />
+                        </h:form>
+                    </div>
+                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px;">
+                        <h:form>
                             <p:commandButton id="boton-ajustes" value="Ajustes" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.redirectToSettings()}"/>
-                         
-                        </h:form> 
+                        </h:form>
                     </div>
                 </div>
-                           
             </ui:define>
 
             <ui:define name="left">
