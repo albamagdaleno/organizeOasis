@@ -23,11 +23,11 @@ import javax.inject.Named;
 public class navigationBean {
     
     @Inject
-    private adminController adminController; 
+    private adminController adminPagesController; 
     
     public String redirectToUserPages(User user)  {
         
-        adminController.setSelectedUser(user);
+        adminPagesController.setSelectedUser(user);
         return "/private/administrator/userPagesViewAdmin.xhtml?faces-redirect=true";
     }
     

@@ -146,14 +146,15 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     
     @Override
     public List<Page> findPages(Integer id_user) {
-        
-        //Creamos la consulta para sacar las coincidencias con el id del usuario
-        Query query = em.createQuery("SELECT p FROM Page p WHERE p.id_user = :id_user");
+        System.out.println("Dentro de UserFacade"+id_user);
+        // Creamos la consulta para sacar las coincidencias con el id del usuario
+        Query query = em.createQuery("SELECT p FROM Page p WHERE p.user.id_user = :id_user");
         query.setParameter("id_user", id_user);
-        
-        //Devolvemos la lista resultante
+
+        // Devolvemos la lista resultante
         return query.getResultList();
     }
+
     
     @Override
     public void changeRol(){

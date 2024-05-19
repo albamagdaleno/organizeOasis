@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -21,16 +21,18 @@ import javax.inject.Named;
  * @author albamagdaleno
  */
 @Named
-@ViewScoped
+@SessionScoped
 
-public class adminController implements Serializable{ 
+public class adminPagesController implements Serializable{ 
     
     private User selectedUser;
+    private Page selectedPage;
     private List<User> listUser;
+    private List<Page> listPageUser;
     
     @EJB
     private UserFacadeLocal userEJB;
-
+    private PageFacadeLocal pageEJB;
 
     @PostConstruct
     public void init() {
@@ -43,20 +45,33 @@ public class adminController implements Serializable{
         return listUser;
     }
     
+    public List<Page> getListUserPage(User user){
+        System.out.println("Admin controller"+user.getId_user());
+        this.listPageUser = userEJB.findPages(user.getId_user());
+        return listPageUser;
+    }
+    
     public void setSelectedUser(User user){
         this.selectedUser = user;
+    }
+
+    public void setSelectedPage(Page selectedPage) {
+        this.selectedPage = selectedPage;
     }
     
     public User getSelectedUSer(){
         return selectedUser;
     }
-    
-    public void deleteUser(){
-        if(selectedUser!=null){
-            userEJB.remove(selectedUser);
-            listUser = userEJB.findAll();  
-            selectedUser = null;
-        } 
+
+    public Page getSelectedPAge() {
+        return selectedPage;
     }
     
+    public void deletePage(User user){
+        if(selectedPage!=null){
+            pageEJB.remove(selectedPage);
+            //listPageUser = userEJB.findPages(user.getId_user());
+            selectedPage = null;
+        }
+    }
 }

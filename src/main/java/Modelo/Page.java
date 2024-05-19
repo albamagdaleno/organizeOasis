@@ -19,13 +19,13 @@ import javax.persistence.Table;
 public class Page implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPage;
+    private int id_page;
     
     @Column(name="title")
     private String title; 
     
     @Column(name="num_blocks")
-    private int numBlocks;
+    private int num_blocks;
     
     @Column(name="visits")
     private int visits;
@@ -34,16 +34,16 @@ public class Page implements Serializable{
     @ManyToOne 
     private User user;
 
-    public int getIdPage() {
-        return idPage;
+    public int getId_page() {
+        return id_page;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public int getNumBlocks() {
-        return numBlocks;
+    public int getNum_blocks() {
+        return num_blocks;
     }
 
     public int getVisits() {
@@ -54,16 +54,16 @@ public class Page implements Serializable{
         return user;
     }
 
-    public void setIdPage(int idPage) {
-        this.idPage = idPage;
+    public void setIdPage(int id_page) {
+        this.id_page = id_page;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setNumBlocks(int numBlocks) {
-        this.numBlocks = numBlocks;
+    public void setNumBlocks(int num_blocks) {
+        this.num_blocks = num_blocks;
     }
 
     public void setVisits(int visits) {
@@ -86,10 +86,10 @@ public class Page implements Serializable{
             return false;
         }
         final Page other = (Page) obj;
-        if (this.idPage != other.idPage) {
+        if (this.id_page != other.id_page) {
             return false;
         }
-        if (this.numBlocks != other.numBlocks) {
+        if (this.num_blocks != other.num_blocks) {
             return false;
         }
         if (this.visits != other.visits) {

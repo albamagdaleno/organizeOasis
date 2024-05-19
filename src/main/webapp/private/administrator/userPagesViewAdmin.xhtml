@@ -26,37 +26,53 @@
                 <h:form>
                     <div class="card">
                         
-                        Tabla de paginas de usuario
-                        
-                        <h:outputText value="Nombre de usuario: #{adminController.selectedUSer == null ? 'Ninguno' : adminController.selectedUSer.id_user}" />
-
-                        <ui:remove>
-
-                        <h:outputText value="Id de usuario: #{adminController.selectedUSer.name}" />
                         <p:dataTable var="page" value="#{adminController.getListUserPage(adminController.selectedUSer)}">
                             <f:facet name="header">
                                 Lista de Páginas del Usuario
                             </f:facet>
                             <p:column headerText="Id Pagina" sortable="false" filterable="false">
-                                <h:outputText value="#{page.idPage}" />
+                                <h:outputText value="#{page.id_page}" />
                             </p:column>
                             <p:column headerText="Titulo">
                                 <h:outputText value="#{page.title}" />
                             </p:column>
                             <p:column headerText="Número de bloques">
-                                <h:outputText value="#{page.numBlocks}" />
+                                <h:outputText value="#{page.num_blocks}" />
                             </p:column>    
                             <p:column headerText="Visits">
                                 <h:outputText value="#{page.visits}" />
                             </p:column>
                             <p:column headerText="Actions" exportable="false">
                                 <p:commandButton style="background-color: transparent; border: none; color: red;" 
-                                                 icon="pi pi-trash" onclick="PF('deleteProductDialog').show(); #{adminController.setSelectedPage(page)}" update="@this"/>
+                                                 icon="pi pi-trash" onclick="PF('deletePageDialog').show(); #{adminController.setSelectedPage(page)}" update="@this"/>
                             </p:column>
                         </p:dataTable>
-                        </ui:remove>
+                       
                     </div>
                 </h:form>
+                
+                <h:form id="dialogs">
+                    <p:confirmDialog widgetVar="deletePageDialog"
+                                     showEffect="fade" 
+                                     width="300" 
+                                     message="¿Estás seguro de eliminar la página #{adminController.selectedPAge.title} de #{adminController.selectedUSer}?"
+                                     header="Confirmar" 
+                                     severity="warn">
+                        
+                        <p:commandButton value="Sí" 
+                            icon="pi pi-check" 
+                            style="background-color: red; border: none; "
+                            action="#{adminController.deletePage(adminController.selectedUSer)}" 
+                            oncomplete="PF('deletePageDialog').hide(); location.reload(true)" 
+                            update="@form"/>
+                        <p:commandButton value="No" 
+                            type="button" 
+                            styleClass="ui-button-secondary" 
+                            icon="pi pi-times" 
+                            onclick="PF('deletePageDialog').hide();" />
+                    </p:confirmDialog>
+                </h:form>
+                
             </ui:define>
 
         </ui:composition>
