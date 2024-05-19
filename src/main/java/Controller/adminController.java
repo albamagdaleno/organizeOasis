@@ -13,7 +13,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped; 
+
 import javax.inject.Named;
 
 /**
@@ -21,15 +22,18 @@ import javax.inject.Named;
  * @author albamagdaleno
  */
 @Named
-@ViewScoped
+@SessionScoped
 
 public class adminController implements Serializable{ 
     
     private User selectedUser;
+    private Page selectedPage;
     private List<User> listUser;
+    private List<Page> listPageUser;
     
     @EJB
     private UserFacadeLocal userEJB;
+    private PageFacadeLocal pageEJB;
 
 
     @PostConstruct
@@ -43,20 +47,48 @@ public class adminController implements Serializable{
         return listUser;
     }
     
+    public List<Page> getListUserPage(User user){
+        System.out.println("Admin controller"+user.getId_user());
+        this.listPageUser = userEJB.findPages(user.getId_user());
+        return listPageUser;
+    }
+    
     public void setSelectedUser(User user){
         this.selectedUser = user;
+    }
+    
+    public void setSelectedPage(Page selectedPage) {
+        this.selectedPage = selectedPage;
     }
     
     public User getSelectedUSer(){
         return selectedUser;
     }
     
+    public Page getSelectedPAge() {
+        return selectedPage;
+    }
+    
     public void deleteUser(){
         if(selectedUser!=null){
-            userEJB.remove(selectedUser);
-            listUser = userEJB.findAll();  
-            selectedUser = null;
+            if(getListUserPage(selectedUser)==null){
+                userEJB.remove(selectedUser);
+                listUser = userEJB.findAll();  
+                selectedUser = null;
+            }else{
+                System.out.println("El usuario tiene páginas, hay que eliminarlas primero");
+                //Hacer ese aviso o eliminar todas las paginas del usuario y despues al usuario
+            }
+            
         } 
+    }
+    
+    public void deletePage(User user){
+        if(selectedPage!=null){
+            pageEJB.remove(selectedPage);
+            //listPageUser = userEJB.findPages(user.getId_user());
+            selectedPage = null;
+        }
     }
     
 }
