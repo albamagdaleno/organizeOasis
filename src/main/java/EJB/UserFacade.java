@@ -6,11 +6,14 @@
 package EJB;
 
 import Modelo.User;
+import org.eclipse.persistence.exceptions.QueryException;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -59,123 +62,149 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         
         return result;
     }
-    
+
+    @Override
+    public boolean registerUser(User user){
+        boolean inserted = false;
+        try {
+            user.setVisits(0);
+            em.persist(user);
+            inserted = true;
+        }catch (Exception e){
+            return inserted;
+        }
+        return inserted;
+
+    }
+
+    @Override
+    public boolean existsUsername(String username){
+        Query query = em.createQuery("SELECT COUNT(u) FROM User u WHERE u.username = :username");
+        query.setParameter("username", username);
+        Long count = (Long) query.getSingleResult();
+        if(count > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     @Override
     public void changeName(String newName){
-        
+
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
-        
-        
+
+
         if (globalUser != null) {
 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
-            
+
             if (userToUpdate != null) {
 
                 userToUpdate.setName(newName);
-                
+
                 em.merge(userToUpdate);
-                
+
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
     }
-    
+
     @Override
     public void changeSurname(String newSurname){
-        
+
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
         if (globalUser != null) {
 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
-            
+
             if (userToUpdate != null) {
 
                 userToUpdate.setSurname(newSurname);
-                
+
                 em.merge(userToUpdate);
-                
+
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
-        
+
     }
-    
+
     @Override
     public void changeEmail(String newEmail){
-        
+
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
         if (globalUser != null) {
 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
-            
+
             if (userToUpdate != null) {
 
                 userToUpdate.setEmail(newEmail);
-                
+
                 em.merge(userToUpdate);
-                
+
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
-        
-        
+
+
     }
-    
+
     @Override
     public void changePassword(String newPassword){
-        
+
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
         if (globalUser != null) {
 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
-            
+
             if (userToUpdate != null) {
 
                 userToUpdate.setPassword(newPassword);
-                
+
                 em.merge(userToUpdate);
-                
+
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
     }
-    
+
     @Override
     public void changeRol(){
-        
+
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
         System.out.println(globalUser.getRol().toString());
         if (globalUser != null) {
 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
-            
+
             if (userToUpdate != null) {
-                
+
                 if(globalUser.getRol().toString().equals("Private")){
                     userToUpdate.setRol(User.Rol.Influencer);
                 }
-                
+
                 if(globalUser.getRol().toString().equals("Influencer")){
                     userToUpdate.setRol(User.Rol.Private);
                 }
-                
-                
+
+
                 em.merge(userToUpdate);
-                
+
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
     }
-    
+
     public List<Integer> getVisitsUsers(){
         List<Integer> listVisits = new ArrayList<>();
-        
+
         List<User> usersList = findAll();
-        
+
         for (User user : usersList) {
         // Verificar si el rol del usuario es "Influcnecer"
         if ("Influencer".equals(user.getRol().toString())) {
@@ -184,5 +213,13 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
         return listVisits;
+    }
+
+    @Override
+    public List<String> getUsersStartingWith(String searchTerm) {
+        Query q = em.createQuery("SELECT u.username FROM User u WHERE u.username LIKE :query");
+        q.setParameter("query", searchTerm + "%");
+        q.setMaxResults(3);
+        return q.getResultList();
     }
 }
