@@ -32,6 +32,23 @@ public class settingsController implements Serializable{
     private String newSurname;
     private String newEmail;
     private String newPassword;
+    private String newUsername;
+
+    public void setUserToDelete(User userToDelete) {
+        this.userToDelete = userToDelete;
+    }
+
+    public void setNewUsername(String newUsername) {
+        this.newUsername = newUsername;
+    }
+
+    public User getUserToDelete() {
+        return userToDelete;
+    }
+
+    public String getNewUsername() {
+        return newUsername;
+    }
 
     public void setNewName(String newName) {
         this.newName = newName;
@@ -103,6 +120,7 @@ public class settingsController implements Serializable{
         parameters.add(new ParametroUsuario("Apellidos", user.getSurname()));
         parameters.add(new ParametroUsuario("Email", user.getEmail()));
         parameters.add(new ParametroUsuario("Rol", user.getRol().toString()));
+        parameters.add(new ParametroUsuario("Username", user.getUsername()));
 
         return parameters;
     }
@@ -142,6 +160,11 @@ public class settingsController implements Serializable{
     public void changeRol(){
         
         userEJB.changeRol();
+    }
+    
+    public void changeUsername(){
+        
+        userEJB.changeUsername(this.newUsername);
     }
     
     public void deleteUser(){
