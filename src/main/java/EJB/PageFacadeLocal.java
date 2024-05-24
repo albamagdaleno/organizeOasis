@@ -21,7 +21,9 @@ public interface PageFacadeLocal {
     void edit(Page page);
 
     void remove(Page page);
-
+    
+    void removePage(Page page);
+    
     Page find(Object id);
 
     List<Page> findAll();
