@@ -24,6 +24,7 @@ import javax.inject.Named;
 public class MainViewUserController implements Serializable{
     
     private Page page;
+    private Page newPage;
     //MODIFICAR
     private List<String> blocks; //luego cambiar por bloques objetos
     //END MODIFICAR
@@ -35,6 +36,7 @@ public class MainViewUserController implements Serializable{
     public void init(){
         
         page = new Page();
+        newPage = new Page();
         
         //luego rellenar con bloques de verdad MODIFICAR
         blocks = new ArrayList<>();
@@ -61,11 +63,24 @@ public class MainViewUserController implements Serializable{
         this.pageEJB = pageEJB;
     }
 
+    public void setNewPage(Page newPage) {
+        this.newPage = newPage;
+    }
+
     public Page getPage() {
         return page;
     }
 
     public PageFacadeLocal getPageEJB() {
         return pageEJB;
+    }
+
+    public Page getNewPage() {
+        return newPage;
+    }
+    
+    public void addPage(){
+        System.out.println(newPage.getTitle() +" - "+ newPage.getId_page() +" - "+ newPage.getNum_blocks()+" - "+ newPage.getUser()+" - "+ newPage.getVisits());
+        pageEJB.create(newPage);
     }
 }

@@ -61,7 +61,27 @@
                 </h:form>
                 
                 <h:form id="addPage">
-                    <p:commandButton value="Añadir Página" action="#{navigationBean.redirectToSettings()}" />
+                    <p:commandButton value="Añadir Página" onclick="PF('addPageDialog').show()" />
+                </h:form>
+                
+                <h:form id="dialogs">
+                    <p:dialog widgetVar="addPageDialog"
+                                     showEffect="fade" 
+                                     width="300" 
+                                     header="Nueva Página" 
+                                    >
+                        <h:outputText  value="Introduce un título para la nueva página"/>
+                        <br/>
+                        <p:inputText id="title" value="#{mainViewUserController.newPage.title}" styleClass="input-text"/>
+                        <br/>
+                        <p:commandButton value="Confirmar" 
+                            icon="pi pi-check"
+                            action="#{mainViewUserController.addPage()}" 
+                            oncomplete="PF('addPageDialog').hide(); location.reload(true)" 
+                            update="@form"/>
+                      
+                    </p:dialog>
+                    
                 </h:form>
             </ui:define>
 
