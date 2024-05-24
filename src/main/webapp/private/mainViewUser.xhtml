@@ -33,7 +33,14 @@
             </ui:define>
 
             <ui:define name="left">
-               
+                <h:form id="pageList">
+                    
+                  
+                </h:form>
+                
+                <h:form id="addPage">
+                    <p:commandButton value="Añadir Página" action="#{navigationBean.redirectToSettings()}" />
+                </h:form>
             </ui:define>
 
             <ui:define name="content">
