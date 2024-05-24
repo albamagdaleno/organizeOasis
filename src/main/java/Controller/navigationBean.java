@@ -65,4 +65,8 @@ public class navigationBean {
         return "/private/userPublic/statisticsPublicUser.xhtml?faces-redirect=true";
         
     }
+    
+    public String logout(){
+        return "/index.xhtml?faces-redirect=true";
+    }
 }

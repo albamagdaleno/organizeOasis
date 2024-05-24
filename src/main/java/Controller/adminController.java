@@ -38,6 +38,7 @@ public class adminController implements Serializable{
 
     @PostConstruct
     public void init() {
+        selectedPage= new Page();
         // Asigna la lista al campo
         this.listUser = userEJB.findAll();
         
@@ -79,14 +80,13 @@ public class adminController implements Serializable{
     }
     
     public void deletePage(){
-        if(selectedPage!=null){
-            
-            System.out.println("Pagina sseleccionada "+selectedPage.getTitle()+" id "+selectedPage.getId_page());
-            System.out.println("Usuario seleccionad "+selectedUser.getName());
+        
+            System.out.println("Pagina sseleccionada "+selectedPage.getTitle()+" id "+selectedPage.getId_page()+" bloques "+selectedPage.getNum_blocks()+" id Uset "+selectedPage.getUser().getId_user()+" visitas "+selectedPage.getVisits());
+            System.out.println("Usuario seleccionad "+selectedUser.getName()+" id user "+selectedUser.getId_user());
             pageEJB.remove(selectedPage);
             listPageUser = userEJB.findPages(selectedUser.getId_user());
             selectedPage = null;
-        }
+        
     }
     
 }
