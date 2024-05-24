@@ -124,6 +124,39 @@
                        </p:confirmDialog>
                     </h:form>
                 
+              
+                    <h:form>
+                    
+                
+                    <p:confirmDialog widgetVar="changeUsernameDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="Escribe el nuevo username:"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        <p:outputPanel style="text-align: center;">
+                            <p:inputText id="surname" value="#{settingsController.newUsername}" styleClass="input-text" style="width:350px"/>
+                        </p:outputPanel>
+                                              
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Cambiar" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{settingsController.changeUsername()}" 
+                                oncomplete="PF('changeUsernameDialog').hide(); location.reload(true);"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('changeUsernameDialog').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                    </h:form>
+    
+                
                     <h:form>
                     <p:confirmDialog widgetVar="changeEmailDialog"
                                      showEffect="fade" 

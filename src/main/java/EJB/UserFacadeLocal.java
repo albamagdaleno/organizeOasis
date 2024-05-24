@@ -60,6 +60,8 @@ public interface UserFacadeLocal {
     void changeEmail(String newEmail);
 
     void changePassword(String newPassword);
+    
+    void changeUsername(String newUsername);
 
     List<Integer> getVisitsUsers();
 
