@@ -29,7 +29,7 @@ public class adminController implements Serializable{
     private User selectedUser;
     private Page selectedPage;
     private List<User> listUser;
-    private List<Page> listPageUser;
+    private List<Page> listUserPages;
     
     @EJB
     private UserFacadeLocal userEJB;
@@ -48,10 +48,9 @@ public class adminController implements Serializable{
         return listUser;
     }
     
-    public List<Page> getListUserPage(User user){
-        
-        this.listPageUser = userEJB.findPages(user.getId_user());
-        return listPageUser;
+    public List<Page> getListUserPages(User user){
+        this.listUserPages = userEJB.findPages(user.getId_user());
+        return listUserPages;
     }
     
     public void setSelectedUser(User user){
@@ -84,7 +83,7 @@ public class adminController implements Serializable{
             System.out.println("Pagina sseleccionada "+selectedPage.getTitle()+" id "+selectedPage.getId_page()+" bloques "+selectedPage.getNum_blocks()+" id Uset "+selectedPage.getUser().getId_user()+" visitas "+selectedPage.getVisits());
             System.out.println("Usuario seleccionad "+selectedUser.getName()+" id user "+selectedUser.getId_user());
             pageEJB.remove(selectedPage);
-            listPageUser = userEJB.findPages(selectedUser.getId_user());
+            listUserPages = userEJB.findPages(selectedUser.getId_user());
             selectedPage = null;
         
     }

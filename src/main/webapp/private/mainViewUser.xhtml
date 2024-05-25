@@ -55,14 +55,30 @@
             </ui:define>
 
             <ui:define name="left">
-                <h:form id="pageList">
-                    
-                  
+               
+                <h:form id="addPage">
+                    <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative;">
+                        <h:form style="margin: 0;">
+                            <p:commandButton id="boton-aniadir" value="Añadir Página" icon="pi pi-plus" styleClass="ui-button-raised ui-button-flat ui-button-plain" onclick="PF('addPageDialog').show();" style="width: 100%; height: 50px; margin-bottom: 5px;"/>
+                        </h:form>
+                        
+                    </div>
                 </h:form>
                 
-                <h:form id="addPage">
-                    <p:commandButton value="Añadir Página" onclick="PF('addPageDialog').show()" />
+                <h:form id="listOfPages">
+                    <p:scrollPanel style="height: 400px;">
+                        <p:menu model="#{menuView.model}" >
+                            <p:menuitem value="#{page.title}" actionListener="#{menuView.selectPage(page)}" update=":selectedPagePanel" />
+                        </p:menu>
+                    </p:scrollPanel>
                 </h:form>
+                
+                
+                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative;">
+                    <h:form style="margin: 0;">
+                        <p:commandButton id="boton-logout" value="Logout" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.logout()}" style="width: 100%; height: 50px; margin-bottom: 5px; position: relative; top: 45rem;"/>
+                    </h:form>
+                </div>
                 
                 <h:form id="dialogs">
                     <p:dialog widgetVar="addPageDialog"
@@ -87,6 +103,11 @@
 
             <ui:define name="content">
                 
+                <p:panel id="selectedPagePanel">
+                    <h:outputText value="Página seleccionada: #{menuView.selectedPage.title}" rendered="#{not empty menuView.selectedPage}" />
+                </p:panel>
+                
+                
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action1}" /></div>
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action2}" /></div>
@@ -100,7 +121,7 @@
                         </div>
                     </ui:repeat>
                 </div>
-                              
+                            
             
             </ui:define>
 

@@ -6,14 +6,21 @@
 package Controller;
 
 import EJB.PageFacadeLocal;
+import EJB.UserFacadeLocal;
 import Modelo.Page;
+import Modelo.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuItem.Builder;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.MenuModel;
 
 /**
  *
@@ -25,19 +32,25 @@ public class MainViewUserController implements Serializable{
     
     private Page page;
     private Page newPage;
+    private User user;
+    private MenuModel model;
+    private Page selectedPage;
+    private List<Page> listUserPages;
     //MODIFICAR
     private List<String> blocks; //luego cambiar por bloques objetos
     //END MODIFICAR
 
     @EJB
     private PageFacadeLocal pageEJB;
+    private UserFacadeLocal userEJB;
     
     @PostConstruct
     public void init(){
         
         page = new Page();
         newPage = new Page();
-        
+        user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
+
         //luego rellenar con bloques de verdad MODIFICAR
         blocks = new ArrayList<>();
         // Agregar bloques de ejemplo
@@ -45,6 +58,19 @@ public class MainViewUserController implements Serializable{
         blocks.add("Block 2");
         blocks.add("Block 3");
         blocks.add("Block 4"); // END MODIFICAR
+        
+        //Modelo para la lista de paginas del usuario
+        model = new DefaultMenuModel();
+        
+        //List<Page> pages = getListUserPages();
+        
+        //for (Page page : pages) {
+        //    DefaultMenuItem menuItem = new DefaultMenuItem();
+        //    menuItem.setTitle(page.getTitle());
+        //    menuItem.setCommand("#{mainViewUserController.selectPage(" + page.getId_page() + ")}");
+        //    model.getElements().add(menuItem);
+                    
+        //}
     }
 
     public void setBlocks(List<String> blocks) {
@@ -67,6 +93,31 @@ public class MainViewUserController implements Serializable{
         this.newPage = newPage;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
+
+    public void setSelectedPage(Page selectedPage) {
+        this.selectedPage = selectedPage;
+    }
+
+    public void setListUserPages(List<Page> listUserPages) {
+        this.listUserPages = listUserPages;
+    }
+
+    public void setUserEJB(UserFacadeLocal userEJB) {
+        this.userEJB = userEJB;
+    }
+    
+    public void selectPage(int pageId) {
+        selectedPage = getPageById(pageId);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalPage", selectedPage);
+    }
+
     public Page getPage() {
         return page;
     }
@@ -78,9 +129,41 @@ public class MainViewUserController implements Serializable{
     public Page getNewPage() {
         return newPage;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Page getSelectedPage() {
+        return selectedPage;
+    }
+
+    public UserFacadeLocal getUserEJB() {
+        return userEJB;
+    }
     
     public void addPage(){
+        newPage.setUser(user);
         System.out.println(newPage.getTitle() +" - "+ newPage.getId_page() +" - "+ newPage.getNum_blocks()+" - "+ newPage.getUser()+" - "+ newPage.getVisits());
         pageEJB.create(newPage);
+    }
+    
+    public MenuModel getModel() {
+        return model;
+    }
+    
+    public List<Page> getListUserPages(){
+        this.listUserPages = userEJB.findPages(user.getId_user());
+        return listUserPages;
+    }
+    
+    public Page getPageById(int id_page){
+         List<Page> pages = getListUserPages();
+        for (Page page : pages) {
+            if (id_page == page.getId_page()) {
+                return page;
+            }
+        }
+        return null;
     }
 }
