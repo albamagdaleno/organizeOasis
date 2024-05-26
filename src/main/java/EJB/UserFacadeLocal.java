@@ -24,8 +24,6 @@ public interface UserFacadeLocal {
     void remove(User user);
 
     User find(Object id);
-    
-    List<Page> findPages(Integer id);
 
     List<User> findAll();
 

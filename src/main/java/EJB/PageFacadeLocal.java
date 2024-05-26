@@ -22,11 +22,11 @@ public interface PageFacadeLocal {
 
     void remove(Page page);
     
-    void removePage(Page page);
-    
     Page find(Object id);
 
     List<Page> findAll();
+    
+    List<Page> findAllPages(Integer id_user);
 
     List<Page> findRange(int[] range);
 

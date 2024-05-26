@@ -6,10 +6,12 @@
 package EJB;
 
 import Modelo.Page;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -31,33 +33,16 @@ public class PageFacade extends AbstractFacade<Page> implements PageFacadeLocal 
     }
     
     @Override
-    public void removePage(Page page){
-        Page pageToRemove = em.find(Page.class, page.getId_page());
+    public List<Page> findAllPages(Integer id_user) {
         
-        if (pageToRemove != null) {
-        // Inicia una transacción
-            EntityTransaction transaction = em.getTransaction();
-            try {
-                // Inicia la transacción
-                transaction.begin();
+        // Creamos la consulta para sacar las coincidencias con el id del usuario
+        Query query = em.createQuery("SELECT p FROM Page p WHERE p.user.id_user = :id_user");
+        query.setParameter("id_user", id_user);
 
-                // Realiza la eliminación del objeto Page
-                em.remove(pageToRemove);
-
-                // Confirma la transacción
-                transaction.commit();
-            } catch (Exception e) {
-                // Si ocurre algún error, realiza un rollback de la transacción
-                if (transaction.isActive()) {
-                    transaction.rollback();
-                }
-                e.printStackTrace(); // O maneja la excepción de alguna otra manera
-            }
-        } else {
-            // Maneja el caso en el que el objeto Page no existe en la base de datos
-            System.out.println("El objeto Page no existe en la base de datos.");
-        }
-    
+        // Devolvemos la lista resultante
+        return query.getResultList();
     }
+    
+    
     
 }

@@ -62,15 +62,15 @@ public class MainViewUserController implements Serializable{
         //Modelo para la lista de paginas del usuario
         model = new DefaultMenuModel();
         
-        //List<Page> pages = getListUserPages();
+        List<Page> pages = getListUserPages();
         
-        //for (Page page : pages) {
-        //    DefaultMenuItem menuItem = new DefaultMenuItem();
-        //    menuItem.setTitle(page.getTitle());
-        //    menuItem.setCommand("#{mainViewUserController.selectPage(" + page.getId_page() + ")}");
-        //    model.getElements().add(menuItem);
+        for (Page page : pages) {
+            DefaultMenuItem menuItem = new DefaultMenuItem();
+            menuItem.setTitle(page.getTitle());
+            menuItem.setCommand("#{mainViewUserController.selectPage(" + page.getId_page() + ")}");
+            model.getElements().add(menuItem);
                     
-        //}
+        }
     }
 
     public void setBlocks(List<String> blocks) {
@@ -153,7 +153,7 @@ public class MainViewUserController implements Serializable{
     }
     
     public List<Page> getListUserPages(){
-        this.listUserPages = userEJB.findPages(user.getId_user());
+        this.listUserPages = pageEJB.findAllPages(user.getId_user());
         return listUserPages;
     }
     

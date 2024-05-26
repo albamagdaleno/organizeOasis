@@ -67,8 +67,8 @@
                 
                 <h:form id="listOfPages">
                     <p:scrollPanel style="height: 400px;">
-                        <p:menu model="#{menuView.model}" >
-                            <p:menuitem value="#{page.title}" actionListener="#{menuView.selectPage(page)}" update=":selectedPagePanel" />
+                        <p:menu model="#{menuViewUserController.model}" >
+                            <p:menuitem value="#{page.title}" actionListener="#{menuViewUserController.selectPage(page)}" update=":selectedPagePanel" />
                         </p:menu>
                     </p:scrollPanel>
                 </h:form>
