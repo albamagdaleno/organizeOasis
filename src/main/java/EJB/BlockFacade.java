@@ -6,9 +6,12 @@
 package EJB;
 
 import Modelo.Block;
+import Modelo.Page;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,14 @@ public class BlockFacade extends AbstractFacade<Block> implements BlockFacadeLoc
 
     public BlockFacade() {
         super(Block.class);
+    }
+    
+    public  List<Block> getBlocksByPage(Page page){
+        
+        Query query = em.createQuery("SELECT p FROM Block p WHERE p.page.id_page = :id_page");
+        query.setParameter("id_page", page.getId_page());
+
+        return query.getResultList();
     }
     
 }

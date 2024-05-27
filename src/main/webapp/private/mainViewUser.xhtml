@@ -109,10 +109,13 @@
                 
                 
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
-                    <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action1}" /></div>
-                    <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action2}" /></div>
-                    <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva tabla" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action3}" /></div>
-                    <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva imagen" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action4}" /></div>
+                    <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newTextDialog').show()" /></div>
+                    <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newListDialog').show()" /></div>
+                    <ui:remove>
+                        <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva tabla" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action3}" /></div>
+                        <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva imagen" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action4}" /></div>
+                    </ui:remove>
+                    
                 </div>
                 <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <ui:repeat value="#{mainViewUserController.blocks}" var="block">
@@ -122,7 +125,102 @@
                     </ui:repeat>
                 </div>
                             
-            
+                <h:form>
+                    <p:confirmDialog widgetVar="newTextDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="Texto inicial de la nota:"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        <p:outputPanel style="text-align: center;">
+                            <p:inputTextarea id="name" value="#{MainViewUserController.newTextNote}" styleClass="input-text" 
+                             style="width:350px; height:100px"/>
+                        </p:outputPanel>
+                        
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Crear" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{MainViewController.createNote()}" 
+                                oncomplete="PF('newTextDialog').hide(); location.reload(true);"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('newTextDialog').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
+                    <p:confirmDialog widgetVar="newListDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="Número de elementos iniciales de la lista:"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        <p:outputPanel style="text-align: center;">
+                            <p:inputText id="name" value="#{mainViewUserController.numberElementsNewList}" styleClass="input-text" style="width:350px"/>
+                        </p:outputPanel>
+                        
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Siguiente" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                onclick="PF('newListDialogElements').show()"
+                               
+                                oncomplete="PF('newTextDialog').hide()"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('newListDialog').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
+                    <p:confirmDialog widgetVar="newListDialogElements"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="Introduce los elementos en lineas separadas:"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        <p:outputPanel style="text-align: center;">
+                            <p:inputTextarea id="name" value="#{MainViewUserController.elementsList}" styleClass="input-text" 
+                             style="width:350px; height:200px"/>
+                        </p:outputPanel>
+                        
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Siguiente" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{MainViewController.createList()}" 
+                                oncomplete="PF('newListDialogElements').hide()"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('newListDialogElements').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                </h:form>
+                
             </ui:define>
 
         </ui:composition>
