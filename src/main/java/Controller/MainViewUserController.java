@@ -44,9 +44,7 @@ public class MainViewUserController implements Serializable{
     private MenuModel model;
     private Page selectedPage;
     private List<Page> listUserPages;
-    //MODIFICAR
-    private List<Block> blocks; //luego cambiar por bloques objetos
-    //END MODIFICAR
+    private List<Block> blocks; 
     private String newTextNote;
     private int numberElementsNewList;
     private String elementsList;
