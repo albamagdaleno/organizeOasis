@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped; 
+import javax.inject.Inject;
 
 import javax.inject.Named;
 
@@ -31,6 +32,10 @@ public class adminController implements Serializable{
 
     @EJB
     private UserFacadeLocal userEJB;
+    private PageFacadeLocal pageEJB;
+    
+    @Inject
+    private adminUserPagesController adminUserPagesController; 
     
     @PostConstruct
     public void init() {
@@ -52,11 +57,26 @@ public class adminController implements Serializable{
     
     public void deleteUser(){
         if(selectedUser!=null){
-            //Borrar todas las paginas del usuario --METHOD
+            
+                userEJB.remove(selectedUser);
+                listUser = userEJB.findAll();  
+                selectedUser = null;
+            
+            
+        }
+            
+            /*
+            Esto iria en el else, pero no va (:)
+            List<Page> userPages = pageEJB.findAllPages(selectedUser.getId_user());
+            for (Page page : userPages) {
+                pageEJB.remove(page);
+            }
             userEJB.remove(selectedUser);
             listUser = userEJB.findAll();  
             selectedUser = null;
-        } 
+            */
+        
+        
     }
 
 }
