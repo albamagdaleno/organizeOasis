@@ -18,8 +18,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.menu.DefaultMenuItem;
-import org.primefaces.model.menu.DefaultMenuItem.Builder;
+
 import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -64,13 +65,22 @@ public class MainViewUserController implements Serializable{
         
         List<Page> pages = getListUserPages();
         
+        DefaultSubMenu pagesMenu = DefaultSubMenu.builder()
+                .label("Páginas")
+                .expanded(true)
+                .build();
+        
         for (Page page : pages) {
-            DefaultMenuItem menuItem = new DefaultMenuItem();
-            menuItem.setTitle(page.getTitle());
-            menuItem.setCommand("#{mainViewUserController.selectPage(" + page.getId_page() + ")}");
-            model.getElements().add(menuItem);
-                    
+            DefaultMenuItem item;
+            item = DefaultMenuItem.builder()
+                    .value(page.getTitle())
+                    .command("#{mainViewUserController.selectPage(" + page.getId_page() + ")}")
+                    .build();
+            pagesMenu.getElements().add(item);
+            
         }
+        
+        model.getElements().add(pagesMenu);
     }
 
     public void setBlocks(List<String> blocks) {
@@ -115,7 +125,7 @@ public class MainViewUserController implements Serializable{
     
     public void selectPage(int pageId) {
         selectedPage = getPageById(pageId);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalPage", selectedPage);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedPage", selectedPage);
     }
 
     public Page getPage() {
@@ -144,7 +154,6 @@ public class MainViewUserController implements Serializable{
     
     public void addPage(){
         newPage.setUser(user);
-        System.out.println(newPage.getTitle() +" - "+ newPage.getId_page() +" - "+ newPage.getNum_blocks()+" - "+ newPage.getUser()+" - "+ newPage.getVisits());
         pageEJB.create(newPage);
     }
     
