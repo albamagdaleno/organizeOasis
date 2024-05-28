@@ -56,26 +56,23 @@ public class adminController implements Serializable{
     }
     
     public void deleteUser(){
+        
         if(selectedUser!=null){
             
-                userEJB.remove(selectedUser);
-                listUser = userEJB.findAll();  
-                selectedUser = null;
-            
-            
-        }
-            
-            /*
-            Esto iria en el else, pero no va (:)
-            List<Page> userPages = pageEJB.findAllPages(selectedUser.getId_user());
-            for (Page page : userPages) {
-                pageEJB.remove(page);
+            //Borramos las páginas si las hubiera para ese usuario
+            adminUserPagesController.setSelectedUser(selectedUser);
+            List<Page> pagesList = adminUserPagesController.getListUserPages();
+            for(Page page: pagesList){
+                adminUserPagesController.setSelectedPage(page);
+                adminUserPagesController.deletePage();
             }
+            
+            //Borramos el usuario
             userEJB.remove(selectedUser);
             listUser = userEJB.findAll();  
             selectedUser = null;
-            */
-        
+            
+        }
         
     }
 
