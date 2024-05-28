@@ -46,6 +46,7 @@ public class MainViewUserController implements Serializable{
     private Page selectedPage;
     private List<Page> listUserPages;
     private List<Block> blocks; 
+    private List<Text> notes;
     private String newTextNote;
     private int numberElementsNewList;
     private String elementsList;
@@ -98,9 +99,9 @@ public class MainViewUserController implements Serializable{
         if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
             
             globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
-            
-            System.out.println("Pagina cogida correctamente");
+
             getBlocksOfAcutalPage(globalPage);
+            //getNotesOfBlocks();
                 
         }else{
             
@@ -130,6 +131,23 @@ public class MainViewUserController implements Serializable{
         
         model.getElements().add(pagesMenu);
     }
+    
+    public void getNotesOfBlocks() {
+    notes = new ArrayList<>();
+    try {
+        for (Block block : this.blocks) {
+            int blockId = block.getIdBlock();
+            List<Text> blockNotes = this.textEJB.getNotesOfBlocks(blockId);
+            if (blockNotes != null) {
+                notes.addAll(blockNotes);
+            }
+        }
+    } catch (NullPointerException e) {
+        System.out.println("textEJB is null");
+    }
+}
+
+    
     
     public void getBlocksOfAcutalPage(Page actualPage) {
         
@@ -168,16 +186,18 @@ public class MainViewUserController implements Serializable{
     
     public void createNote(){
         
-        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
+        //Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
         
         Block newBlock = new Block();
-        newBlock.setPage(actualPage);
+        newBlock.setPage(this.globalPage);
         blockEJB.create(newBlock);
         
+        System.out.println("Bloque creado supuestamente");
         Text newText = new Text();
         newText.setBlock(newBlock);
         newText.setText(newTextNote);
         textEJB.create(newText);
+        System.out.println("Nota creado supuestamente");
         
     }
     
