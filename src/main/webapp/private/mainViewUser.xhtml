@@ -46,12 +46,15 @@
                             <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary" action="#{searchUsernameQuery.searchUser()}" />
                         </h:form>
                     </div>
-                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px;">
+                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px; display: flex; flex-direction: row; justify-content: end;">
                         <h:form>
                             <p:commandButton id="boton-ajustes" value="Ajustes" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.redirectToSettings()}"/>
                         </h:form>
+                        <h:form>
+                            <p:commandButton id="boton-logout" value="Cerrar Sesión" icon="pi pi-power-off" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.logout()}"/>
+                        </h:form>
                     </div>
-                </div>
+                </div> 
             </ui:define>
 
             <ui:define name="left">
@@ -66,25 +69,18 @@
                 </h:form>
                 
                 <h:form id="listOfPages">
-                    <p:scrollPanel style="height: 400px;">
-                        <p:menu model="#{menuViewUserController.model}" >
-                            <p:menuitem value="#{page.title}" actionListener="#{menuViewUserController.selectPage(page)}" update=":selectedPagePanel" />
-                        </p:menu>
-                    </p:scrollPanel>
+                    
+                    <div>
+                        <p:menu model="#{mainViewUserController.model}" />
+                    </div>
                 </h:form>
-                
-                
-                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative;">
-                    <h:form style="margin: 0;">
-                        <p:commandButton id="boton-logout" value="Logout" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.logout()}" style="width: 100%; height: 50px; margin-bottom: 5px; position: relative; top: 45rem;"/>
-                    </h:form>
-                </div>
                 
                 <h:form id="dialogs">
                     <p:dialog widgetVar="addPageDialog"
                                      showEffect="fade" 
                                      width="300" 
                                      header="Nueva Página" 
+                                     closable="false"
                                     >
                         <h:outputText  value="Introduce un título para la nueva página"/>
                         <br/>
@@ -102,11 +98,9 @@
             </ui:define>
 
             <ui:define name="content">
-                
-                <p:panel id="selectedPagePanel">
-                    <h:outputText value="Página seleccionada: #{menuView.selectedPage.title}" rendered="#{not empty menuView.selectedPage}" />
-                </p:panel>
-                
+               <h:outputText value="Página seleccionada: #{selectedPage.title}" rendered="#{not empty selectedPage}" />
+
+                <h:outputText value="Página seleccionada: #{mainViewUserController.selectedPage.title}"  />
                 
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newTextDialog').show()" /></div>

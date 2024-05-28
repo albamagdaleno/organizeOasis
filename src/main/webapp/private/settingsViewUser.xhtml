@@ -18,14 +18,16 @@
 
             <ui:define name="top">
                 <div class="top-div" style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr auto; height: 0%;">
-                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px">
                     
-                        <h:form> 
-                            
+                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px; display: flex; flex-direction: row; justify-content: end;">
+                        <h:form>
                             <p:commandButton id="boton-ajustes" value="Volver a mi perfil" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.redirectToMainViewUser()}"/>
-                         
-                        </h:form> 
+                        </h:form>
+                        <h:form>
+                            <p:commandButton id="boton-logout" value="Cerrar Sesión" icon="pi pi-power-off" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.logout()}"/>
+                        </h:form>
                     </div>
+                    
                 </div>
             </ui:define>
 
