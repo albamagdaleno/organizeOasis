@@ -75,11 +75,8 @@ public class adminUserPagesController implements Serializable{
     public void deletePage(){
         
         if(selectedPage!=null){
-            System.out.println("Usuario seleccionad "+selectedUser.getName()+" id user "+selectedUser.getId_user());
-            //selectedPage.setUser(null);
+            
             pageEJB.remove(selectedPage);
-            System.out.println("LLega debajo");
-            //listUserPages = userEJB.findPages(selectedUser.getId_user());
             selectedPage = null;
         }
     }
