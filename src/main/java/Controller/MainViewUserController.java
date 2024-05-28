@@ -47,6 +47,46 @@ public class MainViewUserController implements Serializable{
     private List<Page> listUserPages;
     private List<Block> blocks; 
     private List<Text> notes;
+
+    public void setNotes(List<Text> notes) {
+        this.notes = notes;
+    }
+
+    public void setGlobalPage(Page globalPage) {
+        this.globalPage = globalPage;
+    }
+
+    public void setBlockEJB(BlockFacadeLocal blockEJB) {
+        this.blockEJB = blockEJB;
+    }
+
+    public void setTextEJB(TextFacadeLocal textEJB) {
+        this.textEJB = textEJB;
+    }
+
+    public void setListEJB(ListFacadeLocal listEJB) {
+        this.listEJB = listEJB;
+    }
+
+    public List<Text> getNotes() {
+        return notes;
+    }
+
+    public Page getGlobalPage() {
+        return globalPage;
+    }
+
+    public BlockFacadeLocal getBlockEJB() {
+        return blockEJB;
+    }
+
+    public TextFacadeLocal getTextEJB() {
+        return textEJB;
+    }
+
+    public ListFacadeLocal getListEJB() {
+        return listEJB;
+    }
     private String newTextNote;
     private int numberElementsNewList;
     private String elementsList;
@@ -96,19 +136,7 @@ public class MainViewUserController implements Serializable{
         newPage = new Page();
         user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
         
-        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
-            
-            globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
-
-            getBlocksOfAcutalPage(globalPage);
-            //getNotesOfBlocks();
-                
-        }else{
-            
-            System.out.println("Pagina no cogida!!");
-        }
-        
-        
+    
         //Modelo para la lista de paginas del usuario
         model = new DefaultMenuModel();
         
@@ -130,6 +158,25 @@ public class MainViewUserController implements Serializable{
         }
         
         model.getElements().add(pagesMenu);
+        
+        /*if(pages.size()!=0){
+            selectPage(pages.get(0).getId_page());
+        }*/
+        
+        
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
+            
+            globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
+
+            getBlocksOfAcutalPage(globalPage);
+            getNotesOfBlocks();
+            //getListsOfBlocks();
+                
+        }else{
+            
+            System.out.println("Pagina no cogida!!");
+        }
+        
     }
     
     public void getNotesOfBlocks() {
@@ -141,6 +188,9 @@ public class MainViewUserController implements Serializable{
             if (blockNotes != null) {
                 notes.addAll(blockNotes);
             }
+        }
+        if(notes.size()!=0){
+            System.out.println("Esta llenando las notas");
         }
     } catch (NullPointerException e) {
         System.out.println("textEJB is null");

@@ -112,9 +112,9 @@
                     
                 </div>
                 <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <ui:repeat value="#{mainViewUserController.blocks}" var="block">
-                        <div class="block" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; margin-left: 10px">
-                            <h:outputText value="#{block}" />
+                    <ui:repeat value="#{mainViewUserController.notes}" var="note">
+                        <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; margin-left: 10px">
+                            <h:outputText value="#{note.text}" />
                         </div>
                     </ui:repeat>
                 </div>
