@@ -31,6 +31,6 @@ public interface BlockFacadeLocal {
 
     int count();
     
-    List<Block> getBlocksByPage(Page page);
+    List<Block> getBlocksByPage(int id_page);
     
 }

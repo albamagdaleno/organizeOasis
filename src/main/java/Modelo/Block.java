@@ -20,6 +20,7 @@ import javax.persistence.Table;
 public class Block implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_block")  // Mapea la columna id_block en la base de datos
     private int idBlock;
     
     /*

@@ -49,6 +49,7 @@ public class MainViewUserController implements Serializable{
     private String newTextNote;
     private int numberElementsNewList;
     private String elementsList;
+    private Page globalPage;
     
 
     public void setElementsList(String elementsList) {
@@ -76,13 +77,15 @@ public class MainViewUserController implements Serializable{
     }
 
     
-    
-
     @EJB
     private PageFacadeLocal pageEJB;
+    @EJB
     private UserFacadeLocal userEJB;
+    @EJB
     private BlockFacadeLocal blockEJB;
+    @EJB
     private TextFacadeLocal textEJB;
+    @EJB
     private ListFacadeLocal listEJB;
     
     @PostConstruct
@@ -92,10 +95,16 @@ public class MainViewUserController implements Serializable{
         newPage = new Page();
         user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
         
-        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("actualPage")!=null){
-        
-            getBlocksOfAcutalPage();
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
+            
+            globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
+            
+            System.out.println("Pagina cogida correctamente");
+            getBlocksOfAcutalPage(globalPage);
                 
+        }else{
+            
+            System.out.println("Pagina no cogida!!");
         }
         
         
@@ -122,12 +131,16 @@ public class MainViewUserController implements Serializable{
         model.getElements().add(pagesMenu);
     }
     
-    public void getBlocksOfAcutalPage(){
+    public void getBlocksOfAcutalPage(Page actualPage) {
         
-        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("actualPage");
-                    
+        int idPage = actualPage.getId_page();
+        
         blocks = new ArrayList<>();
-        blocks = blockEJB.getBlocksByPage(actualPage);
+        try {
+            blocks = this.blockEJB.getBlocksByPage(idPage);
+        } catch (NullPointerException e) {
+            System.out.println("blockEJB is null");
+        }
     }
     
     public void createList() {
@@ -138,7 +151,7 @@ public class MainViewUserController implements Serializable{
         //En bbdd los guardamos separados por ; para saber como representarlos
         String transformedList = String.join(";", elementsArray);
     
-        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("actualPage");
+        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
         
         Block newBlock = new Block();
         newBlock.setPage(actualPage);
@@ -155,7 +168,7 @@ public class MainViewUserController implements Serializable{
     
     public void createNote(){
         
-        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("actualPage");
+        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
         
         Block newBlock = new Block();
         newBlock.setPage(actualPage);
