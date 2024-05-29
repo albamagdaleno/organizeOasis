@@ -32,7 +32,6 @@ public interface TextFacadeLocal {
     
     List<Text> getNotesOfBlocks(int blockId);
     
-    void deleteNote(Text note);
     
     void modifyNote(Text note, String newText);
 }

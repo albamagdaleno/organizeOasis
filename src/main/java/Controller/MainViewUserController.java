@@ -179,6 +179,8 @@ public class MainViewUserController implements Serializable{
             item = DefaultMenuItem.builder()
                     .value(page.getTitle())
                     .command("#{mainViewUserController.selectPage(" + page.getId_page() + ")}")
+                    .update("listOfPages")
+                    .oncomplete("reloadPage();")
                     .build();
             pagesMenu.getElements().add(item);
             
