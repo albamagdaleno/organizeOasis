@@ -5,12 +5,20 @@
  */
 package Controller;
 
+import EJB.BlockFacadeLocal;
 import EJB.PageFacadeLocal;
+import EJB.TextFacadeLocal;
 import EJB.UserFacadeLocal;
+import EJB.ListFacadeLocal;
+import Modelo.Block;
 import Modelo.Page;
+import Modelo.Text;
 import Modelo.User;
+import Modelo.*;
+//import Modelo.List;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -37,13 +45,89 @@ public class MainViewUserController implements Serializable{
     private MenuModel model;
     private Page selectedPage;
     private List<Page> listUserPages;
-    //MODIFICAR
-    private List<String> blocks; //luego cambiar por bloques objetos
-    //END MODIFICAR
+    private List<Block> blocks; 
+    private List<Text> notes;
 
+    public void setNotes(List<Text> notes) {
+        this.notes = notes;
+    }
+
+    public void setGlobalPage(Page globalPage) {
+        this.globalPage = globalPage;
+    }
+
+    public void setBlockEJB(BlockFacadeLocal blockEJB) {
+        this.blockEJB = blockEJB;
+    }
+
+    public void setTextEJB(TextFacadeLocal textEJB) {
+        this.textEJB = textEJB;
+    }
+
+    public void setListEJB(ListFacadeLocal listEJB) {
+        this.listEJB = listEJB;
+    }
+
+    public List<Text> getNotes() {
+        return notes;
+    }
+
+    public Page getGlobalPage() {
+        return globalPage;
+    }
+
+    public BlockFacadeLocal getBlockEJB() {
+        return blockEJB;
+    }
+
+    public TextFacadeLocal getTextEJB() {
+        return textEJB;
+    }
+
+    public ListFacadeLocal getListEJB() {
+        return listEJB;
+    }
+    private String newTextNote;
+    private int numberElementsNewList;
+    private String elementsList;
+    private Page globalPage;
+    
+
+    public void setElementsList(String elementsList) {
+        this.elementsList = elementsList;
+    }
+
+    public String getElementsList() {
+        return elementsList;
+    }
+
+    public String getNewTextNote() {
+        return newTextNote;
+    }
+
+    public int getNumberElementsNewList() {
+        return numberElementsNewList;
+    }
+
+    public void setNewTextNote(String newTextNote) {
+        this.newTextNote = newTextNote;
+    }
+
+    public void setNumberElementsNewList(int numberElementsNewList) {
+        this.numberElementsNewList = numberElementsNewList;
+    }
+
+    
     @EJB
     private PageFacadeLocal pageEJB;
+    @EJB
     private UserFacadeLocal userEJB;
+    @EJB
+    private BlockFacadeLocal blockEJB;
+    @EJB
+    private TextFacadeLocal textEJB;
+    @EJB
+    private ListFacadeLocal listEJB;
     
     @PostConstruct
     public void init(){
@@ -51,15 +135,8 @@ public class MainViewUserController implements Serializable{
         page = new Page();
         newPage = new Page();
         user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
-
-        //luego rellenar con bloques de verdad MODIFICAR
-        blocks = new ArrayList<>();
-        // Agregar bloques de ejemplo
-        blocks.add("Block 1");
-        blocks.add("Block 2");
-        blocks.add("Block 3");
-        blocks.add("Block 4"); // END MODIFICAR
         
+    
         //Modelo para la lista de paginas del usuario
         model = new DefaultMenuModel();
         
@@ -81,13 +158,105 @@ public class MainViewUserController implements Serializable{
         }
         
         model.getElements().add(pagesMenu);
-    }
+        
+        /*if(pages.size()!=0){
+            selectPage(pages.get(0).getId_page());
+        }*/
+        
+        
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
+            
+            globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
 
-    public void setBlocks(List<String> blocks) {
+            getBlocksOfAcutalPage(globalPage);
+            getNotesOfBlocks();
+            //getListsOfBlocks();
+                
+        }else{
+            
+            System.out.println("Pagina no cogida!!");
+        }
+        
+    }
+    
+    public void getNotesOfBlocks() {
+    notes = new ArrayList<>();
+    try {
+        for (Block block : this.blocks) {
+            int blockId = block.getIdBlock();
+            List<Text> blockNotes = this.textEJB.getNotesOfBlocks(blockId);
+            if (blockNotes != null) {
+                notes.addAll(blockNotes);
+            }
+        }
+        if(notes.size()!=0){
+            System.out.println("Esta llenando las notas");
+        }
+    } catch (NullPointerException e) {
+        System.out.println("textEJB is null");
+    }
+}
+
+    
+    
+    public void getBlocksOfAcutalPage(Page actualPage) {
+        
+        int idPage = actualPage.getId_page();
+        
+        blocks = new ArrayList<>();
+        try {
+            blocks = this.blockEJB.getBlocksByPage(idPage);
+        } catch (NullPointerException e) {
+            System.out.println("blockEJB is null");
+        }
+    }
+    
+    public void createList() {
+        
+        //El user mete los elementos con saltos de linea
+        String[] elementsArray = elementsList.split("\n");
+        
+        //En bbdd los guardamos separados por ; para saber como representarlos
+        String transformedList = String.join(";", elementsArray);
+    
+        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
+        
+        Block newBlock = new Block();
+        newBlock.setPage(actualPage);
+        blockEJB.create(newBlock);
+        
+        Modelo.List newList = new Modelo.List();
+        newList.setBlock(newBlock);
+        newList.setText(elementsList);
+        listEJB.create(newList);
+        
+        
+        
+    }
+    
+    public void createNote(){
+        
+        //Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
+        
+        Block newBlock = new Block();
+        newBlock.setPage(this.globalPage);
+        blockEJB.create(newBlock);
+        
+        System.out.println("Bloque creado supuestamente");
+        Text newText = new Text();
+        newText.setBlock(newBlock);
+        newText.setText(newTextNote);
+        textEJB.create(newText);
+        System.out.println("Nota creado supuestamente");
+        
+    }
+    
+
+    public void setBlocks(List<Block> blocks) {
         this.blocks = blocks;
     }
 
-    public List<String> getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 

@@ -30,4 +30,5 @@ public interface TextFacadeLocal {
 
     int count();
     
+    List<Text> getNotesOfBlocks(int blockId);
 }

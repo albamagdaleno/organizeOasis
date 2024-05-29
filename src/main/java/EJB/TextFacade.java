@@ -6,9 +6,12 @@
 package EJB;
 
 import Modelo.Text;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +32,15 @@ public class TextFacade extends AbstractFacade<Text> implements TextFacadeLocal 
         super(Text.class);
     }
     
+
+    public List<Text> getNotesOfBlocks(int blockId) {
+        
+        //TypedQuery<Text> query = em.createQuery("SELECT t FROM Text t WHERE t.block.idBlock = :id_block", Text.class);
+        Query query = em.createQuery("SELECT t FROM Text t WHERE t.block.idBlock = :idBlock");
+        query.setParameter("idBlock", blockId);
+        return query.getResultList();
+    }
+
+
+   
 }

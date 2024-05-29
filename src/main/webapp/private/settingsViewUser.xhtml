@@ -32,14 +32,18 @@
             </ui:define>
 
             <ui:define name="left">
-                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
-                    <h:form style="margin: 0;">
+                <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; height: 100%">
+                    <h:form style="margin: 0; flex: 1;">
                         <p:commandButton id="boton-mis-datos" value="Mis datos" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.redirectToSettings()}" style="width: 100%; height: 75px; margin-bottom: 5px"/>
                         <p:commandButton id="boton-mis-estadisticas" value="Mis estadisticas" styleClass="ui-button-raised ui-button-flat ui-button-plain" action="#{navigationBean.redirectToStatistics()}" style="width: 100%; height: 75px; margin-bottom: 5px"/>
                         <!--<p:commandButton id="boton-mis-estadisticas" value="Mis estadisticas" styleClass="boton-left ui-button-raised ui-button-secondary" action="misEstadisticas.xhtml" style="width: 100%; height: 50px;"/>-->
                     </h:form>
+                    
                 </div>
             </ui:define>
+
+            
+            
 
             <ui:define name="content">
                 <h:form> 

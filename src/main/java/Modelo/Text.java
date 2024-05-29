@@ -18,6 +18,7 @@ import javax.persistence.Table;
 public class Text implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_texts")
     private int idText;
     
     @Column(name="text_str")
