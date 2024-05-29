@@ -52,6 +52,9 @@
                         </h:form>
                     </div>
                 </div>
+                <h:panelGroup layout="block" styleClass="error-message" rendered="#{not empty searchUsernameQuery.errorMessage}">
+                    <h:outputText value="#{searchUsernameQuery.errorMessage}" style="color: red;" />
+                </h:panelGroup>
             </ui:define>
 
             <ui:define name="left">
@@ -106,8 +109,18 @@
                 <p:panel id="selectedPagePanel">
                     <h:outputText value="Página seleccionada: #{menuView.selectedPage.title}" rendered="#{not empty menuView.selectedPage}" />
                 </p:panel>
-                
-                
+
+    <h:form id="userDetails" rendered="#{not empty searchUsernameQuery.selectedUser}">
+        <h2>Detalles del Usuario</h2>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Nombre:" />
+            <h:outputText value="#{searchUsernameQuery.selectedUser.name}" />
+            <h:outputLabel value="Apellidos:" />
+            <h:outputText value="#{searchUsernameQuery.selectedUser.surname}" />
+            <h:outputLabel value="Nombre de Usuario:" />
+                </h:panelGrid>
+    </h:form>
+
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action1}" /></div>
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action2}" /></div>

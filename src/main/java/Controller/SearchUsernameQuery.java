@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import EJB.UserFacadeLocal;
+import Modelo.User;
 
 @Named
 @RequestScoped
@@ -16,9 +17,8 @@ public class SearchUsernameQuery implements Serializable {
 
     //Campo por el que se realiza la busqueda para el filtro de usuarios
     private String searchTerm;
-
-    //Nombre del username que se selecciona en el filtro de busqueda de usuarios
-    private String selectedUser;
+    private User selectedUser;
+    private String errorMessage;
     private List<String> filteredUsers;
 
     public List<String> completeUser(String searchTerm) {
@@ -34,8 +34,14 @@ public class SearchUsernameQuery implements Serializable {
         return filtered;
     }
 
-    public void searchUser() {
-        // Lógica para buscar el usuario seleccionado (this.selectedUser)
+    public String searchUser() {
+        selectedUser = userFacadeLocal.findUserByUsername(searchTerm);
+        if (selectedUser == null) {
+            errorMessage = "No se encontró ningún usuario con el nombre de usuario: " + searchTerm;
+        } else {
+            errorMessage = null;
+        }
+        return null;
     }
 
     public UserFacadeLocal getUserFacadeLocal() {
@@ -54,19 +60,27 @@ public class SearchUsernameQuery implements Serializable {
         this.searchTerm = searchTerm;
     }
 
-    public String getSelectedUser() {
-        return selectedUser;
-    }
-
-    public void setSelectedUser(String selectedUser) {
-        this.selectedUser = selectedUser;
-    }
-
     public List<String> getFilteredUsers() {
         return filteredUsers;
     }
 
     public void setFilteredUsers(List<String> filteredUsers) {
         this.filteredUsers = filteredUsers;
+    }
+
+    public User getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(User selectedUser) {
+        this.selectedUser = selectedUser;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

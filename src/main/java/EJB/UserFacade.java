@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 /**
  *
@@ -246,4 +243,17 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         q.setMaxResults(3);
         return q.getResultList();
     }
+
+    @Override
+    public User findUserByUsername(String username) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+        query.setParameter("username", username);
+        List<User> result = query.getResultList();
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
+    }
+
+
 }
