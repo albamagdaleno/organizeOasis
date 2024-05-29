@@ -6,6 +6,7 @@
 package EJB;
 
 import Modelo.Block;
+import Modelo.Page;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface BlockFacadeLocal {
     List<Block> findRange(int[] range);
 
     int count();
+    
+    List<Block> getBlocksByPage(int id_page);
     
 }

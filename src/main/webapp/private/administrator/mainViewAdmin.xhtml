@@ -7,16 +7,20 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:head>
-        <title> Administrator Menu </title>
+        <title> Menu de Administrador </title>
     </h:head>
     
     <h:body>
 
         <ui:composition template="./../../WEB-INF/template/mainTemplate.xhtml">
 
-            <ui:insert name="top">
-               
-            </ui:insert>
+            <ui:define name="top">
+               <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px; display: flex; flex-direction: row; justify-content: end;">
+                    <h:form>
+                        <p:commandButton id="boton-logout" value="Cerrar Sesión" icon="pi pi-power-off" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.logout()}"/>
+                    </h:form>
+                </div>
+            </ui:define>
 
             <ui:define name="left">
                 <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; position: relative;">
