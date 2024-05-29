@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import EJB.UserFacadeLocal;
 import Modelo.User;
+import javax.faces.context.FacesContext;
 
 @Named
 @RequestScoped
@@ -37,12 +38,15 @@ public class SearchUsernameQuery implements Serializable {
     public String searchUser() {
         selectedUser = userFacadeLocal.findUserByUsername(searchTerm);
         if (selectedUser == null) {
-            errorMessage = "No se encontró ningún usuario con el nombre de usuario: " + searchTerm;
+            errorMessage = "No se encontró ningún usuario.";
+            return null;
         } else {
             errorMessage = null;
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedUser", selectedUser);
+            return "userDetails?faces-redirect=true";
         }
-        return null;
     }
+
 
     public UserFacadeLocal getUserFacadeLocal() {
         return userFacadeLocal;
