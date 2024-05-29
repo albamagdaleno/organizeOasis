@@ -111,13 +111,20 @@
                     </ui:remove>
                     
                 </div>
-                <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+               <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <ui:repeat value="#{mainViewUserController.notes}" var="note">
-                        <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; margin-left: 10px">
+                        <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; position: relative; margin-left: 10px;">
                             <h:outputText value="#{note.text}" />
+                            <div class="buttons" style="position: absolute; right: 10px; top: 10px;">
+                                <p:commandButton style="background-color: transparent; border: none; color: red;" 
+                                                 icon="pi pi-trash" onclick="PF('deleteNoteDialog').show(); #{mainViewUserController.getNoteToDelete(note)}" update="@this"/>
+                                <p:commandButton style="background-color: transparent; border: none; color: grey;" 
+                                                 icon="pi pi-pencil" onclick="PF('modifyNoteDialog').show()" action="#{mainViewUserController.getNoteToChange(note)}" update="@this"/>
+                            </div>
                         </div>
                     </ui:repeat>
                 </div>
+
                             
                 <h:form>
                     <p:confirmDialog widgetVar="newTextDialog"
@@ -210,6 +217,64 @@
                                 styleClass="ui-button-secondary" 
                                 icon="pi pi-times" 
                                 onclick="PF('newListDialogElements').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
+                    <p:confirmDialog widgetVar="deleteNoteDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="¿Eliminar la nota?"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Eliminar" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{mainViewUserController.deleteNote()}" 
+                                oncomplete="PF('deleteNoteDialog').hide(); location.reload(true);"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('deleteNoteDialog').hide();" />
+                        </div>
+                        
+                       </p:confirmDialog>
+                </h:form>
+                
+                <h:form>
+                    <p:confirmDialog widgetVar="modifyNoteDialog"
+                                     showEffect="fade" 
+                                     width="500" 
+                                     message="Introduce el nuevo texto para la nota:"
+                                     header="Confirmar" 
+                                     severity="info">
+                        
+                        <p:outputPanel style="text-align: center;">
+                            <p:inputTextarea id="name" value="#{mainViewUserController.newTextNoteToChange}" styleClass="input-text" 
+                             style="width:350px; height:100px"/>
+                        </p:outputPanel>
+                        
+                        
+                        
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Cambiar" 
+                                icon="pi pi-check" 
+                                style="background-color: red; border: none; "
+                                action="#{mainViewUserController.modifyNote()}" 
+                                oncomplete="PF('modifyNoteDialog').hide(); location.reload(true);"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar" 
+                                type="button" 
+                                styleClass="ui-button-secondary" 
+                                icon="pi pi-times" 
+                                onclick="PF('modifyNoteDialog').hide();" />
                         </div>
                         
                        </p:confirmDialog>

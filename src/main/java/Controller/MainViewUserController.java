@@ -47,6 +47,33 @@ public class MainViewUserController implements Serializable{
     private List<Page> listUserPages;
     private List<Block> blocks; 
     private List<Text> notes;
+    private Text noteToDelete;
+    private Text noteToChange;
+    private String newTextNoteToChange;
+
+    public Text getNoteToDelete() {
+        return noteToDelete;
+    }
+
+    public Text getNoteToChange() {
+        return noteToChange;
+    }
+
+    public String getNewTextNoteToChange() {
+        return newTextNoteToChange;
+    }
+
+    public void setNoteToDelete(Text noteToDelete) {
+        this.noteToDelete = noteToDelete;
+    }
+
+    public void setNoteToChange(Text noteToChange) {
+        this.noteToChange = noteToChange;
+    }
+
+    public void setNewTextNoteToChange(String newTextNoteToChange) {
+        this.newTextNoteToChange = newTextNoteToChange;
+    }
 
     public void setNotes(List<Text> notes) {
         this.notes = notes;
@@ -177,6 +204,27 @@ public class MainViewUserController implements Serializable{
             System.out.println("Pagina no cogida!!");
         }
         
+    }
+    
+    public void getNoteToDelete(Text note){
+        
+        this.noteToDelete = note;
+    }
+    
+    public void getNoteToChange(Text note){
+        
+        this.noteToChange = note;
+        this.newTextNoteToChange = this.noteToChange.getText();
+    }
+    
+    public void deleteNote(){
+        
+        textEJB.remove(this.noteToDelete);
+    }
+    
+    public void modifyNote(){
+        
+        textEJB.modifyNote(this.noteToChange, this.newTextNoteToChange);
     }
     
     public void getNotesOfBlocks() {
