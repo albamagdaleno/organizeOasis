@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import EJB.UserFacadeLocal;
 import Modelo.User;
+import org.primefaces.PrimeFaces;
+
 import javax.faces.context.FacesContext;
 
 @Named
 @RequestScoped
-public class SearchUsernameQuery implements Serializable {
+public class SearchUsernameController implements Serializable {
     @EJB
     private UserFacadeLocal userFacadeLocal;
 
@@ -39,11 +41,21 @@ public class SearchUsernameQuery implements Serializable {
         selectedUser = userFacadeLocal.findUserByUsername(searchTerm);
         if (selectedUser == null) {
             errorMessage = "No se encontró ningún usuario.";
+            PrimeFaces.current().ajax().update("errorDialog");
+            PrimeFaces.current().executeScript("PF('errorDialog').show()");
             return null;
         } else {
-            errorMessage = null;
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedUser", selectedUser);
-            return "userDetails?faces-redirect=true";
+            if(selectedUser.getRol().equals(User.Rol.Influencer)){
+                userFacadeLocal.updateUserVisits(selectedUser);
+                errorMessage = null;
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedUser", selectedUser);
+                return "userDetails?faces-redirect=true";
+            } else {
+                errorMessage = "El usuario es privado";
+                PrimeFaces.current().ajax().update("errorDialog");
+                PrimeFaces.current().executeScript("PF('errorDialog').show()");
+                return null;
+            }
         }
     }
 

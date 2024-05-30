@@ -29,7 +29,7 @@
             width: 100px;
             height: 100px;
         }
-        
+
         .error-message {
             color: red;
             margin-left: 10px;
@@ -42,22 +42,17 @@
 <ui:composition template="./../WEB-INF/template/mainTemplate.xhtml">
 
     <ui:define name="top">
-        <div class="top-div"
-             style="display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr auto; height: 0%;">
-            <div class="top-search" style="text-align: left; align-self: start; margin-bottom: 5px; margin-left: 5px;">
+        <div class="top-div" style="display: flex; justify-content: space-between;">
+            <div class="top-search" style="display: flex; align-items: center;">
                 <h:form>
                     <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
-                    <p:autoComplete id="userAutoComplete" value="#{searchUsernameQuery.searchTerm}"
-                                    completeMethod="#{searchUsernameQuery.completeUser}"
+                    <p:autoComplete id="userAutoComplete" value="#{searchUsernameController.searchTerm}"
+                                    completeMethod="#{searchUsernameController.completeUser}"
                                     dropdown="true" forceSelection="true"
-                                    placeholder="Buscar usuario"
-                    />
+                                    placeholder="Buscar usuario"/>
                     <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary"
-                                     action="#{searchUsernameQuery.searchUser()}" update="@form"/>
-                        <h:panelGroup layout="block" style="color: red; margin-left: 10px;"
-                                      rendered="#{not empty searchUsernameQuery.errorMessage}">
-                            <h:outputText value="#{searchUsernameQuery.errorMessage}"/>
-                        </h:panelGroup>
+                                     action="#{searchUsernameController.searchUser()}" update="@form"
+                                     oncomplete="if (#{not empty searchUsernameController.errorMessage}) PF('errorDialog').show();"/>
                 </h:form>
             </div>
             <div class="top-buttons"
@@ -246,6 +241,13 @@
 
             </p:confirmDialog>
         </h:form>
+
+        <p:dialog id="errorDialog" header="Error" widgetVar="errorDialog" modal="true" resizable="true"
+                  draggable="false">
+            <h:outputText value="#{searchUsernameController.errorMessage}"/>
+            <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog"/>
+        </p:dialog>
+
 
     </ui:define>
 

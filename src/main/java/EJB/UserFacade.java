@@ -255,5 +255,13 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         return result.get(0);
     }
 
+    @Override
+    public void updateUserVisits(User user) {
+            // Incrementar el campo visits
+            user.setVisits(user.getVisits() + 1);
+            // Actualizar el usuario en la base de datos
+            em.merge(user);
+    }
+
 
 }

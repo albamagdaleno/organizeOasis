@@ -72,6 +72,17 @@ public interface UserFacadeLocal {
      */
     List<String> getUsersStartingWith(String searchTerm);
 
+    /**
+     * Busca un usuario por su nombre de usuario
+     * @param username
+     * @return
+     */
     User findUserByUsername(String username);
 
+    /**
+     * Actualiza las visitas de un usuario
+     *
+     * @param user
+     */
+    void updateUserVisits(User user);
 }
