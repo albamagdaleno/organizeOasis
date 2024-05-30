@@ -31,4 +31,7 @@ public interface TextFacadeLocal {
     int count();
     
     List<Text> getNotesOfBlocks(int blockId);
+    
+    
+    void modifyNote(Text note, String newText);
 }
