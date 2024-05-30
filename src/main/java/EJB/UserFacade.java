@@ -130,7 +130,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
     
     @Override
-    public void changeUsername(String newUsername){
+    public Boolean changeUsername(String newUsername){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
@@ -140,19 +140,25 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
             if (userToUpdate != null) {
 
-                userToUpdate.setUsername(newUsername);
+                if(existsUsername(newUsername)){
+                    return true;
+                }else{
+                    userToUpdate.setUsername(newUsername);
 
-                em.merge(userToUpdate);
+                    em.merge(userToUpdate);
 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    return false;
+                }
+
             }
         }
-
+        return true;
     }
     
 
     @Override
-    public void changeEmail(String newEmail){
+    public Boolean changeEmail(String newEmail){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
@@ -161,15 +167,21 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
 
             if (userToUpdate != null) {
-
                 userToUpdate.setEmail(newEmail);
+                User existsUser = verifyUser(userToUpdate);
+                if(existsUser == null){
+                    userToUpdate.setEmail(newEmail);
 
-                em.merge(userToUpdate);
+                    em.merge(userToUpdate);
 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    return false;
+                }else{
+                    return true;
+                }
             }
         }
-
+        return true;
 
     }
 

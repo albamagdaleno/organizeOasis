@@ -55,11 +55,11 @@ public interface UserFacadeLocal {
 
     void changeSurname(String newSurname);
 
-    void changeEmail(String newEmail);
+    Boolean changeEmail(String newEmail);
 
     void changePassword(String newPassword);
     
-    void changeUsername(String newUsername);
+    Boolean changeUsername(String newUsername);
 
     List<Integer> getVisitsUsers();
 

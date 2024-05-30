@@ -3,11 +3,14 @@ package Controller;
 
 import EJB.UserFacadeLocal;
 import Modelo.User;
+import org.primefaces.PrimeFaces;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -33,6 +36,7 @@ public class settingsController implements Serializable{
     private String newEmail;
     private String newPassword;
     private String newUsername;
+    private String errorMessage;
 
     public void setUserToDelete(User userToDelete) {
         this.userToDelete = userToDelete;
@@ -148,8 +152,13 @@ public class settingsController implements Serializable{
     }
     
     public void changeEmail(){
-        
-        userEJB.changeEmail(this.newEmail);
+        Boolean error = userEJB.changeEmail(this.newEmail);
+
+        if(error){
+            errorMessage = "El correo ya existe.";
+            PrimeFaces.current().ajax().update("errorDialog");
+            PrimeFaces.current().executeScript("PF('errorDialog').show()");
+        }
     }
     
     public void changePassword(){
@@ -163,8 +172,13 @@ public class settingsController implements Serializable{
     }
     
     public void changeUsername(){
-        
-        userEJB.changeUsername(this.newUsername);
+        Boolean error = userEJB.changeUsername(this.newUsername);
+
+        if(error){
+            errorMessage = "El nombre de usuario ya existe";
+            PrimeFaces.current().ajax().update("errorDialog");
+            PrimeFaces.current().executeScript("PF('errorDialog').show()");
+        }
     }
     
     public void deleteUser(){
@@ -207,6 +221,14 @@ public class settingsController implements Serializable{
         public void setValor(String value) {
             this.value = value;
         }
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
 
