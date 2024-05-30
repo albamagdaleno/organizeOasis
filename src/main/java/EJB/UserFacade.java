@@ -263,5 +263,12 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             em.merge(user);
     }
 
+    @Override
+    public List<Page> findPagesByUserId(Integer userId) {
+        TypedQuery<Page> query = em.createQuery("SELECT p FROM Page p WHERE p.user.id_user = :userId", Page.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
+
 
 }

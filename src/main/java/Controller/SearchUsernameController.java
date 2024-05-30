@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import EJB.UserFacadeLocal;
+import Modelo.Page;
 import Modelo.User;
 import org.primefaces.PrimeFaces;
 
@@ -23,6 +24,7 @@ public class SearchUsernameController implements Serializable {
     private User selectedUser;
     private String errorMessage;
     private List<String> filteredUsers;
+    private List<Page> userPages;
 
     public List<String> completeUser(String searchTerm) {
         List<String> allUsers = userFacadeLocal.getUsersStartingWith(searchTerm);
@@ -49,6 +51,8 @@ public class SearchUsernameController implements Serializable {
                 userFacadeLocal.updateUserVisits(selectedUser);
                 errorMessage = null;
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedUser", selectedUser);
+                userPages = userFacadeLocal.findPagesByUserId(selectedUser.getId_user());
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userPages", userPages);
                 return "userDetails?faces-redirect=true";
             } else {
                 errorMessage = "El usuario es privado";
@@ -98,5 +102,13 @@ public class SearchUsernameController implements Serializable {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public List<Page> getUserPages() {
+        return userPages;
+    }
+
+    public void setUserPages(List<Page> userPages) {
+        this.userPages = userPages;
     }
 }

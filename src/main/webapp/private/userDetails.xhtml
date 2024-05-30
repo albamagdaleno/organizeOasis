@@ -45,13 +45,16 @@
         </ui:define>
 
         <ui:define name="left">
-            <h:form id="listOfPages">
-
-                <div>
-                    <p:menu model="#{mainViewUserController.model}"/>
-                </div>
+            <h:form id="leftContent">
+                <p:panel header="Páginas del Usuario">
+                    <p:dataList value="#{sessionScope.userPages}" var="page" itemType="page">
+                            <h:outputText value="#{page.title}" />
+                    </p:dataList>
+                    <h:panelGroup rendered="#{empty sessionScope.userPages}">
+                        <h:outputText value="Este usuario no tiene páginas." />
+                    </h:panelGroup>
+                </p:panel>
             </h:form>
-
         </ui:define>
 
         <ui:define name="content">

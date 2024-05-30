@@ -85,4 +85,12 @@ public interface UserFacadeLocal {
      * @param user
      */
     void updateUserVisits(User user);
+
+    /**
+     * Obtiene las paginas de un usuario
+     *
+     * @param userId
+     * @return
+     */
+    List<Page> findPagesByUserId(Integer userId);
 }
