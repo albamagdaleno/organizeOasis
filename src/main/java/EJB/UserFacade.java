@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.context.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 /**
  *
@@ -133,7 +130,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
     
     @Override
-    public void changeUsername(String newUsername){
+    public Boolean changeUsername(String newUsername){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
@@ -143,19 +140,25 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
             if (userToUpdate != null) {
 
-                userToUpdate.setUsername(newUsername);
+                if(existsUsername(newUsername)){
+                    return true;
+                }else{
+                    userToUpdate.setUsername(newUsername);
 
-                em.merge(userToUpdate);
+                    em.merge(userToUpdate);
 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    return false;
+                }
+
             }
         }
-
+        return true;
     }
     
 
     @Override
-    public void changeEmail(String newEmail){
+    public Boolean changeEmail(String newEmail){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
@@ -164,15 +167,21 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
 
             if (userToUpdate != null) {
-
                 userToUpdate.setEmail(newEmail);
+                User existsUser = verifyUser(userToUpdate);
+                if(existsUser == null){
+                    userToUpdate.setEmail(newEmail);
 
-                em.merge(userToUpdate);
+                    em.merge(userToUpdate);
 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
+                    return false;
+                }else{
+                    return true;
+                }
             }
         }
-
+        return true;
 
     }
 
@@ -246,4 +255,32 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         q.setMaxResults(3);
         return q.getResultList();
     }
+
+    @Override
+    public User findUserByUsername(String username) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+        query.setParameter("username", username);
+        List<User> result = query.getResultList();
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result.get(0);
+    }
+
+    @Override
+    public void updateUserVisits(User user) {
+            // Incrementar el campo visits
+            user.setVisits(user.getVisits() + 1);
+            // Actualizar el usuario en la base de datos
+            em.merge(user);
+    }
+
+    @Override
+    public List<Page> findPagesByUserId(Integer userId) {
+        TypedQuery<Page> query = em.createQuery("SELECT p FROM Page p WHERE p.user.id_user = :userId", Page.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
+
+
 }

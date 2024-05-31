@@ -1,61 +1,75 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    
-    <h:head>
-        <style>
-            .button-container {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 10px;
-                margin-top: 10px;
-            }
-            .blocks-container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .block {
-                background-color: #f0f0f0;
-                padding: 20px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                width: 100px; 
-                height: 100px; 
-            }
-        </style>
-    </h:head>
-    
-    <body>
 
-        <ui:composition template="./../WEB-INF/template/mainTemplate.xhtml">
+<h:head>
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
 
-            <ui:define name="top">
-                <div class="top-div" style="display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr auto; height: 0%;">
-                    <div class="top-search" style="text-align: left; align-self: start; margin-bottom: 5px; margin-left: 5px;">
-                        <h:form>
-                            <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
-                            <p:autoComplete id="userAutoComplete" value="#{searchUsernameQuery.searchTerm}"
-                                            completeMethod="#{searchUsernameQuery.completeUser}"
-                                            dropdown="true" forceSelection="true"
-                                            placeholder="Buscar usuario" 
-                                            />
-                            <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary" action="#{searchUsernameQuery.searchUser()}" />
-                        </h:form>
-                    </div>
-                    <div class="top-buttons" style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px; display: flex; flex-direction: row; justify-content: end;">
-                        <h:form>
-                            <p:commandButton id="boton-ajustes" value="Ajustes" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.redirectToSettings()}"/>
-                        </h:form>
-                        <h:form>
-                            <p:commandButton id="boton-logout" value="Cerrar Sesión" icon="pi pi-power-off" styleClass="ui-button-raised ui-button-secondary" action="#{navigationBean.logout()}"/>
-                        </h:form>
-                    </div>
-                </div> 
-            </ui:define>
+        .blocks-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .block {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .error-message {
+            color: red;
+            margin-left: 10px;
+        }
+    </style>
+</h:head>
+
+<body>
+
+<ui:composition template="./../WEB-INF/template/mainTemplate.xhtml">
+
+    <ui:define name="top">
+        <div class="top-div" style="display: flex; justify-content: space-between;">
+            <div class="top-search" style="display: flex; align-items: center;">
+                <h:form>
+                    <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
+                    <p:autoComplete id="userAutoComplete" value="#{searchUsernameController.searchTerm}"
+                                    completeMethod="#{searchUsernameController.completeUser}"
+                                    dropdown="true" forceSelection="true"
+                                    placeholder="Buscar usuario"/>
+                    <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary"
+                                     action="#{searchUsernameController.searchUser()}" update="@form"
+                                     oncomplete="if (#{not empty searchUsernameController.errorMessage}) PF('errorDialog').show();"/>
+                </h:form>
+            </div>
+            <div class="top-buttons"
+                 style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px; display: flex; flex-direction: row; justify-content: end;">
+                <h:form>
+                    <p:commandButton id="boton-ajustes" value="Ajustes"
+                                     styleClass="ui-button-raised ui-button-secondary"
+                                     action="#{navigationBean.redirectToSettings()}"/>
+                </h:form>
+                <h:form>
+                    <p:commandButton id="boton-logout" value="Cerrar Sesión" icon="pi pi-power-off"
+                                     styleClass="ui-button-raised ui-button-secondary"
+                                     action="#{navigationBean.logout()}"/>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
 
             <ui:define name="left">
                
@@ -76,44 +90,44 @@
                     </div>
                 </h:form>
 
-                
+
                 <h:form id="dialogs">
                     <p:confirmDialog widgetVar="addPageDialog"
-                                     showEffect="fade" 
-                                     width="500" 
-                                     header="Nueva Página" 
+                                     showEffect="fade"
+                                     width="500"
+                                     header="Nueva Página"
                                      message="Introduce un titulo para la nueva página"
                                      closable="false"
                                     >
                         <p:outputPanel style="text-align:center;">
                             <p:inputText id="title" value="#{mainViewUserController.newPage.title}" styleClass="input-text"/>
                         </p:outputPanel>
-                        
+
                         <br/>
                         <div style="margin-top:10px">
-                            <p:commandButton value="Confirmar" 
+                            <p:commandButton value="Confirmar"
                                 icon="pi pi-check"
                                 style="background-color: red; border: none; "
-                                action="#{mainViewUserController.addPage()}" 
-                                oncomplete="PF('addPageDialog').hide(); location.reload(true)" 
+                                action="#{mainViewUserController.addPage()}"
+                                oncomplete="PF('addPageDialog').hide(); location.reload(true)"
                                 update="@form"/>
-                            <p:commandButton value="Cancelar" 
-                                type="button" 
-                                styleClass="ui-button-secondary" 
-                                icon="pi pi-times" 
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
                                 onclick="PF('addPageDialog').hide(); location.reload(true)" />
                         </div>
-                        
-                      
+
+
                     </p:confirmDialog>
-                    
+
                 </h:form>
-                
+
 
             </ui:define>
 
             <ui:define name="content">
-              
+
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newTextDialog').show()" /></div>
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newListDialog').show()" /></div>
@@ -121,7 +135,7 @@
                         <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva tabla" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action3}" /></div>
                         <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva imagen" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action4}" /></div>
                     </ui:remove>
-                    
+
                 </div>
                <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
                    <p:outputLabel value="#{mainViewUserController.titleOfPage}" style="font-size: 27px; margin-left: 5px; align-self: center; font-weight: bold; color: #849795;"/>
@@ -130,173 +144,179 @@
                         <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; position: relative; margin-left: 10px;">
                             <h:outputText value="#{note.text}" />
                             <div class="buttons" style="position: absolute; right: 10px; top: 10px;">
-                                <p:commandButton style="background-color: transparent; border: none; color: red;" 
+                                <p:commandButton style="background-color: transparent; border: none; color: red;"
                                                  icon="pi pi-trash" onclick="PF('deleteNoteDialog').show(); #{mainViewUserController.getNoteToDelete(note)}" update="@this"/>
-                                <p:commandButton style="background-color: transparent; border: none; color: grey;" 
+                                <p:commandButton style="background-color: transparent; border: none; color: grey;"
                                                  icon="pi pi-pencil" onclick="PF('modifyNoteDialog').show()" action="#{mainViewUserController.getNoteToChange(note)}" update="@this"/>
                             </div>
                         </div>
                     </ui:repeat>
                 </div>
 
-                            
+
                 <h:form>
                     <p:confirmDialog widgetVar="newTextDialog"
-                                     showEffect="fade" 
-                                     width="500" 
+                                     showEffect="fade"
+                                     width="500"
                                      message="Texto inicial de la nota:"
-                                     header="Confirmar" 
+                                     header="Confirmar"
                                      severity="info">
-                        
+
                         <p:outputPanel style="text-align: center;">
-                            <p:inputTextarea id="name" value="#{mainViewUserController.newTextNote}" styleClass="input-text" 
+                            <p:inputTextarea id="name" value="#{mainViewUserController.newTextNote}" styleClass="input-text"
                              style="width:350px; height:100px"/>
                         </p:outputPanel>
-                        
-                        
-                        
+
+
+
                         <div style="margin-top:10px">
-                            <p:commandButton value="Crear" 
-                                icon="pi pi-check" 
+                            <p:commandButton value="Crear"
+                                icon="pi pi-check"
                                 style="background-color: red; border: none; "
-                                action="#{mainViewUserController.createNote()}" 
+                                action="#{mainViewUserController.createNote()}"
                                 oncomplete="PF('newTextDialog').hide(); location.reload(true);"
                                 update="@form"/>
-                            <p:commandButton value="Cancelar" 
-                                type="button" 
-                                styleClass="ui-button-secondary" 
-                                icon="pi pi-times" 
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
                                 onclick="PF('newTextDialog').hide();" />
                         </div>
-                        
+
                        </p:confirmDialog>
                 </h:form>
-                
+
                 <h:form>
                     <p:confirmDialog widgetVar="newListDialog"
-                                     showEffect="fade" 
-                                     width="500" 
+                                     showEffect="fade"
+                                     width="500"
                                      message="Número de elementos iniciales de la lista:"
-                                     header="Confirmar" 
+                                     header="Confirmar"
                                      severity="info">
-                        
+
                         <p:outputPanel style="text-align: center;">
                             <p:inputText id="name" value="#{mainViewUserController.numberElementsNewList}" styleClass="input-text" style="width:350px"/>
                         </p:outputPanel>
-                        
-                        
-                        
+
+
+
                         <div style="margin-top:10px">
-                            <p:commandButton value="Siguiente" 
-                                icon="pi pi-check" 
+                            <p:commandButton value="Siguiente"
+                                icon="pi pi-check"
                                 style="background-color: red; border: none; "
                                 onclick="PF('newListDialogElements').show()"
-                               
+
                                 oncomplete="PF('newTextDialog').hide()"
                                 update="@form"/>
-                            <p:commandButton value="Cancelar" 
-                                type="button" 
-                                styleClass="ui-button-secondary" 
-                                icon="pi pi-times" 
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
                                 onclick="PF('newListDialog').hide();" />
                         </div>
-                        
+
                        </p:confirmDialog>
                 </h:form>
-                
+
                 <h:form>
                     <p:confirmDialog widgetVar="newListDialogElements"
-                                     showEffect="fade" 
-                                     width="500" 
+                                     showEffect="fade"
+                                     width="500"
                                      message="Introduce los elementos en lineas separadas:"
-                                     header="Confirmar" 
+                                     header="Confirmar"
                                      severity="info">
-                        
+
                         <p:outputPanel style="text-align: center;">
-                            <p:inputTextarea id="name" value="#{mainViewUserController.elementsList}" styleClass="input-text" 
+                            <p:inputTextarea id="name" value="#{mainViewUserController.elementsList}" styleClass="input-text"
                              style="width:350px; height:200px"/>
                         </p:outputPanel>
-                        
-                        
-                        
+
+
+
                         <div style="margin-top:10px">
-                            <p:commandButton value="Siguiente" 
-                                icon="pi pi-check" 
+                            <p:commandButton value="Siguiente"
+                                icon="pi pi-check"
                                 style="background-color: red; border: none; "
-                                action="#{mainViewUserController.createList()}" 
+                                action="#{mainViewUserController.createList()}"
                                 oncomplete="PF('newListDialogElements').hide()"
                                 update="@form"/>
-                            <p:commandButton value="Cancelar" 
-                                type="button" 
-                                styleClass="ui-button-secondary" 
-                                icon="pi pi-times" 
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
                                 onclick="PF('newListDialogElements').hide();" />
                         </div>
-                        
+
                        </p:confirmDialog>
                 </h:form>
-                
+
                 <h:form>
                     <p:confirmDialog widgetVar="deleteNoteDialog"
-                                     showEffect="fade" 
-                                     width="500" 
+                                     showEffect="fade"
+                                     width="500"
                                      message="¿Eliminar la nota?"
-                                     header="Confirmar" 
+                                     header="Confirmar"
                                      severity="info">
-                        
-                        
+
+
                         <div style="margin-top:10px">
-                            <p:commandButton value="Eliminar" 
-                                icon="pi pi-check" 
+                            <p:commandButton value="Eliminar"
+                                icon="pi pi-check"
                                 style="background-color: red; border: none; "
-                                action="#{mainViewUserController.deleteNote()}" 
+                                action="#{mainViewUserController.deleteNote()}"
                                 oncomplete="PF('deleteNoteDialog').hide(); location.reload(true);"
                                 update="@form"/>
-                            <p:commandButton value="Cancelar" 
-                                type="button" 
-                                styleClass="ui-button-secondary" 
-                                icon="pi pi-times" 
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
                                 onclick="PF('deleteNoteDialog').hide();" />
                         </div>
-                        
+
                        </p:confirmDialog>
                 </h:form>
-                
+
                 <h:form>
                     <p:confirmDialog widgetVar="modifyNoteDialog"
-                                     showEffect="fade" 
-                                     width="500" 
+                                     showEffect="fade"
+                                     width="500"
                                      message="Introduce el nuevo texto para la nota:"
-                                     header="Confirmar" 
+                                     header="Confirmar"
                                      severity="info">
-                        
+
                         <p:outputPanel style="text-align: center;">
-                            <p:inputTextarea id="name" value="#{mainViewUserController.newTextNoteToChange}" styleClass="input-text" 
+                            <p:inputTextarea id="name" value="#{mainViewUserController.newTextNoteToChange}" styleClass="input-text"
                              style="width:350px; height:100px"/>
                         </p:outputPanel>
-                        
-                        
-                        
+
+
+
                         <div style="margin-top:10px">
-                            <p:commandButton value="Cambiar" 
-                                icon="pi pi-check" 
+                            <p:commandButton value="Cambiar"
+                                icon="pi pi-check"
                                 style="background-color: red; border: none; "
-                                action="#{mainViewUserController.modifyNote()}" 
+                                action="#{mainViewUserController.modifyNote()}"
                                 oncomplete="PF('modifyNoteDialog').hide(); location.reload(true);"
                                 update="@form"/>
-                            <p:commandButton value="Cancelar" 
-                                type="button" 
-                                styleClass="ui-button-secondary" 
-                                icon="pi pi-times" 
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
                                 onclick="PF('modifyNoteDialog').hide();" />
                         </div>
                         
                        </p:confirmDialog>
                 </h:form>
+
+                <p:dialog id="errorDialog" header="Error" widgetVar="errorDialog" modal="true" resizable="true"
+                          draggable="false">
+                    <h:outputText value="#{searchUsernameController.errorMessage}"/>
+                    <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog"/>
+                </p:dialog>
                 
             </ui:define>
 
-        </ui:composition>
+</ui:composition>
 
-    </body>
+</body>
 </html>
