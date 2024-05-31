@@ -50,9 +50,32 @@ public class MainViewUserController implements Serializable{
     private List<Lista> lists;
     private Text noteToDelete;
     private Text noteToChange;
+    private Lista listToDelete;
+    private Lista listToChange;
     private String newTextNoteToChange;
     private String titleOfPage;
+    private String newTextNote;
+    private int numberElementsNewList;
+    private String elementsList;
+    private Page globalPage;
 
+
+    public void setListToDelete(Lista listToDelete) {
+        this.listToDelete = listToDelete;
+    }
+
+    public void setListToChange(Lista listToChange) {
+        this.listToChange = listToChange;
+    }
+
+    public Lista getListToDelete() {
+        return listToDelete;
+    }
+
+    public Lista getListToChange() {
+        return listToChange;
+    }
+    
     public Text getNoteToDelete() {
         return noteToDelete;
     }
@@ -116,12 +139,8 @@ public class MainViewUserController implements Serializable{
     public ListFacadeLocal getListEJB() {
         return listEJB;
     }
-    private String newTextNote;
-    private int numberElementsNewList;
-    private String elementsList;
-    private Page globalPage;
     
-
+   
     public void setElementsList(String elementsList) {
         this.elementsList = elementsList;
     }
@@ -216,6 +235,16 @@ public class MainViewUserController implements Serializable{
         this.noteToDelete = note;
     }
     
+    public void getListToDelete(Lista list){
+        
+        this.listToDelete = list;
+    }
+    
+    public void getListToChange(Lista list){
+        
+        this.listToChange = list;
+    }
+    
     public void getNoteToChange(Text note){
         
         this.noteToChange = note;
@@ -225,6 +254,11 @@ public class MainViewUserController implements Serializable{
     public void deleteNote(){
         
         textEJB.remove(this.noteToDelete);
+    }
+    
+    public void deleteList(){
+        
+        listEJB.remove(this.listToDelete);
     }
     
     public void modifyNote(){
@@ -306,16 +340,15 @@ public class MainViewUserController implements Serializable{
         
         //En bbdd los guardamos separados por ; para saber como representarlos
         String transformedList = String.join(";", elementsArray);
+        System.out.println(transformedList);
     
-        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
-        
         Block newBlock = new Block();
-        newBlock.setPage(actualPage);
+        newBlock.setPage(this.globalPage);
         blockEJB.create(newBlock);
         
         Modelo.Lista newList = new Modelo.Lista();
         newList.setBlock(newBlock);
-        newList.setText(elementsList);
+        newList.setText(transformedList);
         listEJB.create(newList);
         
         
