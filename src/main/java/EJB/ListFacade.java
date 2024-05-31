@@ -5,17 +5,19 @@
  */
 package EJB;
 
-import Modelo.List;
+import Modelo.Lista;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author alimb
  */
 @Stateless
-public class ListFacade extends AbstractFacade<List> implements ListFacadeLocal {
+public class ListFacade extends AbstractFacade<Lista> implements ListFacadeLocal {
 
     @PersistenceContext(unitName = "OrganizeOasisPU")
     private EntityManager em;
@@ -26,7 +28,14 @@ public class ListFacade extends AbstractFacade<List> implements ListFacadeLocal 
     }
 
     public ListFacade() {
-        super(List.class);
+        super(Lista.class);
+    }
+    
+    public List<Lista> getListsOfBlocks(int blockId){
+        
+        Query query = em.createQuery("SELECT l FROM Lista l WHERE l.block.idBlock = :idBlock");
+        query.setParameter("idBlock", blockId);
+        return query.getResultList();
     }
     
 }

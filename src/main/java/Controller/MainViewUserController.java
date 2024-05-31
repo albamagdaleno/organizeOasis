@@ -47,6 +47,7 @@ public class MainViewUserController implements Serializable{
     private List<Page> listUserPages;
     private List<Block> blocks; 
     private List<Text> notes;
+    private List<Lista> lists;
     private Text noteToDelete;
     private Text noteToChange;
     private String newTextNoteToChange;
@@ -201,7 +202,7 @@ public class MainViewUserController implements Serializable{
             getBlocksOfAcutalPage(globalPage);
             getNotesOfBlocks();
             titleOfPage=globalPage.getTitle();
-            //getListsOfBlocks();
+            getListsOfBlocks();
                 
         }else{
             
@@ -232,22 +233,57 @@ public class MainViewUserController implements Serializable{
     }
     
     public void getNotesOfBlocks() {
-    notes = new ArrayList<>();
+        notes = new ArrayList<>();
+        try {
+            for (Block block : this.blocks) {
+                int blockId = block.getIdBlock();
+                List<Text> blockNotes = this.textEJB.getNotesOfBlocks(blockId);
+                if (blockNotes != null) {
+                    notes.addAll(blockNotes);
+                }
+            }
+            if(notes.size()!=0){
+                System.out.println("Esta llenando las notas");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("textEJB is null");
+        }
+    }
+    
+    
+    
+    public void getListsOfBlocks() {
+    lists = new ArrayList<>(); 
     try {
         for (Block block : this.blocks) {
             int blockId = block.getIdBlock();
-            List<Text> blockNotes = this.textEJB.getNotesOfBlocks(blockId);
-            if (blockNotes != null) {
-                notes.addAll(blockNotes);
+            List<Lista> blockLists = this.listEJB.getListsOfBlocks(blockId);
+            if (blockLists != null) {
+                lists.addAll(blockLists);
             }
         }
-        if(notes.size()!=0){
-            System.out.println("Esta llenando las notas");
+        
+        for (Lista lista : lists) {
+            
+            String modifiedText = lista.getText().replace(";", "<br /><br /> - ");
+            lista.setText(modifiedText);
         }
+        
+        if(notes.size()!=0){
+                System.out.println("Esta llenando las notas");
+            }
     } catch (NullPointerException e) {
-        System.out.println("textEJB is null");
+        System.out.println("listEJB is null");
     }
 }
+
+    public void setLists(List<Lista> lists) {
+        this.lists = lists;
+    }
+
+    public List<Lista> getLists() {
+        return lists;
+    }
 
     
     
@@ -277,7 +313,7 @@ public class MainViewUserController implements Serializable{
         newBlock.setPage(actualPage);
         blockEJB.create(newBlock);
         
-        Modelo.List newList = new Modelo.List();
+        Modelo.Lista newList = new Modelo.Lista();
         newList.setBlock(newBlock);
         newList.setText(elementsList);
         listEJB.create(newList);
