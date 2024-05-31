@@ -71,7 +71,7 @@
                 <h:form id="listOfPages">
                     
                     <div>
-                        <p:remoteCommand name="reloadPage" action="#{mainViewUserController.reloadPage}" oncomplete="location.reload(true);" />
+                        <p:remoteCommand name="reloadPage" oncomplete="location.reload(true);" />
                         <p:menu model="#{mainViewUserController.model}" />
                     </div>
                 </h:form>
@@ -114,7 +114,6 @@
 
             <ui:define name="content">
               
-                
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newTextDialog').show()" /></div>
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newListDialog').show()" /></div>
@@ -125,6 +124,8 @@
                     
                 </div>
                <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                   <p:outputLabel value="#{mainViewUserController.titleOfPage}" style="font-size: 27px; margin-left: 5px; align-self: center; font-weight: bold; color: #849795;"/>
+                
                     <ui:repeat value="#{mainViewUserController.notes}" var="note">
                         <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; position: relative; margin-left: 10px;">
                             <h:outputText value="#{note.text}" />

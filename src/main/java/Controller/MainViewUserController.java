@@ -50,6 +50,7 @@ public class MainViewUserController implements Serializable{
     private Text noteToDelete;
     private Text noteToChange;
     private String newTextNoteToChange;
+    private String titleOfPage;
 
     public Text getNoteToDelete() {
         return noteToDelete;
@@ -162,7 +163,7 @@ public class MainViewUserController implements Serializable{
         page = new Page();
         newPage = new Page();
         user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
-        
+        titleOfPage = "";
     
         //Modelo para la lista de paginas del usuario
         model = new DefaultMenuModel();
@@ -196,9 +197,10 @@ public class MainViewUserController implements Serializable{
         if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
             
             globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
-
+               
             getBlocksOfAcutalPage(globalPage);
             getNotesOfBlocks();
+            titleOfPage=globalPage.getTitle();
             //getListsOfBlocks();
                 
         }else{
@@ -347,6 +349,10 @@ public class MainViewUserController implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedPage", selectedPage);
     }
 
+    public void setTitleOfPage(String titleOfPage) {
+        this.titleOfPage= titleOfPage;
+    }
+    
     public Page getPage() {
         return page;
     }
@@ -366,6 +372,12 @@ public class MainViewUserController implements Serializable{
     public Page getSelectedPage() {
         return selectedPage;
     }
+
+    public String getTitleOfPage() {
+        return titleOfPage;
+    }
+    
+    
 
     public UserFacadeLocal getUserEJB() {
         return userEJB;
