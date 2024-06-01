@@ -135,6 +135,9 @@
                 <div class="button-container" style="display: flex; margin-bottom: 10px; padding-top: 10px;">
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva nota" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newTextDialog').show()" /></div>
                     <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva lista" styleClass="ui-button-raised ui-button-secondary" onclick="PF('newListDialogElements').show()" /></div>
+                    <div style="margin-right: 5px; margin-left: 5px;">
+                        <p:commandButton value="Eliminar Página" style="background-color:red; border-color: red; " onclick="PF('DeletePage').show()" />
+                    </div>
                     <ui:remove>
                         <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva tabla" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action3}" /></div>
                         <div style="margin-right: 5px; margin-left: 5px;"><p:commandButton value="Nueva imagen" styleClass="ui-button-raised ui-button-secondary" action="#{bean.action4}" /></div>
@@ -143,9 +146,7 @@
                 </div>
                <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
                    <p:outputLabel value="#{mainViewUserController.titleOfPage}" style="font-size: 27px; margin-left: 5px; align-self: center; font-weight: bold; color: #849795;"/>
-                    <div style="margin-right: 5px; margin-left: 5px;">
-                        <p:commandButton value="Eliminar Página" styleClass="ui-button-raised ui-button-secondary" onclick="PF('DeletePage').show()" />
-                    </div>
+                    
                     <ui:repeat value="#{mainViewUserController.notes}" var="note">
                         <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; position: relative; margin-left: 10px;">
                             <h:outputText value="#{note.text}" />
@@ -164,8 +165,10 @@
                             <div class="buttons" style="position: absolute; right: 10px; top: 10px;">
                                 <p:commandButton style="background-color: transparent; border: none; color: red;"
                                                  icon="pi pi-trash" onclick="PF('deleteListDialog').show(); #{mainViewUserController.getListToDelete(list)}" update="@this"/>
+                                <ui:remove>
                                 <p:commandButton style="background-color: transparent; border: none; color: grey;"
                                                  icon="pi pi-pencil" onclick="PF('modifyListDialog').show()" action="#{mainViewUserController.getListToChange(list)}" update="@this"/>
+                                </ui:remove>
                             </div>
                         </div>
                     </ui:repeat>

@@ -252,7 +252,11 @@ public class MainViewUserController implements Serializable{
     }
     
     public void deletePage(){
+        this.setTitleOfPage("");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedPage", null);
         pageEJB.remove(globalPage);
+        
+        globalPage=null;
     }
     
     public void deleteNote(){
@@ -450,8 +454,6 @@ public class MainViewUserController implements Serializable{
         return titleOfPage;
     }
     
-    
-
     public UserFacadeLocal getUserEJB() {
         return userEJB;
     }
