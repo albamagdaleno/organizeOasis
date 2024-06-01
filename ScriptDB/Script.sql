@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
  id_user INT NOT NULL AUTO_INCREMENT,
  name VARCHAR(16),
  surname VARCHAR(24),
- username VARCHAR(16);
+ username VARCHAR(16),
  email VARCHAR(32),
  user_password VARCHAR(32),
  rol ENUM('Private','Influencer','Administrator'),
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
  id_user INT NOT NULL,
  visits INT,
  PRIMARY KEY (id_page),
- FOREIGN KEY (id_user) REFERENCES users(id_user));
+ FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE);
 -- ALTER TABLE pages
 -- MODIFY COLUMN id_user COMMENT 'Usuario al que esta asociado la pagina',
 -- MODIFY COLUMN num_blocks COMMENT 'Numero de bloques en los que se divide la pagina';
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS users (
  id_type INT,
  id_page INT NOT NULL,
  PRIMARY KEY (id_block),
- FOREIGN KEY (id_page) REFERENCES pages(id_page));
+ FOREIGN KEY (id_page) REFERENCES pages(id_page) ON DELETE CASCADE);
 -- ALTER TABLE blocks
 -- MODIFY COLUMN id_page COMMENT 'Pagina a la que esta asociado un bloque';
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS users (
  id_block INT,
  text_str text,
  PRIMARY KEY (id_texts),
- FOREIGN KEY (id_block) REFERENCES blocks(id_block));
+ FOREIGN KEY (id_block) REFERENCES blocks(id_block) ON DELETE CASCADE);
 -- ALTER TABLE texts
 -- MODIFY COLUMN id_block COMMENT 'Bloque al que esta asociado un tipo de bloque texto';
  
@@ -54,17 +54,17 @@ CREATE TABLE IF NOT EXISTS users (
  id_block INT,
  text_str text,
  PRIMARY KEY (id_list),
- FOREIGN KEY (id_block) REFERENCES blocks(id_block));
+ FOREIGN KEY (id_block) REFERENCES blocks(id_block) ON DELETE CASCADE);
 -- ALTER TABLE lists
 -- MODIFY COLUMN id_block COMMENT 'Bloque al que esta asociado un tipo de bloque lista';
 
 
-   CREATE TABLE IF NOT EXISTS tables (
- id_table INT NOT NULL AUTO_INCREMENT,
- id_block INT,
- text_str text,
- PRIMARY KEY (id_table),
- FOREIGN KEY (id_block) REFERENCES blocks(id_block));
+--   CREATE TABLE IF NOT EXISTS tables (
+-- id_table INT NOT NULL AUTO_INCREMENT,
+-- id_block INT,
+-- text_str text,
+-- PRIMARY KEY (id_table),
+-- FOREIGN KEY (id_block) REFERENCES blocks(id_block));
 -- ALTER TABLE tables
 -- MODIFY COLUMN id_block COMMENT 'Bloque al que esta asociado un tipo de bloque tabla';
 
@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS users (
  ALTER TABLE blocks
  ADD CONSTRAINT fk_Lists FOREIGN KEY (id_type) REFERENCES lists(id_list);
 
- ALTER TABLE blocks
- ADD CONSTRAINT fk_Tables FOREIGN KEY (id_type) REFERENCES tables(id_table);
+-- ALTER TABLE blocks
+-- ADD CONSTRAINT fk_Tables FOREIGN KEY (id_type) REFERENCES tables(id_table);
  
  -- USUARIOS --
  INSERT INTO `organizeOasis`.`users` (`id_user`, `name`, `surname`, `email`) VALUES ('1', 'Alicia', 'Mayor', 'alicia@gmail.com');
