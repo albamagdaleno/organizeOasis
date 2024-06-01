@@ -7,7 +7,6 @@ package EJB;
 
 import Modelo.Page;
 import Modelo.User;
-import org.eclipse.persistence.exceptions.QueryException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +57,30 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", result);
         } 
         
+        return result;
+    }
+
+    @Override
+    public User verifyUserWithoutGlobal(User user){
+
+        User result = null;
+
+        //Creamos la consulta para ver si el usuario está en bbdd
+        String stringQuery = "FROM User u WHERE u.email=:param1 and u.password=:param2";
+
+        Query query = em.createQuery(stringQuery);
+
+        query.setParameter("param1", user.getEmail());
+        query.setParameter("param2", user.getPassword());
+
+        //Devuelve null si no encuentra al usuario o una lista de usuarios en caso de que si
+        //(Cuento con que no pueda haber dos usuarios con mismo mail, así que si devuelve devolverá solo 1 user)
+        List<User> listUsers = query.getResultList();
+
+        if (!listUsers.isEmpty()) {
+            result = listUsers.get(0);
+        }
+
         return result;
     }
 
@@ -130,7 +153,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
     
     @Override
-    public Boolean changeUsername(String newUsername){
+    public void changeUsername(String newUsername){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
@@ -139,49 +162,37 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             User userToUpdate = em.find(User.class, globalUser.getId_user());
 
             if (userToUpdate != null) {
-
-                if(existsUsername(newUsername)){
-                    return true;
-                }else{
+                if(!existsUsername(newUsername)){
                     userToUpdate.setUsername(newUsername);
 
                     em.merge(userToUpdate);
 
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
-                    return false;
                 }
 
             }
         }
-        return true;
     }
-    
+
 
     @Override
-    public Boolean changeEmail(String newEmail){
+    public void changeEmail(String newEmail){
 
         User globalUser = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
 
         if (globalUser != null) {
-
             User userToUpdate = em.find(User.class, globalUser.getId_user());
 
             if (userToUpdate != null) {
+
                 userToUpdate.setEmail(newEmail);
-                User existsUser = verifyUser(userToUpdate);
-                if(existsUser == null){
-                    userToUpdate.setEmail(newEmail);
 
-                    em.merge(userToUpdate);
+                em.merge(userToUpdate);
 
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
-                    return false;
-                }else{
-                    return true;
-                }
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("globalUser", userToUpdate);
             }
         }
-        return true;
+
 
     }
 

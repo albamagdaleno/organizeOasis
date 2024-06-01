@@ -10,7 +10,7 @@
 </h:head>
 <h:body style="background-image: url('#{resource['images/oasis.png']}'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center;">
     <h:form>
-        <h2>¡Regístrate en OrganizeOasis!</h2>
+        <h2 style="font-family: Arial, sans-serif;">¡Regístrate en OrganizeOasis!</h2>
         <p:messages id="msgs"/>
         <div class="form-group">
             <h:outputLabel for="name" value="Nombre:" styleClass="input-label"/>
@@ -71,8 +71,7 @@
         <p:dialog header="Error" id="errorDialog" widgetVar="errorDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:outputText value="#{registerController.errorRegister}" />
         </p:dialog>
-        <h:link value="Volver al inicio de sesión" outcome="/index.xhtml" styleClass="input-label" style="margin-left: 20px;"/>
-
+        <p:commandButton value="Volver al login" action="#{registerController.backToIndex()}" styleClass="ui-button-raised ui-button-flat ui-button-plain"/>
     </h:form>
 </h:body>
 </html>

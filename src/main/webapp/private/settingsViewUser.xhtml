@@ -272,12 +272,6 @@
                         
                        </p:confirmDialog>
                 </h:form>
-                <p:dialog id="errorDialog" header="Error" widgetVar="errorDialog" modal="true" resizable="true"
-                          draggable="false">
-                    <h:outputText value="#{settingsController.errorMessage}"/>
-                    <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog"/>
-                </p:dialog>
-
             </ui:define>
         </ui:composition>
 

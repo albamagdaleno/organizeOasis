@@ -55,11 +55,11 @@ public interface UserFacadeLocal {
 
     void changeSurname(String newSurname);
 
-    Boolean changeEmail(String newEmail);
+    void changeEmail(String newEmail);
 
     void changePassword(String newPassword);
     
-    Boolean changeUsername(String newUsername);
+    void changeUsername(String newUsername);
 
     List<Integer> getVisitsUsers();
 
@@ -93,4 +93,11 @@ public interface UserFacadeLocal {
      * @return
      */
     List<Page> findPagesByUserId(Integer userId);
+
+    /**
+     * Verifica si un usuario existe a través de su email.
+     * @param user
+     * @return
+     */
+    User verifyUserWithoutGlobal(User user);
 }

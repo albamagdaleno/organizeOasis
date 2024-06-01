@@ -21,7 +21,7 @@
                         <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
                         <p:autoComplete id="userAutoComplete" value="#{searchUsernameController.searchTerm}"
                                         completeMethod="#{searchUsernameController.completeUser}"
-                                        dropdown="true" forceSelection="true"
+                                        dropdown="false" forceSelection="true"
                                         placeholder="Buscar usuario"/>
                         <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary"
                                          action="#{searchUsernameController.searchUser()}" update="@form"
@@ -59,31 +59,48 @@
 
         <ui:define name="content">
             <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                <h:panelGrid columns="1" cellpadding="10"
-                             style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 10px; margin-top: 100px">
+                <h:panelGrid columns="2" cellpadding="10"
+                             style="font-family: Arial, sans-serif; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 10px; margin-top: 100px">
                     <h:panelGroup>
+                        <div style="width: 300px; height: 150px; border: 5px solid #dddddd; border-radius: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
                         <h:outputText value="Nombre de usuario: #{sessionScope.selectedUser.username}"
                                       style="font-weight: bold;"/>
+                        </div>
                     </h:panelGroup>
                     <h:panelGroup>
+                        <div style="width: 300px; height: 150px; border: 5px solid #dddddd; border-radius: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
                         <h:outputText
                                 value="Nombre y apellidos: #{sessionScope.selectedUser.name} #{sessionScope.selectedUser.surname}"
                                 style="font-weight: bold;"/>
+                        </div>
                     </h:panelGroup>
                     <h:panelGroup>
+                        <div style="width: 300px; height: 150px; border: 5px solid #dddddd; border-radius: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
                         <h:outputText value="Numero de visitas: #{sessionScope.selectedUser.visits}"
                                       style="font-weight: bold;"/>
+                        </div>
                     </h:panelGroup>
-                    <h:outputLink value="mainViewUser.xhtml">
-                        <h:outputText value="Volver a la pagina principal"/>
-                    </h:outputLink>
+                    <h:panelGroup>
+                        <div style="width: 300px; height: 150px; border: 5px solid #dddddd; border-radius: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <p:outputLabel value="Este usuario está dentro del:" style=" font-weight: bold; margin-top: 20px; align-self: center;"/>
+                            <p:outputLabel value="#{statisticsController.getPercentile()}" style=" margin-top: 20px; align-self: center; font-weight: bold;"/>
+                            <p:outputLabel value="de perfiles más visitados" style="font-weight: bold; margin-top: 20px; align-self: center;"/>
+                        </div>
+                    </h:panelGroup>
+                        <h:outputLink value="mainViewUser.xhtml"
+                                      style="display: block; text-align: left; color: #849795">
+                            <h:outputText value="Volver a la página principal" style="text-align: center"/>
+                        </h:outputLink>
                 </h:panelGrid>
             </div>
 
             <p:dialog id="errorDialog" header="Error" widgetVar="errorDialog" modal="true" resizable="true"
                       draggable="false">
                 <h:outputText value="#{searchUsernameController.errorMessage}"/>
-                <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog"/>
+                <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog" styleClass="ui-button-raised ui-button-secondary"/>
             </p:dialog>
 
         </ui:define>
