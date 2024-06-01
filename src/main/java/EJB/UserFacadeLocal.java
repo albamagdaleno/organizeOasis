@@ -55,11 +55,11 @@ public interface UserFacadeLocal {
 
     void changeSurname(String newSurname);
 
-    void changeEmail(String newEmail);
+    Boolean changeEmail(String newEmail);
 
     void changePassword(String newPassword);
     
-    void changeUsername(String newUsername);
+    Boolean changeUsername(String newUsername);
 
     List<Integer> getVisitsUsers();
 
@@ -72,4 +72,25 @@ public interface UserFacadeLocal {
      */
     List<String> getUsersStartingWith(String searchTerm);
 
+    /**
+     * Busca un usuario por su nombre de usuario
+     * @param username
+     * @return
+     */
+    User findUserByUsername(String username);
+
+    /**
+     * Actualiza las visitas de un usuario
+     *
+     * @param user
+     */
+    void updateUserVisits(User user);
+
+    /**
+     * Obtiene las paginas de un usuario
+     *
+     * @param userId
+     * @return
+     */
+    List<Page> findPagesByUserId(Integer userId);
 }

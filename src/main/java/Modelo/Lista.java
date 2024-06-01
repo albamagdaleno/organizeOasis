@@ -17,10 +17,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "lists")
-public class List implements Serializable {
+public class Lista implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_list")
     private int idList;
 
     @Column(name = "text_str")
@@ -74,7 +75,7 @@ public class List implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final List other = (List) obj;
+        final Lista other = (Lista) obj;
         if (this.idList != other.idList) {
             return false;
         }

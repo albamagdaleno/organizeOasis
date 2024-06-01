@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+    <ui:composition template="./../WEB-INF/template/mainTemplate.xhtml">
+
+        <ui:define name="top">
+            <div class="top-div" style="display: flex; justify-content: space-between;">
+                <div class="top-search" style="display: flex; align-items: center;">
+                    <h:form>
+                        <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
+                        <p:autoComplete id="userAutoComplete" value="#{searchUsernameController.searchTerm}"
+                                        completeMethod="#{searchUsernameController.completeUser}"
+                                        dropdown="true" forceSelection="true"
+                                        placeholder="Buscar usuario"/>
+                        <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary"
+                                         action="#{searchUsernameController.searchUser()}" update="@form"
+                                         oncomplete="if (#{not empty searchUsernameController.errorMessage}) PF('errorDialog').show();"/>
+                    </h:form>
+                </div>
+                <div class="top-buttons"
+                     style="text-align: right; align-self: end; margin-bottom: 5px; margin-right: 5px; display: flex; flex-direction: row; justify-content: end;">
+                    <h:form>
+                        <p:commandButton id="boton-ajustes" value="Ajustes"
+                                         styleClass="ui-button-raised ui-button-secondary"
+                                         action="#{navigationBean.redirectToSettings()}"/>
+                    </h:form>
+                    <h:form>
+                        <p:commandButton id="boton-logout" value="Cerrar Sesión" icon="pi pi-power-off"
+                                         styleClass="ui-button-raised ui-button-secondary"
+                                         action="#{navigationBean.logout()}"/>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+
+        <ui:define name="left">
+            <h:form id="leftContent">
+                <p:panel header="Páginas del Usuario">
+                    <p:dataList value="#{sessionScope.userPages}" var="page" itemType="page">
+                            <h:outputText value="#{page.title}" />
+                    </p:dataList>
+                    <h:panelGroup rendered="#{empty sessionScope.userPages}">
+                        <h:outputText value="Este usuario no tiene páginas." />
+                    </h:panelGroup>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="content">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <h:panelGrid columns="1" cellpadding="10"
+                             style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 10px; margin-top: 100px">
+                    <h:panelGroup>
+                        <h:outputText value="Nombre de usuario: #{sessionScope.selectedUser.username}"
+                                      style="font-weight: bold;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText
+                                value="Nombre y apellidos: #{sessionScope.selectedUser.name} #{sessionScope.selectedUser.surname}"
+                                style="font-weight: bold;"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="Numero de visitas: #{sessionScope.selectedUser.visits}"
+                                      style="font-weight: bold;"/>
+                    </h:panelGroup>
+                    <h:outputLink value="mainViewUser.xhtml">
+                        <h:outputText value="Volver a la pagina principal"/>
+                    </h:outputLink>
+                </h:panelGrid>
+            </div>
+
+            <p:dialog id="errorDialog" header="Error" widgetVar="errorDialog" modal="true" resizable="true"
+                      draggable="false">
+                <h:outputText value="#{searchUsernameController.errorMessage}"/>
+                <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog"/>
+            </p:dialog>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+</html>

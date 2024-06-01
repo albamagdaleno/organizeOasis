@@ -40,7 +40,15 @@ public class TextFacade extends AbstractFacade<Text> implements TextFacadeLocal 
         query.setParameter("idBlock", blockId);
         return query.getResultList();
     }
-
+    
+    
+    public void modifyNote(Text note, String newText){
+        
+        Text noteToUpdate = em.find(Text.class, note.getIdText());
+        
+        noteToUpdate.setText(newText);
+        em.persist(noteToUpdate);
+    }
 
    
 }

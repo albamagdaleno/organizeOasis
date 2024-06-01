@@ -5,7 +5,8 @@
  */
 package EJB;
 
-import Modelo.List;
+import Modelo.Lista;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,18 +16,20 @@ import javax.ejb.Local;
 @Local
 public interface ListFacadeLocal {
 
-    void create(List list);
+    void create(Lista list);
 
-    void edit(List list);
+    void edit(Lista list);
 
-    void remove(List list);
+    void remove(Lista list);
 
-    List find(Object id);
+    Lista find(Object id);
 
-    java.util.List<List> findAll();
+    java.util.List<Lista> findAll();
 
-    java.util.List<List> findRange(int[] range);
+    java.util.List<Lista> findRange(int[] range);
 
     int count();
+    
+    List<Lista> getListsOfBlocks(int blockId);
     
 }

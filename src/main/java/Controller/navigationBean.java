@@ -67,6 +67,8 @@ public class navigationBean {
     }
     
     public String logout(){
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         return "/index.xhtml?faces-redirect=true";
+        
     }
 }

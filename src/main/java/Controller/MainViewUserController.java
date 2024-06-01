@@ -47,6 +47,58 @@ public class MainViewUserController implements Serializable{
     private List<Page> listUserPages;
     private List<Block> blocks; 
     private List<Text> notes;
+    private List<Lista> lists;
+    private Text noteToDelete;
+    private Text noteToChange;
+    private Lista listToDelete;
+    private Lista listToChange;
+    private String newTextNoteToChange;
+    private String titleOfPage;
+    private String newTextNote;
+    private int numberElementsNewList;
+    private String elementsList;
+    private Page globalPage;
+
+
+    public void setListToDelete(Lista listToDelete) {
+        this.listToDelete = listToDelete;
+    }
+
+    public void setListToChange(Lista listToChange) {
+        this.listToChange = listToChange;
+    }
+
+    public Lista getListToDelete() {
+        return listToDelete;
+    }
+
+    public Lista getListToChange() {
+        return listToChange;
+    }
+    
+    public Text getNoteToDelete() {
+        return noteToDelete;
+    }
+
+    public Text getNoteToChange() {
+        return noteToChange;
+    }
+
+    public String getNewTextNoteToChange() {
+        return newTextNoteToChange;
+    }
+
+    public void setNoteToDelete(Text noteToDelete) {
+        this.noteToDelete = noteToDelete;
+    }
+
+    public void setNoteToChange(Text noteToChange) {
+        this.noteToChange = noteToChange;
+    }
+
+    public void setNewTextNoteToChange(String newTextNoteToChange) {
+        this.newTextNoteToChange = newTextNoteToChange;
+    }
 
     public void setNotes(List<Text> notes) {
         this.notes = notes;
@@ -87,12 +139,8 @@ public class MainViewUserController implements Serializable{
     public ListFacadeLocal getListEJB() {
         return listEJB;
     }
-    private String newTextNote;
-    private int numberElementsNewList;
-    private String elementsList;
-    private Page globalPage;
     
-
+   
     public void setElementsList(String elementsList) {
         this.elementsList = elementsList;
     }
@@ -135,7 +183,7 @@ public class MainViewUserController implements Serializable{
         page = new Page();
         newPage = new Page();
         user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("globalUser");
-        
+        titleOfPage = "";
     
         //Modelo para la lista de paginas del usuario
         model = new DefaultMenuModel();
@@ -152,6 +200,8 @@ public class MainViewUserController implements Serializable{
             item = DefaultMenuItem.builder()
                     .value(page.getTitle())
                     .command("#{mainViewUserController.selectPage(" + page.getId_page() + ")}")
+                    .update("listOfPages")
+                    .oncomplete("reloadPage();")
                     .build();
             pagesMenu.getElements().add(item);
             
@@ -167,10 +217,11 @@ public class MainViewUserController implements Serializable{
         if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage")!=null){
             
             globalPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
-
+               
             getBlocksOfAcutalPage(globalPage);
             getNotesOfBlocks();
-            //getListsOfBlocks();
+            titleOfPage=globalPage.getTitle();
+            getListsOfBlocks();
                 
         }else{
             
@@ -179,23 +230,94 @@ public class MainViewUserController implements Serializable{
         
     }
     
+    public void getNoteToDelete(Text note){
+        
+        this.noteToDelete = note;
+    }
+    
+    public void getListToDelete(Lista list){
+        
+        this.listToDelete = list;
+    }
+    
+    public void getListToChange(Lista list){
+        
+        this.listToChange = list;
+    }
+    
+    public void getNoteToChange(Text note){
+        
+        this.noteToChange = note;
+        this.newTextNoteToChange = this.noteToChange.getText();
+    }
+    
+    public void deleteNote(){
+        
+        textEJB.remove(this.noteToDelete);
+    }
+    
+    public void deleteList(){
+        
+        listEJB.remove(this.listToDelete);
+    }
+    
+    public void modifyNote(){
+        
+        textEJB.modifyNote(this.noteToChange, this.newTextNoteToChange);
+    }
+    
     public void getNotesOfBlocks() {
-    notes = new ArrayList<>();
+        notes = new ArrayList<>();
+        try {
+            for (Block block : this.blocks) {
+                int blockId = block.getIdBlock();
+                List<Text> blockNotes = this.textEJB.getNotesOfBlocks(blockId);
+                if (blockNotes != null) {
+                    notes.addAll(blockNotes);
+                }
+            }
+            if(notes.size()!=0){
+                System.out.println("Esta llenando las notas");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("textEJB is null");
+        }
+    }
+    
+    
+    
+    public void getListsOfBlocks() {
+    lists = new ArrayList<>(); 
     try {
         for (Block block : this.blocks) {
             int blockId = block.getIdBlock();
-            List<Text> blockNotes = this.textEJB.getNotesOfBlocks(blockId);
-            if (blockNotes != null) {
-                notes.addAll(blockNotes);
+            List<Lista> blockLists = this.listEJB.getListsOfBlocks(blockId);
+            if (blockLists != null) {
+                lists.addAll(blockLists);
             }
         }
-        if(notes.size()!=0){
-            System.out.println("Esta llenando las notas");
+        
+        for (Lista lista : lists) {
+            
+            String modifiedText = lista.getText().replace(";", "<br /><br /> - ");
+            lista.setText(modifiedText);
         }
+        
+        if(notes.size()!=0){
+                System.out.println("Esta llenando las notas");
+            }
     } catch (NullPointerException e) {
-        System.out.println("textEJB is null");
+        System.out.println("listEJB is null");
     }
 }
+
+    public void setLists(List<Lista> lists) {
+        this.lists = lists;
+    }
+
+    public List<Lista> getLists() {
+        return lists;
+    }
 
     
     
@@ -218,16 +340,15 @@ public class MainViewUserController implements Serializable{
         
         //En bbdd los guardamos separados por ; para saber como representarlos
         String transformedList = String.join(";", elementsArray);
+        System.out.println(transformedList);
     
-        Page actualPage = (Page) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectedPage");
-        
         Block newBlock = new Block();
-        newBlock.setPage(actualPage);
+        newBlock.setPage(this.globalPage);
         blockEJB.create(newBlock);
         
-        Modelo.List newList = new Modelo.List();
+        Modelo.Lista newList = new Modelo.Lista();
         newList.setBlock(newBlock);
-        newList.setText(elementsList);
+        newList.setText(transformedList);
         listEJB.create(newList);
         
         
@@ -297,6 +418,10 @@ public class MainViewUserController implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedPage", selectedPage);
     }
 
+    public void setTitleOfPage(String titleOfPage) {
+        this.titleOfPage= titleOfPage;
+    }
+    
     public Page getPage() {
         return page;
     }
@@ -316,6 +441,12 @@ public class MainViewUserController implements Serializable{
     public Page getSelectedPage() {
         return selectedPage;
     }
+
+    public String getTitleOfPage() {
+        return titleOfPage;
+    }
+    
+    
 
     public UserFacadeLocal getUserEJB() {
         return userEJB;
