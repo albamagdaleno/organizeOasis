@@ -32,7 +32,7 @@ public class adminController implements Serializable{
 
     @EJB
     private UserFacadeLocal userEJB;
-    private PageFacadeLocal pageEJB;
+    
     
     @Inject
     private adminUserPagesController adminUserPagesController; 

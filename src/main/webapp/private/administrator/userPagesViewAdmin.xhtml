@@ -44,12 +44,6 @@
                             <p:column headerText="Titulo">
                                 <h:outputText value="#{page.title}" />
                             </p:column>
-                            <p:column headerText="Número de bloques">
-                                <h:outputText value="#{page.num_blocks}" />
-                            </p:column>    
-                            <p:column headerText="Visits">
-                                <h:outputText value="#{page.visits}" />
-                            </p:column>
                             <p:column headerText="Actions" exportable="false">
                                 <p:commandButton style="background-color: transparent; border: none; color: red;" 
                                                  icon="pi pi-trash" onclick="PF('deletePageDialog').show(); #{adminUserPagesController.setSelectedPage(page)}" update="@this"/>
