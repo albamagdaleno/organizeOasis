@@ -71,7 +71,7 @@
         <p:dialog header="Error" id="errorDialog" widgetVar="errorDialog" modal="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:outputText value="#{registerController.errorRegister}" />
         </p:dialog>
-        <p:commandButton value="Volver al login" action="#{registerController.backToIndex()}" styleClass="ui-button-raised ui-button-flat ui-button-plain"/>
+        <h:link value="Volver al login" outcome="/index.xhtml" styleClass="input-label" style="margin-left: 20px; color: #849795"/>
     </h:form>
 </h:body>
 </html>
