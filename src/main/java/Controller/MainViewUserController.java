@@ -251,6 +251,10 @@ public class MainViewUserController implements Serializable{
         this.newTextNoteToChange = this.noteToChange.getText();
     }
     
+    public void deletePage(){
+        pageEJB.remove(globalPage);
+    }
+    
     public void deleteNote(){
         
         textEJB.remove(this.noteToDelete);

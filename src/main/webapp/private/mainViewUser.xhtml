@@ -143,7 +143,9 @@
                 </div>
                <div class="blocks-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
                    <p:outputLabel value="#{mainViewUserController.titleOfPage}" style="font-size: 27px; margin-left: 5px; align-self: center; font-weight: bold; color: #849795;"/>
-                
+                    <div style="margin-right: 5px; margin-left: 5px;">
+                        <p:commandButton value="Eliminar Página" styleClass="ui-button-raised ui-button-secondary" onclick="PF('DeletePage').show()" />
+                    </div>
                     <ui:repeat value="#{mainViewUserController.notes}" var="note">
                         <div class="note" style="background-color: #f0f0f0; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 100%; height: 150px; position: relative; margin-left: 10px;">
                             <h:outputText value="#{note.text}" />
@@ -169,7 +171,31 @@
                     </ui:repeat>
                 </div>
 
+                <h:form>
+                    <p:confirmDialog widgetVar="DeletePage"
+                                     showEffect="fade"
+                                     width="500"
+                                     message="¿Quieres eliminar la página?"
+                                     header="Eliminar Página"
+                                     severity="info">
 
+                        <div style="margin-top:10px">
+                            <p:commandButton value="Eliminar"
+                                icon="pi pi-check"
+                                style="background-color:red ; border: none; "
+                                action="#{mainViewUserController.deletePage()}"
+                                oncomplete="PF('DeletePage').hide(); location.reload(true);"
+                                update="@form"/>
+                            <p:commandButton value="Cancelar"
+                                type="button"
+                                styleClass="ui-button-secondary"
+                                icon="pi pi-times"
+                                onclick="PF('DeletePage').hide();" />
+                        </div>
+
+                       </p:confirmDialog>
+                </h:form>
+                
                 <h:form>
                     <p:confirmDialog widgetVar="newTextDialog"
                                      showEffect="fade"
