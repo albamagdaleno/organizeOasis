@@ -75,5 +75,9 @@ public class RegisterController implements Serializable {
         return null;
     }
 
+    public String backToIndex(){
+        return "/index.xhtml?faces-redirect=true";
+    }
+
 
 }

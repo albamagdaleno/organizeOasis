@@ -152,13 +152,7 @@ public class settingsController implements Serializable{
     }
     
     public void changeEmail(){
-        Boolean error = userEJB.changeEmail(this.newEmail);
-
-        if(error){
-            errorMessage = "El correo ya existe.";
-            PrimeFaces.current().ajax().update("errorDialog");
-            PrimeFaces.current().executeScript("PF('errorDialog').show()");
-        }
+        userEJB.changeEmail(this.newEmail);
     }
     
     public void changePassword(){
@@ -172,13 +166,7 @@ public class settingsController implements Serializable{
     }
     
     public void changeUsername(){
-        Boolean error = userEJB.changeUsername(this.newUsername);
-
-        if(error){
-            errorMessage = "El nombre de usuario ya existe";
-            PrimeFaces.current().ajax().update("errorDialog");
-            PrimeFaces.current().executeScript("PF('errorDialog').show()");
-        }
+        userEJB.changeUsername(this.newUsername);
     }
     
     public void deleteUser(){
@@ -223,12 +211,5 @@ public class settingsController implements Serializable{
         }
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
 }
 

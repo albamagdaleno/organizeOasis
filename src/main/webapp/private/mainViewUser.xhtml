@@ -52,7 +52,7 @@
                     <p:outputLabel value="Buscar usuario: " styleClass="input-label"/>
                     <p:autoComplete id="userAutoComplete" value="#{searchUsernameController.searchTerm}"
                                     completeMethod="#{searchUsernameController.completeUser}"
-                                    dropdown="true" forceSelection="true"
+                                    dropdown="false" forceSelection="true"
                                     placeholder="Buscar usuario"/>
                     <p:commandButton value="Buscar" styleClass="ui-button-raised ui-button-secondary"
                                      action="#{searchUsernameController.searchUser()}" update="@form"
@@ -353,7 +353,7 @@
                 <p:dialog id="errorDialog" header="Error" widgetVar="errorDialog" modal="true" resizable="true"
                           draggable="false">
                     <h:outputText value="#{searchUsernameController.errorMessage}"/>
-                    <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog"/>
+                    <p:commandButton value="Aceptar" onclick="PF('errorDialog').hide();" update="errorDialog" styleClass="ui-button-raised ui-button-secondary"/>
                 </p:dialog>
                 
             </ui:define>

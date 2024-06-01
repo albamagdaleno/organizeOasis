@@ -9,6 +9,7 @@ body {
 }
 
 h2 {
+    font-family: Arial, sans-serif;
     text-align: center;
 }
 
@@ -21,11 +22,15 @@ form {
 }
 
 .input-label {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
     width: 100px;
     display: inline-block;
 }
 
 .input-text {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
     width: calc(100% - 120px);
 }
 
